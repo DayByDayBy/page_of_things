@@ -6,9 +6,8 @@ function App() {
     <>
       <h1>space</h1>
       <br></br>
-
       <br></br>
-      <p>and some things to fill it </p>
+      <p>and something to fill it </p>
     </>
   );
 }

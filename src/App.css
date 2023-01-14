@@ -21,7 +21,7 @@ main{
   width: 50vw;
   height: 60vh;
   border-radius: 5rem;
-  background-color:hsla(344, 17%, 74%, 0.25);
+  background-color:hsla(344, 17%, 74%, 0.1);
 }
 
 h1{
@@ -49,8 +49,8 @@ a{
 
 .textBox{
 
-  padding: 1rem 2rem;
-  margin: 5rem 2rem 1rem 2rem;
+  padding: 3rem 4rem;
+  margin: 3rem 2rem 1rem 2rem;
   border-radius: 1.5rem;
   background-color: hsl(157, 42%, 58%, 0.2);
 }

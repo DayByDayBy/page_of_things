@@ -1,3 +1,4 @@
+import NavBar from "../components/NavBar";
 
 const PageContainer = () => {
 
@@ -10,6 +11,8 @@ const PageContainer = () => {
             <br></br>
             <p>and something to fill it </p>
         </div>
+
+        <NavBar />
 
         </>
 

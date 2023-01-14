@@ -32,11 +32,30 @@ h1{
   border-radius: 1.5rem;
 }
 
+a{
+  display: flex;
+  justify-content:space-between;
+  background-color: #f44336;
+  color: white;
+  margin: 6rem 5rem 0rem 5rem;
+  padding: 1rem 2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 3rem;
+
+}
+
+
 .textBox{
 
   padding: 1rem 2rem;
+  margin: 5rem 2rem 1rem 2rem;
   border-radius: 1.5rem;
   background-color: hsl(157, 42%, 58%, 0.2);
+}
 
-
+.nav{
+  list-style: none;
+  text-align: center;
 }

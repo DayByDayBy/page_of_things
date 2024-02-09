@@ -5,14 +5,14 @@ const PageContainer = () => {
     return (
 
         <>
-            <div className='name'>
+            {/* <div className='name'>
                 <h1>boagDev</h1>
-            </div>
+            </div> */}
 
 
             <NavBar />
             <div className='textBox'>
-                <p className='text'>theboag<br></br>gmail</p>
+                <p className='text'> theboag <br></br>@<br></br> gmail </p>
             </div>
 
         </>

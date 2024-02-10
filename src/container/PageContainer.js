@@ -5,15 +5,16 @@ const PageContainer = () => {
     return (
 
         <>
-            {/* <div className='name'>
-                <h1>boagDev</h1>
-            </div> */}
+            <div className='name'>
+                <h3>boagDev</h3>
+            </div>
+            <br></br>
 
 
             <NavBar />
-            <div className='textBox'>
-                <p className='text'> theboag <br></br>@<br></br> gmail </p>
-            </div>
+            
+                <p className='text'> theboag <br></br>[@]<br></br> gmail </p>
+
 
         </>
 

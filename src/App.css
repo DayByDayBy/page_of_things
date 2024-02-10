@@ -5,8 +5,9 @@ body{
   justify-content: center;
   align-items: center;
   padding:1rem;
-  margin: 3rem;
+  margin: 1rem;
   min-height: 80vh;
+  font-family: 'Courier New', Courier, monospace;
   text-align:center;
 }
 
@@ -23,22 +24,22 @@ main{
   border-radius: 5rem;
   background-color:hsla(344, 17%, 74%, 0.1);
 }
-
+/* 
 h1{
   padding: 1rem 3rem;
   margin-bottom: 1rem;
   background-color: hsla(72, 80%, 75%, 0.7);
   border-radius: 1.5rem;
-}
+} */
 
 a {
   text-decoration: none;
 }
 
 
-
 .svglink{
-  padding: 2rem;
+  padding: 1rem;
+  margin:2rem;
 }
 
 .svglink img {
@@ -46,10 +47,13 @@ a {
   height: 50px;
 }
 
+p.text {
+  margin:1rem 0 1rem 0;
+  text-align: left;
+}
 
 
-
-.redbox{
+/* .redbox{
   display: flex;
   justify-content:space-between;
   margin: 1rem 1rem 0rem 1rem;
@@ -58,22 +62,24 @@ a {
   padding: 1rem 2rem;
   display: inline-block;
   border-radius: 3rem;  
-}
+} */
 
-.textBox{
+/* .textBox{
+
   padding: 0rem 12rem;
   margin: 5rem 1rem -1rem 1rem;
   border-radius: 1.5rem;
   background-color: hsl(157, 42%, 58%, 0.2);
-}
+} */
 
 .nav{
   list-style: none;
 }
 
 .name{
+  margin: -5rem 0rem 6rem 0rem;
+  padding: 0rem 1rem 1rem 1rem;
   display: flex;
-  list-style: none;
-  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
 }
 

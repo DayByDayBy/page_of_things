@@ -8,7 +8,6 @@ const PageContainer = () => {
             <div className='name'>
                 <h3>boagDev</h3>
             </div>
-            <br></br>
 
 
             <NavBar />

@@ -3,8 +3,8 @@ import liSVG from "../assets/linkedIn.svg";
 
 const NavBar = () => {
   return (
-  <>
-    <div className="svglink">
+    <>
+      <div className="svglink">
         <a href="https://github.com/DayByDayBy">
           <img src={gitSVG} alt="github, DayByDayBy" />
         </a>
@@ -13,8 +13,8 @@ const NavBar = () => {
         <a href="https://www.linkedin.com/in/james-boag/">
           <img src={liSVG} alt="linkedIn, James Boag" />
         </a>
-    </div>
-  </>
+      </div>
+    </>
   );
 };
 

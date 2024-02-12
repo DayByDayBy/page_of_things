@@ -6,12 +6,15 @@ function App() {
   return (
     <>
       <main>
-        <PageContainer />
+        <div className="page-content">
+          <PageContainer />
+        </div>
+        <div className='wave-container'>
+          <div className='wave'>
+          <Wavy />
+          </div>
+        </div>
       </main>
-      <div className="container">
-        <Wavy />
-      </div>
-
     </>
   );
 }

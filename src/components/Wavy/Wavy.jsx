@@ -44,50 +44,22 @@ const Wavy = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      let maxAmpReached = false;
-      let minAmpReached = false;
       let maxFreqReached = false;
       let minFreqReached = false;
+      let maxAmpReached = false;
+      let minAmpReached = false;
 
-      if (!maxFreqReached) {
-        setFrequency((frequency) => {
-          let newFrequency = frequency + frequencyChange;
-          if (newFrequency >= 4) {
-            newFrequency = 4;
-            maxAmpReached = true;
-          }
-          return newFrequency;
-        });
-      } else if (!minFreqReached) {
-        setFrequency((frequency) => {
-          let newFrequency = frequency - frequencyChange;
-          if (newFrequency <= 0.000001) {
-            newFrequency = 0.000001;
-            minFreqReached = true;
-          }
-          return newFrequency;
-        });
+
+      if (frequency < 4) {
+        setFrequency((frequency) => Math.min(frequency + frequencyChange, 4));
+      } else { 
+        setFrequency((frequency) => Math.max(frequency - frequencyChange, 0.0000001));
       }
 
-      if (!maxAmpReached) {
-        setAmplitude((amplitude) => {
-          let newAmplitude = amplitude + amplitudeChange;
-          if (newAmplitude >= 20) {
-            newAmplitude = 20;
-            maxAmpReached = true;
-          }
-          return newAmplitude;
-        });
-
-      } else if (!minAmpReached) {
-        setAmplitude((amplitude) => {
-          let newAmplitude = amplitude - amplitudeChange;
-          if (newAmplitude <= 0.01) {
-            newAmplitude = 0.01;
-            minAmpReached = true;
-          }
-          return newAmplitude;
-        });
+      if (amplitude < 20) {
+        setAmplitude((amplitude) => Math.min(amplitude + amplitudeChange, 20));
+      } else { 
+        setAmplitude((amplitude) => Math.max(amplitude - amplitudeChange, 0.01));
       }
 
       if (canvasRef.current) {
@@ -100,7 +72,7 @@ const Wavy = () => {
     }, 5);
 
     return () => clearInterval(intervalId);
-  }, [mousePos]);
+  }, [mousePos, amplitude]);
 
   const handleMouseMove = (event) => {
     setMousePos({ x: event.clientX, y: event.clientY });

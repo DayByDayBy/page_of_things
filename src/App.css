@@ -1,12 +1,6 @@
 body{
   margin: 0;
-  background-color:hsla(344, 17%, 74%, 0.384);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding:1rem;
-  margin: 1rem;
-  min-height: 80vh;
+  background-color:hsla(344, 13%, 74%, 0.384);
   font-family: 'Courier New', Courier, monospace;
   text-align:center;
 }
@@ -16,30 +10,49 @@ main{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
   padding: 0rem 2rem;
   margin: 2rem;
-  width: 50vw;
-  height: 70vh;
+  height: 80vh;
   border-radius: 5rem;
-  background-color:hsla(344, 17%, 74%, 0.1);
+  background-color:hsla(0, 17%, 74%, 0.09);
+  z-index: 1;
 }
-/* 
-h1{
-  padding: 1rem 3rem;
-  margin-bottom: 1rem;
-  background-color: hsla(72, 80%, 75%, 0.7);
-  border-radius: 1.5rem;
-} */
+
+.page-content{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+min-height: 70vh;
+padding: 0rem 3rem;
+margin: 2rem;
+border-radius: 3rem;
+background-color:hsla(342, 10%, 74%, 0.05);
+z-index: 2;
+}
+
+.wave-container{
+  position: absolute;
+  width:101%;
+  height: 0%;
+  z-index: -1;
+}
+.wave {
+  left: 0;
+  z-index: -2;
+}
+
+
+
+
 
 a {
   text-decoration: none;
 }
 
-
 .svglink{
   padding: auto 1rem;
-  margin: auto 2rem;
+  margin: 3rem 1rem;
 }
 
 .svglink img {
@@ -48,7 +61,8 @@ a {
 }
 
 p.text {
-  margin: auto 0 2rem 0;
+  margin: 0rem 1rem 3rem 1rem;
+  padding: 1rem 0 2rem 0;
   text-align: left;
 }
 
@@ -77,7 +91,7 @@ p.text {
 }
 
 .name{
-  margin: auto 0rem 6rem 0rem;
+  margin: 0 0 1rem 0;
   padding: 0rem 1rem 1rem 1rem;
   display: flex;
   font-family: 'Courier New', Courier, monospace;

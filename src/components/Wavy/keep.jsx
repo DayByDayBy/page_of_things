@@ -5,9 +5,10 @@ const Wavy = () => {
   const canvasRef = useRef();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [phase, setPhase] = useState(0.0001);
+  const [ampMod, setAmpMod] = useState(0);
+  const [freqMod, setFreqMod] = useState(0);
   const [amplitude, setAmplitude] = useState(20);
-  const [frequency, setFrequency] = useState(10);
-
+  const [frequency, setFrequency] = useState(0.3333);
 
   const frequencyChange = 0.001;
   const amplitudeChange = 0.003;
@@ -26,9 +27,12 @@ const Wavy = () => {
       const stepSize = canvas.width / numPoints;
 
       for (let x = 0; x < canvas.width; x += stepSize) {
+        const modulatedFrequency = frequency + freqMod * 10;
+        const modulatedAmplitude = amplitude + ampMod;
+
         const y =
           canvas.height / 2 +
-          (amplitude) * Math.sin((x + phase) / (50 * frequency));
+          modulatedAmplitude * Math.sin((x + phase) / (50 * modulatedFrequency));
         ctx.lineTo(x, y);
       }
       ctx.strokeStyle = "black";
@@ -39,30 +43,33 @@ const Wavy = () => {
     return () => {
       cancelAnimationFrame(animationID);
     };
-  }, [phase, amplitude, frequency]);
+  }, [phase, amplitude, ampMod, freqMod, frequency]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
 
+      if (frequency < 4) {
+        setFrequency((frequency) => Math.min(frequency + frequencyChange, 4));
+      } else { 
+        setFrequency((frequency) => Math.max(frequency - frequencyChange, 0.0000001));
+      }
       if (amplitude < 20) {
         setAmplitude((amplitude) => Math.min(amplitude + amplitudeChange, 20));
       } else { 
         setAmplitude((amplitude) => Math.max(amplitude - amplitudeChange, 0.01));
       }
 
-      if (frequency < 10) {
-        setFrequency((frequency) => Math.min(frequency + frequencyChange, 10));
-      } else { 
-        setFrequency((frequency) => Math.max(frequency - frequencyChange, 0.0001));
+      if (canvasRef.current) {
+        const canvas = canvasRef.current;
+        setAmpMod((ampMod) => ampMod + (mousePos.y - canvas.height / 2) * 0.0001);
+        setFreqMod((freqMod) => freqMod + (mousePos.x - canvas.height / 2) * 0.01);
       }
       setPhase((phase) => phase + Math.random() < 0.03 ? phase - 0.01 : phase + 0.01);
-    }, 500);
+
+    }, 5);
 
     return () => clearInterval(intervalId);
-  }, [ amplitude,frequency ]);
-
-
- 
+  }, [mousePos, amplitude,frequency]);
 
   const handleMouseMove = (event) => {
     setMousePos({ x: event.clientX, y: event.clientY });

@@ -31,7 +31,7 @@ const Wavy = () => {
           (amplitude) * Math.sin((x + phase) / (50 * frequency));
         ctx.lineTo(x, y);
       }
-      ctx.strokeStyle = "black";
+      ctx.strokeStyle = "hsla(0, 0%, 0%, 0.99)";
       ctx.stroke();
     };
 
@@ -76,7 +76,7 @@ const Wavy = () => {
     <canvas
       ref={canvasRef}
       width={document.documentElement.clientWidth}
-      height={document.documentElement.clientHeight}
+      height={document.documentElement.clientHeight/2}
       onMouseMove={handleMouseMove}
     ></canvas>
   );

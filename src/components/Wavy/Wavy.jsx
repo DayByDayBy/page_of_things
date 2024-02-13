@@ -6,7 +6,7 @@ const Wavy = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [phase, setPhase] = useState(0.0001);
   const [amplitude, setAmplitude] = useState(20);
-  const [frequency, setFrequency] = useState(10);
+  const [frequency, setFrequency] = useState(20);
 
 
   const frequencyChange = 0.001;
@@ -51,7 +51,7 @@ const Wavy = () => {
       }
 
       if (frequency < 10) {
-        setFrequency((frequency) => Math.min(frequency + frequencyChange, 10));
+        setFrequency((frequency) => Math.min(frequency + frequencyChange, 20));
       } else { 
         setFrequency((frequency) => Math.max(frequency - frequencyChange, 0.0001));
       }

@@ -13,7 +13,7 @@ main{
   padding: 0rem 2rem;
   margin: 4rem;
   height: 80vh;
-  border-radius: 5rem;
+  border-radius: 3rem;
   background: linear-gradient(
     to top right, 
     hsla(235, 17%, 74%, 0.1) 0%, 

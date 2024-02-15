@@ -5,7 +5,7 @@ const Wavy = () => {
   const canvasRef = useRef();
 
   const [phase, setPhase] = useState(0.000000001);
-  const [amplitude, setAmplitude] = useState(24);
+  const [amplitude, setAmplitude] = useState(2);
   const [frequency, setFrequency] = useState(0.1);
 
   const ampMaxReached = useRef(false);
@@ -17,7 +17,7 @@ const Wavy = () => {
   const [onClick, setOnClick] = useState(false);
 
   const frequencyChange = 0.000253333333;
-  const amplitudeChange = 0.05;
+  const amplitudeChange = 0.0005;
   const ampMax = 25;
   const ampMin = 0;
   const freqMax = 10;

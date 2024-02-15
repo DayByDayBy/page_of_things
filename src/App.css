@@ -11,10 +11,13 @@ main{
   justify-content: center;
   align-items: center;
   padding: 0rem 2rem;
-  margin: 2rem;
+  margin: 4rem;
   height: 80vh;
   border-radius: 5rem;
-  background-color:hsla(0, 17%, 74%, 0.09);
+  background: linear-gradient(
+    to top right, 
+    hsla(235, 17%, 74%, 0.1) 0%, 
+    hsla(265, 1%, 74%, 0.19) 67%);
   z-index: 1;
 }
 
@@ -27,7 +30,9 @@ min-height: 70vh;
 padding: 0rem 3rem;
 margin: 2rem;
 border-radius: 3rem;
-background-color:hsla(342, 10%, 74%, 0.05);
+background:linear-gradient( 110deg,
+  hsla(145, 10%, 80%, 0.1) 37%,
+  hsla(235, 12%, 60%, 0.084)) 0%;
 z-index: 2;
 }
 

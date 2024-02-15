@@ -4,9 +4,9 @@ import "./Wavy.css"
 const Wavy = () => {
   const canvasRef = useRef();
 
-  const [phase, setPhase] = useState(0.00001);
-  const [amplitude, setAmplitude] = useState(10);
-  const [frequency, setFrequency] = useState(0.000001);
+  const [phase, setPhase] = useState(0.000000001);
+  const [amplitude, setAmplitude] = useState(24);
+  const [frequency, setFrequency] = useState(0.1);
 
   const ampMaxReached = useRef(false);
   const ampMinReached = useRef(false);
@@ -16,12 +16,12 @@ const Wavy = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [onClick, setOnClick] = useState(false);
 
-  const frequencyChange = 0.00003;
-  const amplitudeChange = 0.067;
-  const ampMax = 30;
-  const ampMin = 0.01;
-  const freqMax = 2;
-  const freqMin = 0.000001;
+  const frequencyChange = 0.000253333333;
+  const amplitudeChange = 0.05;
+  const ampMax = 25;
+  const ampMin = 0;
+  const freqMax = 10;
+  const freqMin = 0.1;
 
   // basic wave stuff, if you're curious:
   // y = Math.sin(x) * (frequency modifier)
@@ -33,25 +33,24 @@ const Wavy = () => {
   // to the side because canvas draws a weird line at the edge of waves
 
 
-  const drawWave = () => {
+  const drawWave = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.moveTo(-1, canvas.height / 2);
-    const numPoints = 747;
+    const numPoints = 5000;
     const stepSize = canvas.width / numPoints;
     for (let x = 0; x < canvas.width; x += (stepSize)) {
-      const y = canvas.height / 2 + amplitude * Math.sin((x + phase) * frequency);
+      const y = canvas.height / 2 + amplitude * Math.sin((x + phase) * (frequency/(4*Math.PI)));
       ctx.lineTo(x, y);
     }
     ctx.strokeStyle = "hsla(0, 0%, 0%, 0.99)";
     ctx.stroke();
-  };
+  }, [amplitude, frequency, phase]);
 
 
-  console.log("amp min reached: ", ampMinReached);
-  console.log("amplitude : ", amplitude);
+ 
 
   const updateWave = useCallback(() => {
     if (!ampMaxReached.current) {
@@ -59,7 +58,7 @@ const Wavy = () => {
         ampMaxReached.current = true;
         ampMinReached.current = false;
       } else if (amplitude < ampMax) {
-        setAmplitude((amplitude) => amplitude + amplitudeChange);
+        setAmplitude((amplitude) => amplitude + (amplitudeChange*Math.random()));
       }
 
     } else if (!ampMinReached.current) {
@@ -72,21 +71,23 @@ const Wavy = () => {
     }
     if (!freqMaxReached.current) {
       if (frequency >= freqMax) {
+        console.log("freq max reached.   A: ", amplitude);
         freqMaxReached.current = true;
         freqMinReached.current = false;
       } else if (frequency < freqMax) {
-        setFrequency((frequency) => frequency + frequencyChange);
+        setFrequency((frequency) => frequency + (frequencyChange*Math.random()));
       }
 
     } else if (!freqMinReached.current) {
       if (frequency <= freqMin) {
+        console.log("freq min reached... A:", amplitude);
         freqMinReached.current = true;
         freqMaxReached.current = false;
       } else if (frequency > freqMin) {
         setFrequency((frequency) => frequency - frequencyChange);
       }
     }
-}, [setAmplitude, setFrequency, ampMaxReached, ampMinReached, amplitude, ampMax, ampMin, freqMaxReached, freqMinReached, frequency, freqMax, freqMin]);
+}, [ampMin, amplitude, frequency]);
 
 
 useEffect(() => {
@@ -95,7 +96,7 @@ useEffect(() => {
     cancelAnimationFrame(animationID);
   };
 
-}, [updateWave, ampMaxReached, ampMinReached, amplitude, freqMaxReached, freqMinReached]);
+}, [updateWave]);
 
 useEffect(() => {
   const animationID = requestAnimationFrame(drawWave);
@@ -128,8 +129,8 @@ useEffect(() => {
 
 // phase variance; chnages over time, and is slightly more likely to speed up:
 useEffect(() => {
-  if (canvasRef) {
-    setPhase(phase => phase + Math.random() < 0.04 ? phase - 0.002 : phase + 0.00125)
+  if (canvasRef.current) {
+    setPhase(phase => phase + Math.random() < 0.03 ? phase - 0.002 : phase + 0.00125)
   };
 }, [phase]);
 

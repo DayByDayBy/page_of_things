@@ -1,7 +1,7 @@
 import gitSVG from "../assets/git.svg";
 import liSVG from "../assets/linkedIn.svg";
 
-const NavBar = () => {
+const Contact = () => {
   return (
     <>
       <div className="svglink">
@@ -18,4 +18,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default Contact;

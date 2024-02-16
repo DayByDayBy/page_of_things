@@ -2,13 +2,13 @@ body{
   margin: 0;
   background-color:hsla(344, 13%, 74%, 0.384);
   font-family: 'Courier New', Courier, monospace;
-  text-align:center;
 }
 
 main{
   display:flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
   padding: 0rem 2rem;
   margin: 4rem;
@@ -21,13 +21,15 @@ main{
   z-index: 1;
 }
 
-.page-content{
+.contact{
 display: flex;
+flex-wrap: wrap;
 justify-content: center;
-align-items: center;
+align-self: center;
 flex-direction: column;
-min-height: 70vh;
-padding: 0rem 3rem;
+height: 70%;
+max-width: 29%;
+padding: 0rem;
 margin: 2rem;
 border-radius: 3rem;
 background:linear-gradient( 110deg,
@@ -45,6 +47,25 @@ z-index: 2;
 .wave {
   left: 0;
   z-index: -2;
+}
+
+.right-box{
+  display: flex;
+  margin: 0 auto;
+  background-color: #f44336;
+  color: white;
+  padding: 1rem 1rem;
+  border-radius: 3rem;  
+}
+
+
+.right-box{
+  display: flex;
+  margin: 0 auto;
+  background-color: #f44336;
+  color: white;
+  padding: 1rem 1rem;
+  border-radius: 3rem;  
 }
 
 
@@ -66,22 +87,13 @@ a {
 }
 
 p.text {
-  margin: 0rem 1rem 3rem 1rem;
+  margin: 0rem 1rem 0rem 1rem;
   padding: 1rem 0 2rem 0;
   text-align: left;
 }
 
 
-/* .redbox{
-  display: flex;
-  justify-content:space-between;
-  margin: 1rem 1rem 0rem 1rem;
-  background-color: #f44336;
-  color: white;
-  padding: 1rem 2rem;
-  display: inline-block;
-  border-radius: 3rem;  
-} */
+
 
 /* .textBox{
 

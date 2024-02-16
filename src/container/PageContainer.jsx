@@ -1,17 +1,26 @@
-import NavBar from "../components/NavBar";
-import Wavy from "../components/Wavy/Wavy";
+import Contact from "../components/Contact";
+import RightBox from "../components/RightBox";
+import LeftBox from "../components/RightBox";
 
 const PageContainer = () => {
+
+
+
   return (
     <>
 
-      <div className="name">
-        <h3>boagDev</h3>
+    
+        <LeftBox />
+
+      <div className="contact">
+        <h3 className="name">boagDev</h3>
+        <Contact />
+        <p className="text">theboag<br></br>[@]<br></br>gmail</p>
       </div>
-      <NavBar />
-      <p className="text">
-        theboag<br></br>[@]<br></br>gmail
-      </p>
+
+        <RightBox />
+  
+
     </>
   );
 };

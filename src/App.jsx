@@ -7,7 +7,6 @@ function App() {
     <>
       <main>
                     <PageContainer />
-
             <div className='wave-container'>
                       <Wavy />
             </div>

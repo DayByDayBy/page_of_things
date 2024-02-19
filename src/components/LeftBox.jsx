@@ -4,11 +4,11 @@ import GlobalGameJam from "./projects/GlobalGameJam";
 const LeftBox = () => {
     return (
         <>
-            <div className="Left-box">
+            <div className="left-box">
                 <GlobalGameJam />
             </div>
         </>
     )
 };
 
-export default RightBox;
+export default LeftBox;

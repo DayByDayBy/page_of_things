@@ -5,7 +5,7 @@ const GlobalGameJam = () => {
 
     return (
     <a href="https://globalgamejam.org/games/2024/dead-funny-5">
-        <img src={GGJSVG} alt="GlobalGameJam 2024" />
+        <img src={GGJSVG} alt="GlobalGameJam 2024" width="100" />
     </a>
     )
 }

@@ -59,7 +59,13 @@ const Wavy = () => {
       const ampModOne = onClick ? Math.sin(mousePos.x % (x - canvas.width)) : 0;
       const ampModTwo =  onClick ? Math.sin(mousePos.y % (x - canvas.width)) : 0;
       const ampModThree = onClick ? (mousePos.y * mousePos.x) % (x - canvas.width) - phase : 0;
-      const ampModOverall = !onClick ? 0: Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() / Math.sin(ampModThree)
+      const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
+      
+      // a couple of the sillier wave mod ideas:
+
+      //const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
+      //const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() / Math.sin(ampModThree))
+
 
       const y = canvas.height / 2 + ampModOverall + amplitude * Math.sin((x + phase) * (frequency / 10));
 

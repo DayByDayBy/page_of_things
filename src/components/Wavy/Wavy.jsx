@@ -51,9 +51,10 @@ const Wavy = () => {
       // of the idea (three sets of mod, one overall sum value)
       // some cool effects by messing with that wave, would be cool to 
       // make a button/mod selector switch to turn on 1, 2, and/or 3, 
-      // and to add some other buttons/sliders to adjust the wave further 
-      // (eg multiply ampMod below, either individually or altogether, possibly both, 
-      // possibly in combination)
+      // and to add some other buttons/sliders to adjust the wave further. 
+      // eg multiply ampMod below, either individually or altogether, possibly both, 
+      // possibly in combination - also might be intersting to incorporate 
+      // the date/time as a variable, or some user-set or user-derived numbers
 
       const ampModOne = onClick ? Math.sin(mousePos.x % (x - canvas.width)) : 0;
       const ampModTwo =  onClick ? Math.sin(mousePos.y % (x - canvas.width)) : 0;

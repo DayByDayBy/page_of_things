@@ -1,24 +1,20 @@
-import Drawer from 'react-motion-drawer';
-import React, { useState } from 'react';
+import React from 'react';
 
-function Menu() {
+const Menu = ({ onSelect }) => {
+  const handleItemClick = (option) => {
+    onSelect(option);
+  };
 
-    const [isOpen, setIsOpen] = useState(true);
-
-    const handleCloseDrawer = () => {
-        setIsOpen(false);
-
-    }
-
-    return (
-        <Drawer open={isOpen} onChange={handleCloseDrawer} drawerWidth={250} drawerBackgroundColor="#fff">
-            <ul>
-                <li>Home</li>
-                <li>About</li>
-                <li>Settings</li>
-            </ul>
-        </Drawer>)
-}
-
+  return (
+    <div>
+      <h2>wave modulation: </h2>
+      <ul>
+        <li onClick={() => handleItemClick('1')}>Option 1</li>
+        <li onClick={() => handleItemClick('2')}>Option 2</li>
+        <li onClick={() => handleItemClick('3')}>Option 3</li>
+      </ul>
+    </div>
+  );
+};
 
 export default Menu;

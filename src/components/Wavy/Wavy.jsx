@@ -17,8 +17,9 @@ const Wavy = () => {
 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [onClick, setOnClick] = useState(false);
+  // const [modulation, setModulation] = useState(null);
 
-  const frequencyChange = 0.000253333333;
+  const frequencyChange = 0.0002533333;
   const amplitudeChange = 0.075;
   const ampMax = 40;
   const ampMin = 0;
@@ -34,24 +35,40 @@ const Wavy = () => {
   // canvas.height/2 places it in the middle of the defined canvas, nudged slighly 
   // to the side because canvas draws a weird line at the edge of waves
 
-    const drawWave = useCallback(() => {
+  const drawWave = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
- 
+
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.moveTo(-4, canvas.height / 2);
     const numPoints = 5000;
     const stepSize = canvas.width / numPoints;
     for (let x = 0; x < canvas.width; x += (stepSize)) {
-      const y = canvas.height / 2 + amplitude * Math.sin((x + phase) * (frequency/10));
+
+      //  wave modulation ternaries - a quick and dirty implementation 
+      // of the idea (three sets of mod, one overall sum value)
+      // some cool effects by messing with that wave, would be cool to 
+      // make a button/mod selector switch to turn on 1, 2, and/or 3, 
+      // and to add some other buttons/sliders to adjust the wave further 
+      // (eg multiply ampMod below, either individually or altogether, possibly both, 
+      // possibly in combination)
+
+      const ampModOne = onClick ? Math.sin(mousePos.x % (x - canvas.width)) : 0;
+      const ampModTwo =  onClick ? Math.sin(mousePos.y % (x - canvas.width)) : 0;
+      const ampModThree = onClick ? (mousePos.y * mousePos.x) % (x - canvas.width) - phase : 0;
+      const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() / Math.sin(ampModThree))
+
+      const y = canvas.height / 2 + ampModOverall + amplitude * Math.sin((x + phase) * (frequency / 10));
+
       ctx.lineTo(x, y);
       ctx.lineWidth = 1;
       ctx.strokeStyle = `hsla(0, 0%, 0%, 0.99)`;
 
     }
     ctx.stroke();
-  }, [amplitude, frequency, phase]);
+  }, [amplitude, frequency, phase, mousePos, onClick]);
 
   const updateWave = useCallback(() => {
     if (!ampMaxReached.current) {
@@ -102,7 +119,7 @@ const Wavy = () => {
       cancelAnimationFrame(animationID);
     };
   }, [drawWave]);
-  
+
 
 
   //  mouse stuff, position and click events:
@@ -110,9 +127,9 @@ const Wavy = () => {
   useEffect(() => {
     const handleClick = () => {
       setOnClick((prevOnclick) => !prevOnclick);
-      setFrequency((prevFreq) => prevFreq - (prevFreq / 3));
-      setAmplitude(10);
-      setPhase(0.0000000125);
+      // setFrequency((prevFreq) => prevFreq - (prevFreq / 3));
+      // setAmplitude(amplitude/3);
+      // setPhase(0.0000000125);
     };
     window.addEventListener("click", handleClick);
     return () => {
@@ -138,7 +155,7 @@ const Wavy = () => {
     };
   }, [phase]);
 
-  
+
   // chokey chokey
   function throttle(func, limit) {
     let lastFunc;
@@ -161,17 +178,16 @@ const Wavy = () => {
   }
 
   return (
-<>
+    <>
 
+      <canvas
+        ref={canvasRef}
+        width={document.documentElement.clientWidth}
+        height={document.documentElement.clientHeight / 2}
+        onMouseMove={(event => setMousePos({ x: event.clientX, y: event.clientY }))}
+      ></canvas>
 
-    <canvas
-      ref={canvasRef}
-      width={document.documentElement.clientWidth}
-      height={document.documentElement.clientHeight / 2}
-      onMouseMove={(event => setMousePos({ x: event.clientX, y: event.clientY }))}
-    ></canvas>
-
-</>
+    </>
   );
 };
 

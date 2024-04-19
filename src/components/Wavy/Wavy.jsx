@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./Wavy.css"
+import Menu from "../Menu/Menu";
+
 
 const Wavy = () => {
   const canvasRef = useRef();
@@ -159,12 +161,17 @@ const Wavy = () => {
   }
 
   return (
+<>
+
+
     <canvas
       ref={canvasRef}
       width={document.documentElement.clientWidth}
       height={document.documentElement.clientHeight / 2}
       onMouseMove={(event => setMousePos({ x: event.clientX, y: event.clientY }))}
     ></canvas>
+
+</>
   );
 };
 

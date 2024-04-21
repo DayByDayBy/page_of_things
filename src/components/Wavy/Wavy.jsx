@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./Wavy.css"
-import Menu from "../Menu/Menu";
+
 
 
 const Wavy = () => {
@@ -61,12 +61,24 @@ const Wavy = () => {
       const ampModThree = onClick ? (mousePos.y * mousePos.x) % (x - canvas.width) - phase : 0;
       const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
       
-      // a couple of the sillier wave mod ideas:
+      // a few of the other wave mod ideas:
 
       //const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
       //const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() / Math.sin(ampModThree))
+      // const ampModOverall = !onClick ? 0: 10/(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() - Math.sin(ampModThree))
+      // const ampModOverall = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + (Date.now()/80000000000) - Math.sin(ampModThree))
+      //  const ampModOverall = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.sqrt(Date.now()) * Math.sin(ampModThree))
+      //  const ampModOverall = !onClick ? 0: Math.sin(ampModOne) - Math.sin(ampModTwo) * Math.sin(ampModThree) / Math.cos(Date.now())   // this is one gets a bit wierd
 
-      //const ampModOverall = !onClick ? 0: 10/(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() - Math.sin(ampModThree))
+
+
+        // issue with some more fun AM wave-shaping is that it can 
+        // tend to hit the ceiling of ther container if it's left 
+        // uncapped, which looks bad/ruins the illusion
+        // 
+        // i also quite like the idea of maybe giving the wave the whole page to play 
+        // with, but that isnt really the look for which i was aiming 
+
 
 
       const y = canvas.height / 2 + ampModOverall + amplitude * Math.sin((x + phase) * (frequency / 10));

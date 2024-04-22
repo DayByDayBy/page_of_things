@@ -80,6 +80,9 @@ const Wavy = () => {
         // with (maybe using the z value to push it to the back of the CSS), but that 
         // isn't really in keeping with the look/style 
 
+      // also, reminder to self, re-do the FM stuff you deleted, i think 
+      // that may be more interesting than endless AM fiddling 
+
 
 
       const y = canvas.height / 2 + ampModOverall + amplitude * Math.sin((x + phase) * (frequency / 10));

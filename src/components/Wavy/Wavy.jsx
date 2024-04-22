@@ -30,9 +30,8 @@ const Wavy = () => {
   // y = Math.sin(x) * (frequency modifier)
   // y = (amplitude modifier) + Math.sin(x)
   // the more complicated looking stuff is basically doing variations 
-  // of that to change wave amplitude and frequency, and wavelength is 
-  // just inversely related to frequency. 
-  // canvas.height/2 places it in the middle of the defined canvas, nudged slighly 
+  // of that to change wave amplitude and frequency, and wavelength is inversely related to frequency. 
+  // canvas.height/2 places it in the middle of the defined canvas, nudged slightly 
   // to the side because canvas draws a weird line at the edge of waves
 
   const drawWave = useCallback(() => {
@@ -52,8 +51,9 @@ const Wavy = () => {
       // some cool effects by messing with that wave, would be cool to 
       // make a button/mod selector switch to turn on 1, 2, and/or 3, 
       // and to add some other buttons/sliders to adjust the wave further. 
-      // eg multiply ampMod below, either individually or altogether, possibly both, 
-      // possibly in combination - also might be intersting to incorporate 
+      // 
+      // maybe multiply ampMod, either individually or altogether, possibly both, 
+      // possibly in combination - also might be interesting to incorporate 
       // the date/time as a variable, or some user-set or user-derived numbers
 
       const ampModOne = onClick ? Math.sin(mousePos.x % (x - canvas.width)) : 0;
@@ -63,21 +63,22 @@ const Wavy = () => {
       
       // a few of the other wave mod ideas:
 
-      //const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
-      //const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() / Math.sin(ampModThree))
-      // const ampModOverall = !onClick ? 0: 10/(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() - Math.sin(ampModThree))
-      // const ampModOverall = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + (Date.now()/80000000000) - Math.sin(ampModThree))
+      //  const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
+      //  const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() / Math.sin(ampModThree))
+      //  const ampModOverall = !onClick ? 0: 10/(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() - Math.sin(ampModThree))
+      //  const ampModOverall = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + (Date.now()/80000000000) - Math.sin(ampModThree))
       //  const ampModOverall = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.sqrt(Date.now()) * Math.sin(ampModThree))
-      //  const ampModOverall = !onClick ? 0: Math.sin(ampModOne) - Math.sin(ampModTwo) * Math.sin(ampModThree) / Math.cos(Date.now())   // this is one gets a bit wierd
+      //  const ampModOverall = !onClick ? 0: Math.sin(ampModOne) - Math.sin(ampModTwo) * Math.sin(ampModThree) / Math.cos(Date.now())      // this is one gets a bit wierd
 
 
 
         // issue with some more fun AM wave-shaping is that it can 
-        // tend to hit the ceiling of ther container if it's left 
+        // tend to hit the ceiling of the container if it's left 
         // uncapped, which looks bad/ruins the illusion
         // 
-        // i also quite like the idea of maybe giving the wave the whole page to play 
-        // with, but that isnt really the look for which i was aiming 
+        // i also quite like the idea of giving the wave the whole page to play 
+        // with (maybe using the z value to push it to the back of the CSS), but that 
+        // isn't really in keeping with the look/style 
 
 
 
@@ -169,7 +170,7 @@ const Wavy = () => {
   }, []);
 
 
-  // phase variance; chnages over time, and is slightly more likely to speed up:
+  // phase variance; value changes over time, and is more likely to speed up than slow down:
   useEffect(() => {
     if (canvasRef.current) {
       setPhase(phase => phase + Math.random() < 0.01 ? phase - 0.000012 : phase + 0.0000125)

@@ -27,12 +27,12 @@ const Wavy = () => {
   const freqMin = 0.01;
 
   // basic wave stuff, if you're curious:
-  // y = Math.sin(x) * (frequency modifier)
-  // y = (amplitude modifier) + Math.sin(x)
-  // the more complicated looking stuff is basically doing variations 
-  // of that to change wave amplitude and frequency, and wavelength is inversely related to frequency. 
+      // y = Math.sin(x) * (frequency modifier)
+      // y = (amplitude modifier) + Math.sin(x)
+  // the more complicated looking stuff is just variations on that basic form
+  // to change wave amplitude and frequency (and wavelength is inversely related to frequency).
   // canvas.height/2 places it in the middle of the defined canvas, nudged slightly 
-  // to the side because canvas draws a weird line at the edge of waves
+  // to the side because canvas draws a weird line at the edge of waves and i wanted a cleaner look
 
   const drawWave = useCallback(() => {
     const canvas = canvasRef.current;
@@ -70,8 +70,6 @@ const Wavy = () => {
       //  const ampModOverall = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.sqrt(Date.now()) * Math.sin(ampModThree))
       //  const ampModOverall = !onClick ? 0: Math.sin(ampModOne) - Math.sin(ampModTwo) * Math.sin(ampModThree) / Math.cos(Date.now())      // this is one gets a bit wierd
 
-
-
         // issue with some more fun AM wave-shaping is that it can 
         // tend to hit the ceiling of the container if it's left 
         // uncapped, which looks bad/ruins the illusion
@@ -82,8 +80,6 @@ const Wavy = () => {
 
       // also, reminder to self, re-do the FM stuff you deleted, i think 
       // that may be more interesting than endless AM fiddling 
-
-
 
       const y = canvas.height / 2 + ampModOverall + amplitude * Math.sin((x + phase) * (frequency / 10));
 

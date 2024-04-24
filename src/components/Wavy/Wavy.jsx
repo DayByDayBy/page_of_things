@@ -65,16 +65,16 @@ const Wavy = () => {
       const ampModOne = modOneActive ? Math.sin(mousePos.x % (x - canvas.width)) : 0;
       const ampModTwo =  modTwoActive ? Math.sin(mousePos.y % (x - canvas.width)) : 0;
       const ampModThree = modThreeActive ? (mousePos.y * mousePos.x) % (x - canvas.width) - phase : 0;
-      const ampModOverall = modOverallActive ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
+      const ampModMain = modMainActive ? 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree)): 0;
       
       // a few of the other wave mod ideas:
 
-      //  const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
-      //  const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() / Math.sin(ampModThree))
-      //  const ampModOverall = !onClick ? 0: 10/(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() - Math.sin(ampModThree))
-      //  const ampModOverall = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + (Date.now()/80000000000) - Math.sin(ampModThree))
-      //  const ampModOverall = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.sqrt(Date.now()) * Math.sin(ampModThree))
-      //  const ampModOverall = !onClick ? 0: Math.sin(ampModOne) - Math.sin(ampModTwo) * Math.sin(ampModThree) / Math.cos(Date.now())      // this is one gets a bit wierd
+      //  const ampModMain = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
+      //  const ampModMain = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() / Math.sin(ampModThree))
+      //  const ampModMain = !onClick ? 0: 10/(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() - Math.sin(ampModThree))
+      //  const ampModMain = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + (Date.now()/80000000000) - Math.sin(ampModThree))
+      //  const ampModMain = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.sqrt(Date.now()) * Math.sin(ampModThree))
+      //  const ampModMain = !onClick ? 0: Math.sin(ampModOne) - Math.sin(ampModTwo) * Math.sin(ampModThree) / Math.cos(Date.now())      // this is one gets a bit wierd
 
         // issue with some more fun AM wave-shaping is that it can 
         // tend to hit the ceiling of the container if it's left 
@@ -87,7 +87,7 @@ const Wavy = () => {
       // also, reminder to self, re-do the FM stuff you deleted, i think 
       // that may be more interesting than endless AM fiddling 
 
-      const y = canvas.height / 2 + ampModOverall + amplitude * Math.sin((x + phase) * (frequency / 10));
+      const y = canvas.height / 2 + ampModMain + amplitude * Math.sin((x + phase) * (frequency / 10));
 
       ctx.lineTo(x, y);
       ctx.lineWidth = 1;
@@ -95,7 +95,7 @@ const Wavy = () => {
 
     }
     ctx.stroke();
-  }, [amplitude, frequency, phase, mousePos, modOneActive, modTwoActive, modThreeActive]);
+  }, [amplitude, frequency, phase, mousePos, modOneActive, modTwoActive, modThreeActive, modMainActive]);
 
 
 
@@ -167,18 +167,21 @@ const Wavy = () => {
 
   //  mouse stuff, position and click events:
 
-  useEffect(() => {
-    const handleClick = () => {
-      handleModMaintoggle();
-      // setFrequency((prevFreq) => prevFreq - (prevFreq / 3));
-      // setAmplitude(amplitude/3);
-      // setPhase(0.0000000125);
-    };
-    window.addEventListener("click", handleClick);
-    return () => {
-      window.removeEventListener("click", handleClick);
-    };
-  }, []);
+    // commenting out this bit rather than deleting because i think will use it for 
+    // something else, but for now it is getting in the way of my modulation buttons
+
+  // useEffect(() => {
+  //   const handleClick = () => {
+  //     handleModMaintoggle();
+  //     // setFrequency((prevFreq) => prevFreq - (prevFreq / 3));
+  //     // setAmplitude(amplitude/3);
+  //     // setPhase(0.0000000125);
+  //   };
+  //   window.addEventListener("click", handleClick);
+  //   return () => {
+  //     window.removeEventListener("click", handleClick);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const throttleMouseMove = throttle((event) => {
@@ -233,6 +236,7 @@ const Wavy = () => {
       <ModButton label={modOneActive ? 'Turn Mod 1 Off' : 'Turn Mod 1 On'} onClick={handleModOneToggle} />
       <ModButton label={modTwoActive ? 'Turn Mod 2 Off' : 'Turn Mod 2 On'} onClick={handleModTwoToggle} />
       <ModButton label={modThreeActive ? 'Turn Mod 3 Off' : 'Turn Mod 3 On'} onClick={handleModThreeToggle} />
+      <ModButton label={modMainActive ? 'Turn off AM' : 'Turn On AM'} onClick={handleModMaintoggle} />
 
 
 

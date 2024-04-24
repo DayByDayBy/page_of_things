@@ -17,12 +17,13 @@ const Wavy = () => {
   const freqMinReached = useRef(false);
 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [onClick, setOnClick] = useState(false);
+  // const [onClick, setOnClick] = useState(false);
   // const [modulation, setModulation] = useState(null);
 
   const [modOneActive, setModOneActive] = useState(false);
   const [modTwoActive, setModTwoActive] = useState(false);
   const [modThreeActive, setModThreeActive] = useState(false);
+  const [modMainActive, setModMainActive] = useState(false);
 
   const frequencyChange = 0.0002533333;
   const amplitudeChange = 0.075;
@@ -61,10 +62,10 @@ const Wavy = () => {
       // possibly in combination - also might be interesting to incorporate 
       // the date/time as a variable, or some user-set or user-derived numbers
 
-      const ampModOne = onClick ? Math.sin(mousePos.x % (x - canvas.width)) : 0;
-      const ampModTwo =  onClick ? Math.sin(mousePos.y % (x - canvas.width)) : 0;
-      const ampModThree = onClick ? (mousePos.y * mousePos.x) % (x - canvas.width) - phase : 0;
-      const ampModOverall = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
+      const ampModOne = modOneActive ? Math.sin(mousePos.x % (x - canvas.width)) : 0;
+      const ampModTwo =  modTwoActive ? Math.sin(mousePos.y % (x - canvas.width)) : 0;
+      const ampModThree = modThreeActive ? (mousePos.y * mousePos.x) % (x - canvas.width) - phase : 0;
+      const ampModOverall = modOverallActive ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
       
       // a few of the other wave mod ideas:
 
@@ -94,7 +95,7 @@ const Wavy = () => {
 
     }
     ctx.stroke();
-  }, [amplitude, frequency, phase, mousePos, onClick]);
+  }, [amplitude, frequency, phase, mousePos, modOneActive, modTwoActive, modThreeActive]);
 
 
 
@@ -106,6 +107,9 @@ const Wavy = () => {
   };
   const handleModThreeToggle = () => {
     setModThreeActive(prevModThreeActive => !prevModThreeActive);
+  }
+  const handleModMaintoggle = () =>{
+    setModMainActive(prevModMainActive => !prevModMainActive);
   }
 
 
@@ -165,7 +169,7 @@ const Wavy = () => {
 
   useEffect(() => {
     const handleClick = () => {
-      setOnClick((prevOnclick) => !prevOnclick);
+      handleModMaintoggle();
       // setFrequency((prevFreq) => prevFreq - (prevFreq / 3));
       // setAmplitude(amplitude/3);
       // setPhase(0.0000000125);

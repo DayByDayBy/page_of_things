@@ -33,8 +33,8 @@ const Wavy = () => {
   const freqMin = 0.01;
 
   // basic wave stuff, if you're curious:
-      // y = Math.sin(x) * (frequency modifier)
-      // y = (amplitude modifier) + Math.sin(x)
+  // y = Math.sin(x) * (frequency modifier)
+  // y = (amplitude modifier) + Math.sin(x)
   // the more complicated looking stuff is just variations on that basic form
   // to change wave amplitude and frequency (and wavelength is inversely related to frequency).
   // canvas.height/2 places it in the middle of the defined canvas, nudged slightly 
@@ -63,10 +63,10 @@ const Wavy = () => {
       // the date/time as a variable, or some user-set or user-derived numbers
 
       const ampModOne = modOneActive ? Math.sin(mousePos.x % (x - canvas.width)) : 0;
-      const ampModTwo =  modTwoActive ? Math.sin(mousePos.y % (x - canvas.width)) : 0;
+      const ampModTwo = modTwoActive ? Math.sin(mousePos.y % (x - canvas.width)) : 0;
       const ampModThree = modThreeActive ? (mousePos.y * mousePos.x) % (x - canvas.width) - phase : 0;
-      const ampModMain = modMainActive ? 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree)): 0;
-      
+      const ampModMain = modMainActive ? 10 * (Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree)) : 0;
+
       // a few of the other wave mod ideas:
 
       //  const ampModMain = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
@@ -76,13 +76,13 @@ const Wavy = () => {
       //  const ampModMain = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.sqrt(Date.now()) * Math.sin(ampModThree))
       //  const ampModMain = !onClick ? 0: Math.sin(ampModOne) - Math.sin(ampModTwo) * Math.sin(ampModThree) / Math.cos(Date.now())      // this is one gets a bit wierd
 
-        // issue with some more fun AM wave-shaping is that it can 
-        // tend to hit the ceiling of the container if it's left 
-        // uncapped, which looks bad/ruins the illusion
-        // 
-        // i also quite like the idea of giving the wave the whole page to play 
-        // with (maybe using the z value to push it to the back of the CSS), but that 
-        // isn't really in keeping with the look/style 
+      // issue with some more fun AM wave-shaping is that it can 
+      // tend to hit the ceiling of the container if it's left 
+      // uncapped, which looks bad/ruins the illusion
+      // 
+      // i also quite like the idea of giving the wave the whole page to play 
+      // with (maybe using the z value to push it to the back of the CSS), but that 
+      // isn't really in keeping with the look/style 
 
       // also, reminder to self, re-do the FM stuff you deleted, i think 
       // that may be more interesting than endless AM fiddling 
@@ -99,7 +99,7 @@ const Wavy = () => {
 
 
 
-  const handleModOneToggle = ()=>{
+  const handleModOneToggle = () => {
     setModOneActive(prevModOneActive => !prevModOneActive);
   }
   const handleModTwoToggle = () => {
@@ -108,7 +108,7 @@ const Wavy = () => {
   const handleModThreeToggle = () => {
     setModThreeActive(prevModThreeActive => !prevModThreeActive);
   }
-  const handleModMaintoggle = () =>{
+  const handleModMainToggle = () => {
     setModMainActive(prevModMainActive => !prevModMainActive);
   }
 
@@ -167,8 +167,8 @@ const Wavy = () => {
 
   //  mouse stuff, position and click events:
 
-    // commenting out this bit rather than deleting because i think will use it for 
-    // something else, but for now it is getting in the way of my modulation buttons
+  // commenting out this bit rather than deleting because i think will use it for 
+  // something else, but for now it is getting in the way of my modulation buttons
 
   // useEffect(() => {
   //   const handleClick = () => {
@@ -233,12 +233,15 @@ const Wavy = () => {
         onMouseMove={(event => setMousePos({ x: event.clientX, y: event.clientY }))}
       ></canvas>
       <div className='modulation-controls'>
-      <ModButton label={modOneActive ? 'Turn Mod 1 Off' : 'Turn Mod 1 On'} onClick={handleModOneToggle} />
-      <ModButton label={modTwoActive ? 'Turn Mod 2 Off' : 'Turn Mod 2 On'} onClick={handleModTwoToggle} />
-      <ModButton label={modThreeActive ? 'Turn Mod 3 Off' : 'Turn Mod 3 On'} onClick={handleModThreeToggle} />
-      <ModButton label={modMainActive ? 'Turn off AM' : 'Turn On AM'} onClick={handleModMaintoggle} />
 
+        <ModButton
+          label={`toggle AM: ${modMainActive ? 'ON' : 'OFF'}`} 
+          active={modMainActive} 
+          onClick={handleModMainToggle}/>
 
+        <ModButton label={`mod1: ${modOneActive ? 'ON' : 'OFF'}`}  active={modOneActive} onClick={handleModOneToggle} />
+        <ModButton label={`mod1: ${modTwoActive ? 'ON' : 'OFF'}`} active={modTwoActive} onClick={handleModTwoToggle} />
+        <ModButton label={`mod1: ${modThreeActive ? 'ON' : 'OFF'}`} active={modThreeActive} onClick={handleModThreeToggle} />
 
 
       </div>

@@ -1,3 +1,7 @@
-canvas {
+.modulation-controls {
+  display: flex;
+  justify-content: space-around; /* Adjust as needed */
+  align-items: center; /* Adjust as needed */
+  margin-top: 20px; /* Adjust as needed */
+}
 
-  }

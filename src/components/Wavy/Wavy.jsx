@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import ModButton from "./ModButton";
 import "./Wavy.css"
 
 
@@ -18,6 +19,10 @@ const Wavy = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [onClick, setOnClick] = useState(false);
   // const [modulation, setModulation] = useState(null);
+
+  const [modOneActive, setModOneActive] = useState(false);
+  const [modTwoActive, setModTwoActive] = useState(false);
+  const [modThreeActive, setModThreeActive] = useState(false);
 
   const frequencyChange = 0.0002533333;
   const amplitudeChange = 0.075;
@@ -90,6 +95,19 @@ const Wavy = () => {
     }
     ctx.stroke();
   }, [amplitude, frequency, phase, mousePos, onClick]);
+
+
+
+  const handleModOneToggle = ()=>{
+    setModOneActive(prevModOneActive => !prevModOneActive);
+  }
+  const handleModTwoToggle = () => {
+    setModTwoActive(prevModTwoActive => !prevModTwoActive);
+  };
+  const handleModThreeToggle = () => {
+    setModThreeActive(prevModThreeActive => !prevModThreeActive);
+  }
+
 
   const updateWave = useCallback(() => {
     if (!ampMaxReached.current) {
@@ -207,6 +225,16 @@ const Wavy = () => {
         height={document.documentElement.clientHeight / 2}
         onMouseMove={(event => setMousePos({ x: event.clientX, y: event.clientY }))}
       ></canvas>
+      <div className='modulation-controls'>
+      <ModButton label={modOneActive ? 'Turn Mod 1 Off' : 'Turn Mod 1 On'} onClick={handleModOneToggle} />
+      <ModButton label={modTwoActive ? 'Turn Mod 2 Off' : 'Turn Mod 2 On'} onClick={handleModTwoToggle} />
+      <ModButton label={modThreeActive ? 'Turn Mod 3 Off' : 'Turn Mod 3 On'} onClick={handleModThreeToggle} />
+
+
+
+
+      </div>
+
 
     </>
   );

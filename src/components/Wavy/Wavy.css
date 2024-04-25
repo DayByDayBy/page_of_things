@@ -1,5 +1,7 @@
 .modulation-controls-container{
   position: relative;
+  z-index: 0;
+
 }
 
 .toggle-modulation-menu{
@@ -10,6 +12,7 @@
   border: none;
   cursor: pointer;
   transition: left 0.5s ease;
+  z-index: 4;
 }
 
 .wave-icon {
@@ -26,8 +29,9 @@
   flex-direction: row;
   gap: 1rem;
   padding: 1rem;
-  z-index:2;
   visibility: hidden;
+  z-index: 0;
+
 }
 
 
@@ -37,20 +41,28 @@
   flex-direction: row;
   border-radius: 1rem;
   cursor: pointer;
+  z-index: 0;
+
 }
 
 .mainModButton{
   width: calc(20vw - 20px);
+  z-index: 0;
+
 }
 
 .modButton.active {
   background-color: green;
   color: white;
+  z-index: 0;
+
 }
 
 .modButton.inactive {
   background-color:hsla(344, 13%, 74%, 0.384);
   color: black;
+  z-index: 0;
+
 }
 
 .readout{
@@ -61,5 +73,6 @@
   background-color: #64636390;
   padding: 1rem;
   border-radius: 1rem;
+  z-index: 0;
   
   }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./Wavy.css"
 import ModButton from './ModButton';
+import Readout from './Readout';
 import WaveSVG from "../../assets/wave.svg";
 
 
@@ -65,6 +66,8 @@ const ModulationControls = ({
                             handleButtonClicked('Wave3');
                         }}
                         description='toggles modulation wave 3' />
+
+                        <Readout />
 
                 </div>
             </div>

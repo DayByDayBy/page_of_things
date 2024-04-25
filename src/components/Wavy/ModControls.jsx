@@ -35,7 +35,7 @@ const ModulationControls = ({
 
                     <ModButton
                         className='mainModButton'
-                        label={`AM is ${modMainActive ? 'ON' : 'OFF'}`}
+                        label={`AM ${modMainActive ? 'ON' : 'OFF'}`}
                         active={modMainActive}
                         onClick={() => {
                             handleButtonClicked('AM');
@@ -44,7 +44,7 @@ const ModulationControls = ({
                         description='toggles amplitude modulation' />
 
                     <ModButton
-                        label={`wave 1 is ${modOneActive ? 'ON' : 'OFF'}`}
+                        label={`wave 1 ${modOneActive ? 'ON' : 'OFF'}`}
                         active={modOneActive}
                         onClick={() => {
                             handleButtonClicked('Wave1');
@@ -52,7 +52,7 @@ const ModulationControls = ({
                     description='toggles modulation wave 1' />
 
                     <ModButton
-                        label={`wave 2 is ${modTwoActive ? 'ON' : 'OFF'}`}
+                        label={`wave 2 ${modTwoActive ? 'ON' : 'OFF'}`}
                         active={modTwoActive} 
                         onClick={() => {
                             handleButtonClicked('Wave2');
@@ -60,7 +60,7 @@ const ModulationControls = ({
                         description='toggles modulation wave 2' />
 
                     <ModButton
-                        label={`wave 3 is ${modThreeActive ? 'ON' : 'OFF'}`}
+                        label={`wave 3 ${modThreeActive ? 'ON' : 'OFF'}`}
                         active={modThreeActive}
                         onClick={() =>{
                             handleButtonClicked('Wave3');

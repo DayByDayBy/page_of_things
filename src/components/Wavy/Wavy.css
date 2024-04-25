@@ -13,10 +13,11 @@
 }
 
 .wave-icon {
+  margin: 1rem;
   transition: transform 0.5s ease;
 }
 .wave-icon.expanded {
-  transform: translateY(calc(325% - 2rem));
+  transform: translateX(80vw);
 }
 
 

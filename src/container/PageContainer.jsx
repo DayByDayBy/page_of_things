@@ -1,12 +1,10 @@
 import NavBar from "../components/NavBar";
-import Menu from "../components/Menu/Menu";
-import { useState } from "react";
 
 const PageContainer = () => {
-  const [ modulation, setModulation] = useState(null);
-  const handleModSelect = (mod) => {
-    setModulation(mod);
-  }
+  // const [ modulation, setModulation] = useState(null);
+  // const handleModSelect = (mod) => {
+  //   setModulation(mod);
+  // }
 
   return (
     <>

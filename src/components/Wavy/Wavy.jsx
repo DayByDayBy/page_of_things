@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import ModButton from "./ModButton";
 import "./Wavy.css"
+import ModulationControls from "./ModControls";
 
 
 
@@ -24,6 +24,9 @@ const Wavy = () => {
   const [modTwoActive, setModTwoActive] = useState(false);
   const [modThreeActive, setModThreeActive] = useState(false);
   const [modMainActive, setModMainActive] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  
+
 
   const frequencyChange = 0.0002533333;
   const amplitudeChange = 0.075;
@@ -98,19 +101,23 @@ const Wavy = () => {
   }, [amplitude, frequency, phase, mousePos, modOneActive, modTwoActive, modThreeActive, modMainActive]);
 
 
-
-  const handleModOneToggle = () => {
-    setModOneActive(prevModOneActive => !prevModOneActive);
-  }
-  const handleModTwoToggle = () => {
-    setModTwoActive(prevModTwoActive => !prevModTwoActive);
+  const handleToggleMenu = () => {
+    setMenuOpen(!menuOpen); // Toggle the menuOpen state
   };
-  const handleModThreeToggle = () => {
-    setModThreeActive(prevModThreeActive => !prevModThreeActive);
-  }
-  const handleModMainToggle = () => {
-    setModMainActive(prevModMainActive => !prevModMainActive);
-  }
+
+
+  // const handleModOneToggle = () => {
+  //   setModOneActive(prevModOneActive => !prevModOneActive);
+  // }
+  // const handleModTwoToggle = () => {
+  //   setModTwoActive(prevModTwoActive => !prevModTwoActive);
+  // };
+  // const handleModThreeToggle = () => {
+  //   setModThreeActive(prevModThreeActive => !prevModThreeActive);
+  // }
+  // const handleModMainToggle = () => {
+  //   setModMainActive(prevModMainActive => !prevModMainActive);
+  // }
 
 
   const updateWave = useCallback(() => {
@@ -232,21 +239,8 @@ const Wavy = () => {
         height={document.documentElement.clientHeight / 2}
         onMouseMove={(event => setMousePos({ x: event.clientX, y: event.clientY }))}
       ></canvas>
-      <div className='modulation-controls'>
 
-        <ModButton 
-          className='mainModButton'
-          label={`AM is ${modMainActive ? 'ON' : 'OFF'}`} 
-          active={modMainActive} 
-          onClick={handleModMainToggle}
-          isMain={true}
-          description='toggles amplitude modulation'/>
-
-        <ModButton label={`wave 1 is ${modOneActive ? 'ON' : 'OFF'}`}  active={modOneActive} onClick={handleModOneToggle} description='toggles modulation wave 1'/>
-        <ModButton label={`wave 2 is ${modTwoActive ? 'ON' : 'OFF'}`} active={modTwoActive} onClick={handleModTwoToggle} description='toggles modulation wave 2'/>
-        <ModButton label={`wave 3 is ${modThreeActive ? 'ON' : 'OFF'}`} active={modThreeActive} onClick={handleModThreeToggle} description='toggles modulation wave 3'/>
-
-      </div>
+      <ModulationControls />
 
 
     </>

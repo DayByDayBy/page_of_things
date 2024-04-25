@@ -1,8 +1,19 @@
-.modulation-controls {
+.modulation-controls-container{
+  position: relative;
+}
+
+.toggle-modulation-menu{
   position: absolute;
-  top: -50vh;  
-  left: 20px;
-  display:flex;
+  top: 1rem;
+  left:1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+
+.modulation-controls {
+  display: flex;
   flex-direction: row;
   gap: 1rem;
   padding: 1rem;

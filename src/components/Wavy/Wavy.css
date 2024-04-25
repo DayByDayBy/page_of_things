@@ -1,3 +1,53 @@
-canvas {
+.modulation-controls-container{
+  position: relative;
+}
 
-  }
+.toggle-modulation-menu{
+  position: absolute;
+  top: 1rem;
+  left:1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: left 0.5s ease;
+}
+
+.wave-icon {
+  transition: transform 0.5s ease;
+}
+.wave-icon.expanded {
+  transform: translateY(calc(325% - 2rem));
+}
+
+
+.modulation-controls {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+  z-index:1;
+  visibility: hidden;
+}
+
+
+.modButton {
+  width: calc(10vw - 20px);
+  padding: 1rem;
+  flex-direction: row;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.mainModButton{
+  width: calc(30vw - 20px);
+}
+
+.modButton.active {
+  background-color: green;
+  color: white;
+}
+
+.modButton.inactive {
+  background-color:hsla(344, 13%, 74%, 0.384);
+  color: black;
+}

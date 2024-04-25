@@ -13,11 +13,13 @@
 
 
 .modulation-controls {
+
   display: flex;
   flex-direction: row;
   gap: 1rem;
   padding: 1rem;
   z-index:1;
+  visibility: hidden;
 }
 
 

@@ -19,19 +19,19 @@ const ModulationControls = ({
     };
 
 
-
-
     return (
         <>
+        
             <div className="modulation-controls-container">
 
                 <button
                     className='toggle-modulation-button'
                     onClick={handleToggleMenu}>
-                    <img src={WaveSVG} alt="Wave Icon" />
+                    <img src={WaveSVG} alt="Wave Icon" className={`wave-icon ${menuVisible ? 'expanded' : ''}`} />
                 </button>
 
-                <div className='modulation-controls'>
+                <div className='modulation-controls' style={{ visibility: menuVisible ? 'visible' : 'hidden' }}>
+
                     <ModButton
                         className='mainModButton'
                         label={`AM is ${modMainActive ? 'ON' : 'OFF'}`}

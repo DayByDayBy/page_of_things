@@ -55,6 +55,7 @@
 
 .readout{
   align-self: center;
+  width: 4rem;
   color: #33ff33;
   height: 2rem;
   background-color: #64636390;

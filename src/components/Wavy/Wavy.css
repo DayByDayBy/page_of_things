@@ -16,11 +16,11 @@
 }
 
 .wave-icon {
-  margin: 1rem;
+  margin: 1rem 0;
   transition: transform 0.5s ease;
 }
 .wave-icon.expanded {
-  transform: translateX(80vw);
+  transform: translateX(85vw);
 }
 
 

@@ -37,7 +37,9 @@ function App() {
   
 
 const handleButtonClicked = (buttonName) => {
+  console.log(buttonName);
   const toggleFunction = buttonHandlers[buttonName];
+  console.log(toggleFunction);
   if (toggleFunction) {
     toggleFunction(prevState => !prevState);
   }
@@ -88,6 +90,7 @@ const handleButtonClicked = (buttonName) => {
               modOneActive={modOneActive}
               modTwoActive={modTwoActive}
               modThreeActive={modThreeActive}
+              handleButtonClicked={handleButtonClicked}
             />
           </div>
         </div>

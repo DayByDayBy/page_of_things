@@ -10,10 +10,6 @@ const ModulationControls = ({
     modOneActive,
     modTwoActive,
     modThreeActive,
-    handleModMainToggle,
-    handleModOneToggle,
-    handleModTwoToggle,
-    handleModThreeToggle,
     handleButtonClicked
 }) => {
     const [menuVisible, setMenuVisible] = useState(false);

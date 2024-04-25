@@ -1,7 +1,33 @@
 .modulation-controls {
-  display: flex;
-  justify-content: space-around; /* Adjust as needed */
-  align-items: center; /* Adjust as needed */
-  margin-top: 20px; /* Adjust as needed */
+  position: absolute;
+  top: -50vh;  
+  left: 20px;
+  display:flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+  z-index:1;
 }
 
+
+.modButton {
+  width: calc(10vw - 20px);
+  padding: 1rem;
+  flex-direction: row;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.mainModButton{
+  width: calc(30vw - 20px);
+}
+
+.modButton.active {
+  background-color: green;
+  color: white;
+}
+
+.modButton.inactive {
+  background-color:hsla(344, 13%, 74%, 0.384);
+  color: black;
+}

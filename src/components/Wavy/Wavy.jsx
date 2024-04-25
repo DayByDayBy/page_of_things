@@ -234,15 +234,17 @@ const Wavy = () => {
       ></canvas>
       <div className='modulation-controls'>
 
-        <ModButton
-          label={`toggle AM: ${modMainActive ? 'ON' : 'OFF'}`} 
+        <ModButton 
+          className='mainModButton'
+          label={`AM is ${modMainActive ? 'ON' : 'OFF'}`} 
           active={modMainActive} 
-          onClick={handleModMainToggle}/>
+          onClick={handleModMainToggle}
+          isMain={true}
+          description='toggles amplitude modulation'/>
 
-        <ModButton label={`mod1: ${modOneActive ? 'ON' : 'OFF'}`}  active={modOneActive} onClick={handleModOneToggle} />
-        <ModButton label={`mod1: ${modTwoActive ? 'ON' : 'OFF'}`} active={modTwoActive} onClick={handleModTwoToggle} />
-        <ModButton label={`mod1: ${modThreeActive ? 'ON' : 'OFF'}`} active={modThreeActive} onClick={handleModThreeToggle} />
-
+        <ModButton label={`wave 1 is ${modOneActive ? 'ON' : 'OFF'}`}  active={modOneActive} onClick={handleModOneToggle} description='toggles modulation wave 1'/>
+        <ModButton label={`wave 2 is ${modTwoActive ? 'ON' : 'OFF'}`} active={modTwoActive} onClick={handleModTwoToggle} description='toggles modulation wave 2'/>
+        <ModButton label={`wave 3 is ${modThreeActive ? 'ON' : 'OFF'}`} active={modThreeActive} onClick={handleModThreeToggle} description='toggles modulation wave 3'/>
 
       </div>
 

@@ -25,7 +25,7 @@ const ModulationControls = ({
             <div className="modulation-controls-container">
 
                 <button
-                    className='toggle-modulation-button'
+                    className='toggle-modulation-menu'
                     onClick={handleToggleMenu}>
                     <img src={WaveSVG} alt="Wave Icon" className={`wave-icon ${menuVisible ? 'expanded' : ''}`} />
                 </button>

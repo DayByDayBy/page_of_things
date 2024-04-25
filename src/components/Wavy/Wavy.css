@@ -32,7 +32,7 @@
 
 
 .modButton {
-  width: calc(10vw - 20px);
+  width: calc(10vw);
   padding: 1rem;
   flex-direction: row;
   border-radius: 1rem;
@@ -40,7 +40,7 @@
 }
 
 .mainModButton{
-  width: calc(30vw - 20px);
+  width: calc(20vw - 20px);
 }
 
 .modButton.active {

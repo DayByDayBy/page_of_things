@@ -9,6 +9,11 @@ const Wavy = () => {
   const [amplitude, setAmplitude] = useState(10);
   const [frequency, setFrequency] = useState(0.0101);
 
+  const [modMainActive, setModMainActive] = useState(false);
+  const [modOneActive, setModOneActive] = useState(false);
+  const [modTwoActive, setModTwoActive] = useState(false);
+  const [modThreeActive, setModThreeActive] = useState(false);
+
   const ampMaxReached = useRef(false);
   const ampMinReached = useRef(false);
   const freqMaxReached = useRef(false);
@@ -94,7 +99,7 @@ const Wavy = () => {
 
     }
     ctx.stroke();
-  }, [amplitude, frequency, phase, mousePos, ]);
+  }, [amplitude, frequency, phase, mousePos]);
 
 
   const updateWave = useCallback(() => {

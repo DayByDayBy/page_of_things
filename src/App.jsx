@@ -70,12 +70,13 @@ const handleButtonClicked = (buttonName) => {
   return (
     <>
       <ModulationControls
-
+      
+        handleButtonClicked={handleButtonClicked}
         modMainActive={modMainActive}
         modOneActive={modOneActive}
         modTwoActive={modTwoActive}
         modThreeActive={modThreeActive}
-        handleButtonClicked={handleButtonClicked}
+       
 
       />
       <main>
@@ -86,11 +87,12 @@ const handleButtonClicked = (buttonName) => {
         <div className='wave-container'>
           <div className='wave'>
             <Wavy
+              handleButtonClicked={handleButtonClicked}
               modMainActive={modMainActive}
               modOneActive={modOneActive}
               modTwoActive={modTwoActive}
               modThreeActive={modThreeActive}
-              handleButtonClicked={handleButtonClicked}
+
             />
           </div>
         </div>

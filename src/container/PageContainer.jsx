@@ -1,10 +1,7 @@
 import NavBar from "../components/NavBar";
 
 const PageContainer = () => {
-  // const [ modulation, setModulation] = useState(null);
-  // const handleModSelect = (mod) => {
-  //   setModulation(mod);
-  // }
+
 
   return (
     <>

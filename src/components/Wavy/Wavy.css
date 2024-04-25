@@ -6,13 +6,13 @@
 
 .toggle-modulation-menu{
   position: absolute;
-  top: 1rem;
-  left:1rem;
+  top:  1rem;
+  left: 1rem;
   background-color: transparent;
   border: none;
   cursor: pointer;
   transition: left 0.5s ease;
-  z-index: 4;
+  z-index: 0;
 }
 
 .wave-icon {
@@ -28,7 +28,7 @@
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1rem 4rem;
   visibility: hidden;
   z-index: 0;
 

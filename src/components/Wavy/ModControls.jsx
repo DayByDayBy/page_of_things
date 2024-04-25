@@ -22,7 +22,7 @@ const ModulationControls = ({
 
     return (
         <>
-        
+
             <div className="modulation-controls-container">
 
                 <button
@@ -33,6 +33,7 @@ const ModulationControls = ({
 
                 <div className='modulation-controls' style={{ visibility: menuVisible ? 'visible' : 'hidden' }}>
 
+                    <Readout />
                     <ModButton
                         className='mainModButton'
                         label={`AM ${modMainActive ? 'ON' : 'OFF'}`}
@@ -48,12 +49,12 @@ const ModulationControls = ({
                         active={modOneActive}
                         onClick={() => {
                             handleButtonClicked('Wave1');
-                    }}
-                    description='toggles modulation wave 1' />
+                        }}
+                        description='toggles modulation wave 1' />
 
                     <ModButton
                         label={`wave 2 ${modTwoActive ? 'ON' : 'OFF'}`}
-                        active={modTwoActive} 
+                        active={modTwoActive}
                         onClick={() => {
                             handleButtonClicked('Wave2');
                         }}
@@ -62,12 +63,12 @@ const ModulationControls = ({
                     <ModButton
                         label={`wave 3 ${modThreeActive ? 'ON' : 'OFF'}`}
                         active={modThreeActive}
-                        onClick={() =>{
+                        onClick={() => {
                             handleButtonClicked('Wave3');
                         }}
                         description='toggles modulation wave 3' />
 
-                        <Readout />
+
 
                 </div>
             </div>

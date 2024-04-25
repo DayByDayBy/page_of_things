@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./Wavy.css"
-import ModulationControls from "./ModControls";
-
 
 
 const Wavy = () => {
@@ -20,13 +18,6 @@ const Wavy = () => {
   // const [onClick, setOnClick] = useState(false);
   // const [modulation, setModulation] = useState(null);
 
-  const [modOneActive, setModOneActive] = useState(false);
-  const [modTwoActive, setModTwoActive] = useState(false);
-  const [modThreeActive, setModThreeActive] = useState(false);
-  const [modMainActive, setModMainActive] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  
-
 
   const frequencyChange = 0.0002533333;
   const amplitudeChange = 0.075;
@@ -43,7 +34,12 @@ const Wavy = () => {
   // canvas.height/2 places it in the middle of the defined canvas, nudged slightly 
   // to the side because canvas draws a weird line at the edge of waves and i wanted a cleaner look
 
-  const drawWave = useCallback(() => {
+  const drawWave = useCallback((
+    modOneActive,
+    modTwoActive,
+    modThreeActive,
+    modMainActive 
+  ) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
@@ -98,26 +94,7 @@ const Wavy = () => {
 
     }
     ctx.stroke();
-  }, [amplitude, frequency, phase, mousePos, modOneActive, modTwoActive, modThreeActive, modMainActive]);
-
-
-  const handleToggleMenu = () => {
-    setMenuOpen(!menuOpen); // Toggle the menuOpen state
-  };
-
-
-  // const handleModOneToggle = () => {
-  //   setModOneActive(prevModOneActive => !prevModOneActive);
-  // }
-  // const handleModTwoToggle = () => {
-  //   setModTwoActive(prevModTwoActive => !prevModTwoActive);
-  // };
-  // const handleModThreeToggle = () => {
-  //   setModThreeActive(prevModThreeActive => !prevModThreeActive);
-  // }
-  // const handleModMainToggle = () => {
-  //   setModMainActive(prevModMainActive => !prevModMainActive);
-  // }
+  }, [amplitude, frequency, phase, mousePos, ]);
 
 
   const updateWave = useCallback(() => {
@@ -169,6 +146,7 @@ const Wavy = () => {
       cancelAnimationFrame(animationID);
     };
   }, [drawWave]);
+
 
 
 
@@ -239,10 +217,6 @@ const Wavy = () => {
         height={document.documentElement.clientHeight / 2}
         onMouseMove={(event => setMousePos({ x: event.clientX, y: event.clientY }))}
       ></canvas>
-
-      <ModulationControls />
-
-
     </>
   );
 };

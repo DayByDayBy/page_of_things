@@ -24,7 +24,11 @@ const ModulationControls = ({
         <>
 
             <div className="modulation-controls-container">
-
+            <button
+                    className='toggle-modulation-menu'
+                    onClick={handleToggleMenu}>
+                    <img src={WaveSVG} alt="Wave Icon" className={`wave-icon ${menuVisible ? 'expanded' : ''}`} />
+                </button>
 
 
                 <div className='modulation-controls' style={{ visibility: menuVisible ? 'visible' : 'hidden' }}>
@@ -67,11 +71,7 @@ const ModulationControls = ({
 
 
                 </div>
-                <button
-                    className='toggle-modulation-menu'
-                    onClick={handleToggleMenu}>
-                    <img src={WaveSVG} alt="Wave Icon" className={`wave-icon ${menuVisible ? 'expanded' : ''}`} />
-                </button>
+
             </div>
         </>
     );

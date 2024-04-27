@@ -1,23 +1,22 @@
 .modulation-controls-container{
   position: relative;
-  z-index: 0;
+  z-index: 3;
 
 }
 
 .toggle-modulation-menu{
   position: absolute;
-  top:  1rem;
+  top:  -2rem;
   left: 1rem;
   background-color: transparent;
   border: none;
   cursor: pointer;
-  transition: tleft 1s ease;  
   z-index: 3;
 }
 
 .wave-icon {
-  margin: 1rem 0;
-  transition: transform 0.6s ease;
+  margin: 0;
+  transition: transform 0.3s ease;
 }
 .wave-icon.expanded {
   transform: scaleY(2);
@@ -28,13 +27,17 @@
 
 .modulation-controls {
   display: flex;
-  margin: 0 0 2rem 0;
+  margin: 0 0;
   flex-direction: row;
-  position: relative;
+  position: absolute;
   gap:  0 .25rem;
   padding: 1rem 4rem;
   visibility: hidden;
   z-index: 0;
+}
+.modulation-controls.visible{
+  left:0;
+
 }
 
 .modButton {

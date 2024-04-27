@@ -25,11 +25,7 @@ const ModulationControls = ({
 
             <div className="modulation-controls-container">
 
-                <button
-                    className='toggle-modulation-menu'
-                    onClick={handleToggleMenu}>
-                    <img src={WaveSVG} alt="Wave Icon" className={`wave-icon ${menuVisible ? 'expanded' : ''}`} />
-                </button>
+
 
                 <div className='modulation-controls' style={{ visibility: menuVisible ? 'visible' : 'hidden' }}>
 
@@ -45,7 +41,7 @@ const ModulationControls = ({
                         description='toggles amplitude modulation' />
 
                     <ModButton
-                        label={`wave 1 ${modOneActive ? 'ON' : 'OFF'}`}
+                        label={`1 ${modOneActive ? 'ON' : 'OFF'}`}
                         active={modOneActive}
                         onClick={() => {
                             handleButtonClicked('Wave1');
@@ -53,7 +49,7 @@ const ModulationControls = ({
                         description='toggles modulation wave 1' />
 
                     <ModButton
-                        label={`wave 2 ${modTwoActive ? 'ON' : 'OFF'}`}
+                        label={`2 ${modTwoActive ? 'ON' : 'OFF'}`}
                         active={modTwoActive}
                         onClick={() => {
                             handleButtonClicked('Wave2');
@@ -61,7 +57,7 @@ const ModulationControls = ({
                         description='toggles modulation wave 2' />
 
                     <ModButton
-                        label={`wave 3 ${modThreeActive ? 'ON' : 'OFF'}`}
+                        label={`3 ${modThreeActive ? 'ON' : 'OFF'}`}
                         active={modThreeActive}
                         onClick={() => {
                             handleButtonClicked('Wave3');
@@ -71,6 +67,11 @@ const ModulationControls = ({
 
 
                 </div>
+                <button
+                    className='toggle-modulation-menu'
+                    onClick={handleToggleMenu}>
+                    <img src={WaveSVG} alt="Wave Icon" className={`wave-icon ${menuVisible ? 'expanded' : ''}`} />
+                </button>
             </div>
         </>
     );

@@ -23,9 +23,9 @@ const Readout = () => {
 
         <div className="readout">
             {/* AM: {(modBoolean ? 'on' : 'off')}<br></br> */}
-            X: {mousePosition.x}
+            X:{mousePosition.x}
             <br></br>
-            Y: {mousePosition.y}
+            Y:{mousePosition.y}
         </div>
     )
 

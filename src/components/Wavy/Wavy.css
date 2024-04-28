@@ -17,11 +17,11 @@
 
 .wave-icon {
   margin: 0;
-  transition: transform 0.3s ease;
+  transition: 0.5s ease;
 }
 .wave-icon.expanded {
-  transform: scaleY(2);
-  transition: 0.3s ease;
+  opacity: .2;
+  transition: 0.7s ease;
 }
 
 

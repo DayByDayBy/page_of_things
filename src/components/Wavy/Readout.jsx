@@ -1,34 +1,15 @@
-
-
-import { useState, useEffect } from "react";
-
-
+import { useMousePosition } from "../../hooks/useMousePosition";
 
 const Readout = () => {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
-    useEffect(() => {
-        const updateMousePosition = (e) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
-
-        };
-        document.addEventListener("mousemove", updateMousePosition);
-        return () => {
-            document.removeEventListener("mousemove", updateMousePosition);
-        };
-    }, []);
-
+    const mousePosition = useMousePosition(50);
 
     return (
-
         <div className="readout">
-            {/* AM: {(modBoolean ? 'on' : 'off')}<br></br> */}
             X:{mousePosition.x}
             <br></br>
             Y:{mousePosition.y}
         </div>
     )
-
 };
 
 export default Readout;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useMousePosition } from "../../hooks/useMousePosition";
 import "./Wavy.css"
 
 
@@ -23,7 +24,7 @@ const Wavy = (props) => {
 
   
 
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const mousePos = useMousePosition(50);
   // const [onClick, setOnClick] = useState(false);
   // const [modulation, setModulation] = useState(null);
 
@@ -172,17 +173,6 @@ const Wavy = (props) => {
   //   };
   // }, []);
 
-  useEffect(() => {
-    const throttleMouseMove = throttle((event) => {
-      setMousePos({ x: event.clientX, y: event.clientY });
-    }, 50);
-    window.addEventListener("mousemove", throttleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", throttleMouseMove);
-    };
-  }, []);
-
-
   // phase variance; value changes over time, and is more likely to speed up than slow down:
   useEffect(() => {
     if (canvasRef.current) {
@@ -191,27 +181,6 @@ const Wavy = (props) => {
   }, [phase]);
 
 
-  // chokey chokey
-  function throttle(func, limit) {
-    let lastFunc;
-    let lastRan;
-    return function (...args) {
-      const context = this;
-      if (!lastRan) {
-        func.call(context, ...args);
-        lastRan = Date.now();
-      } else {
-        clearTimeout(lastFunc);
-        lastFunc = setTimeout(function () {
-          if (Date.now() - lastRan >= limit) {
-            func.call(context, ...args);
-            lastRan = Date.now();
-          }
-        }, limit - (Date.now() - lastRan));
-      }
-    };
-  }
-
   return (
     <>
 
@@ -219,7 +188,6 @@ const Wavy = (props) => {
         ref={canvasRef}
         width={document.documentElement.clientWidth}
         height={document.documentElement.clientHeight / 2}
-        onMouseMove={(event => setMousePos({ x: event.clientX, y: event.clientY }))}
       ></canvas>
     </>
   );

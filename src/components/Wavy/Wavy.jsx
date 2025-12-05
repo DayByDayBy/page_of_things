@@ -1,27 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-
-// custom hook for mouse position
-function useMousePosition(delay = 1) {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    let timeoutId;
-    const handleMouseMove = (e) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        setMousePos({ x: e.clientX, y: e.clientY });
-      }, delay);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      clearTimeout(timeoutId);
-    };
-  }, [delay]);
-
-  return mousePos;
-}
+import "./Wavy.css";
+import { useMousePosition } from "../../hooks/useMousePosition";
+import WaveSVG from "../../assets/wave.svg";
 
 // helper function to update wave parameters
 function updateParameter(value, maxReached, minReached, change, max, min) {
@@ -257,9 +237,11 @@ const Wavy = () => {
           className="toggle-modulation-menu"
           onClick={() => setMenuExpanded(!menuExpanded)}
         >
-          <div className={`wave-icon ${menuExpanded ? 'expanded' : ''}`}>
-            ≋
-          </div>
+          <img
+            src={WaveSVG}
+            alt="Wave Icon"
+            className={`wave-icon ${menuExpanded ? 'expanded' : ''}`}
+          />
         </button>
 
         <div className={`modulation-controls ${menuExpanded ? 'visible' : ''}`}>

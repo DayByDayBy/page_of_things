@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Wavy.css";
 import { useMousePosition } from "../../hooks/useMousePosition";
 import WaveSVG from "../../assets/wave.svg";
+import ModButton from "./ModButton";
 
 // Normalizes a value from [fromMin, fromMax] to [-1, 1]
 function normalize(x, fromMin, fromMax) {
@@ -202,76 +203,68 @@ function ModulationControls({
       </button>
 
       <div className={`modulation-controls ${menuExpanded ? 'visible' : ''}`}>
-        <button
-          className={`modButton mainModButton ${systemActive ? 'active' : 'inactive'}`}
+        <ModButton
+          label="MOD"
+          active={systemActive}
           onClick={() => setSystemActive(!systemActive)}
-        >
-          MOD
-        </button>
+          isMain
+        />
 
-        <button
-          className={`modButton amMainButton ${amActive ? 'active' : 'inactive'}`}
+        <ModButton
+          label="AM"
+          active={amActive}
           onClick={() => setAmActive(!amActive)}
           disabled={!systemActive}
-        >
-          AM
-        </button>
+        />
 
-        <button
-          className={`modButton fmMainButton ${fmActive ? 'active' : 'inactive'}`}
+        <ModButton
+          label="FM"
+          active={fmActive}
           onClick={() => setFmActive(!fmActive)}
           disabled={!systemActive}
-        >
-          FM
-        </button>
+        />
 
-        <button
-          className={`modButton ${am1Active ? 'active' : 'inactive'}`}
+        <ModButton
+          label="AM1"
+          active={am1Active}
           onClick={() => setAm1Active(!am1Active)}
           disabled={!amActive}
-        >
-          AM1
-        </button>
+        />
 
-        <button
-          className={`modButton ${fm1Active ? 'active' : 'inactive'}`}
+        <ModButton
+          label="FM1"
+          active={fm1Active}
           onClick={() => setFm1Active(!fm1Active)}
           disabled={!fmActive}
-        >
-          FM1
-        </button>
+        />
 
-        <button
-          className={`modButton ${am2Active ? 'active' : 'inactive'}`}
+        <ModButton
+          label="AM2"
+          active={am2Active}
           onClick={() => setAm2Active(!am2Active)}
           disabled={!amActive}
-        >
-          AM2
-        </button>
+        />
 
-        <button
-          className={`modButton ${fm2Active ? 'active' : 'inactive'}`}
+        <ModButton
+          label="FM2"
+          active={fm2Active}
           onClick={() => setFm2Active(!fm2Active)}
           disabled={!fmActive}
-        >
-          FM2
-        </button>
+        />
 
-        <button
-          className={`modButton ${am3Active ? 'active' : 'inactive'}`}
+        <ModButton
+          label="AM3"
+          active={am3Active}
           onClick={() => setAm3Active(!am3Active)}
           disabled={!amActive}
-        >
-          AM3
-        </button>
+        />
 
-        <button
-          className={`modButton ${fm3Active ? 'active' : 'inactive'}`}
+        <ModButton
+          label="FM3"
+          active={fm3Active}
           onClick={() => setFm3Active(!fm3Active)}
           disabled={!fmActive}
-        >
-          FM3
-        </button>
+        />
       </div>
     </div>
   );

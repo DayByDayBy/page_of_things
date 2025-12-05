@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useReducer } from "react";
 import "./Wavy.css";
 import { useMousePosition } from "../../hooks/useMousePosition";
 import WaveSVG from "../../assets/wave.svg";
@@ -270,6 +270,37 @@ function ModulationControls({
   );
 }
 
+// --- Reducer for modulation toggles -------------------------------------
+
+/**
+ * modulationReducer: Manages the 9 boolean toggles.
+ * Actions are named exactly like the previous setters for safety.
+ */
+function modulationReducer(state, action) {
+  switch (action.type) {
+    case 'setSystemActive':
+      return { ...state, systemActive: action.payload };
+    case 'setAmActive':
+      return { ...state, amActive: action.payload };
+    case 'setFmActive':
+      return { ...state, fmActive: action.payload };
+    case 'setAm1Active':
+      return { ...state, am1Active: action.payload };
+    case 'setAm2Active':
+      return { ...state, am2Active: action.payload };
+    case 'setAm3Active':
+      return { ...state, am3Active: action.payload };
+    case 'setFm1Active':
+      return { ...state, fm1Active: action.payload };
+    case 'setFm2Active':
+      return { ...state, fm2Active: action.payload };
+    case 'setFm3Active':
+      return { ...state, fm3Active: action.payload };
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`);
+  }
+}
+
 // --- Component -----------------------------------------------------------
 
 const Wavy = () => {
@@ -296,17 +327,34 @@ const Wavy = () => {
     freqMin: 0.01,
   };
 
-  // UI state
+  // UI state: menu visibility
   const [menuExpanded, setMenuExpanded] = useState(false);
-  const [systemActive, setSystemActive] = useState(false);
-  const [amActive, setAmActive] = useState(false);
-  const [fmActive, setFmActive] = useState(false);
-  const [am1Active, setAm1Active] = useState(false);
-  const [am2Active, setAm2Active] = useState(false);
-  const [am3Active, setAm3Active] = useState(false);
-  const [fm1Active, setFm1Active] = useState(false);
-  const [fm2Active, setFm2Active] = useState(false);
-  const [fm3Active, setFm3Active] = useState(false);
+
+  // UI state: modulation toggles via useReducer
+  const [modState, dispatch] = useReducer(modulationReducer, {
+    systemActive: false,
+    amActive: false,
+    fmActive: false,
+    am1Active: false,
+    am2Active: false,
+    am3Active: false,
+    fm1Active: false,
+    fm2Active: false,
+    fm3Active: false,
+  });
+
+  // Destructure for compatibility with existing code
+  const {
+    systemActive,
+    amActive,
+    fmActive,
+    am1Active,
+    am2Active,
+    am3Active,
+    fm1Active,
+    fm2Active,
+    fm3Active,
+  } = modState;
 
   const mousePos = useMousePosition(50);
 
@@ -315,18 +363,7 @@ const Wavy = () => {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    const modState = {
-      systemActive,
-      amActive,
-      fmActive,
-      am1Active,
-      am2Active,
-      am3Active,
-      fm1Active,
-      fm2Active,
-      fm3Active,
-    };
-
+    
     let frameId;
     const render = () => {
       updateWave(waveConfig, constants);
@@ -339,33 +376,33 @@ const Wavy = () => {
     return () => cancelAnimationFrame(frameId);
   }, [mousePos, systemActive, amActive, fmActive, am1Active, am2Active, am3Active, fm1Active, fm2Active, fm3Active]);
 
-  // auto-disable sub-toggles when main toggle is turned off
+  // Invariant: turning off a main toggle disables all its sub-toggles
   useEffect(() => {
     if (!amActive) {
-      setAm1Active(false);
-      setAm2Active(false);
-      setAm3Active(false);
+      dispatch({ type: 'setAm1Active', payload: false });
+      dispatch({ type: 'setAm2Active', payload: false });
+      dispatch({ type: 'setAm3Active', payload: false });
     }
   }, [amActive]);
 
   useEffect(() => {
     if (!fmActive) {
-      setFm1Active(false);
-      setFm2Active(false);
-      setFm3Active(false);
+      dispatch({ type: 'setFm1Active', payload: false });
+      dispatch({ type: 'setFm2Active', payload: false });
+      dispatch({ type: 'setFm3Active', payload: false });
     }
   }, [fmActive]);
 
   useEffect(() => {
     if (!systemActive) {
-      setAmActive(false);
-      setFmActive(false);
-      setAm1Active(false);
-      setAm2Active(false);
-      setAm3Active(false);
-      setFm1Active(false);
-      setFm2Active(false);
-      setFm3Active(false);
+      dispatch({ type: 'setAmActive', payload: false });
+      dispatch({ type: 'setFmActive', payload: false });
+      dispatch({ type: 'setAm1Active', payload: false });
+      dispatch({ type: 'setAm2Active', payload: false });
+      dispatch({ type: 'setAm3Active', payload: false });
+      dispatch({ type: 'setFm1Active', payload: false });
+      dispatch({ type: 'setFm2Active', payload: false });
+      dispatch({ type: 'setFm3Active', payload: false });
     }
   }, [systemActive]);
 
@@ -382,23 +419,23 @@ const Wavy = () => {
         menuExpanded={menuExpanded}
         setMenuExpanded={setMenuExpanded}
         systemActive={systemActive}
-        setSystemActive={setSystemActive}
+        setSystemActive={(v) => dispatch({ type: 'setSystemActive', payload: v })}
         amActive={amActive}
-        setAmActive={setAmActive}
+        setAmActive={(v) => dispatch({ type: 'setAmActive', payload: v })}
         fmActive={fmActive}
-        setFmActive={setFmActive}
+        setFmActive={(v) => dispatch({ type: 'setFmActive', payload: v })}
         am1Active={am1Active}
-        setAm1Active={setAm1Active}
+        setAm1Active={(v) => dispatch({ type: 'setAm1Active', payload: v })}
         am2Active={am2Active}
-        setAm2Active={setAm2Active}
+        setAm2Active={(v) => dispatch({ type: 'setAm2Active', payload: v })}
         am3Active={am3Active}
-        setAm3Active={setAm3Active}
+        setAm3Active={(v) => dispatch({ type: 'setAm3Active', payload: v })}
         fm1Active={fm1Active}
-        setFm1Active={setFm1Active}
+        setFm1Active={(v) => dispatch({ type: 'setFm1Active', payload: v })}
         fm2Active={fm2Active}
-        setFm2Active={setFm2Active}
+        setFm2Active={(v) => dispatch({ type: 'setFm2Active', payload: v })}
         fm3Active={fm3Active}
-        setFm3Active={setFm3Active}
+        setFm3Active={(v) => dispatch({ type: 'setFm3Active', payload: v })}
       />
     </div>
   );

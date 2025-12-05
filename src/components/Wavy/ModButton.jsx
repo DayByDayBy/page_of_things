@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ModButton = ({ label, active, description, onClick, isMain }) => {
+const ModButton = ({ label, active, description, onClick, isMain, disabled }) => {
     const buttonClassName = `modButton ${active ? 'active' : 'inactive'} ${isMain ? 'mainModButton' : ''}`;
 
     
@@ -9,7 +9,7 @@ const ModButton = ({ label, active, description, onClick, isMain }) => {
         onClick={onClick}
         aria-pressed={active}
         aria-label={description}
-
+        disabled={disabled}
     >
         {label}
         

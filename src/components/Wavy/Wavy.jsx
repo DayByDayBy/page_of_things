@@ -68,7 +68,17 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
   
   const numPoints = 5000;
   const stepSize = canvas.width / numPoints;
-  
+
+  function normalize(x, fromMin, fromMax) {
+    return ((x - fromMin) / (fromMax - fromMin)) * 2 - 1;
+  }
+
+  const normMouseX = normalize(mousePos.x, 0, canvas.width);
+  const mouseDiff = normalize(mousePos.x - mousePos.y, -canvas.width, canvas.width);
+  const mouseSum = normalize(mousePos.x + mousePos.y, -canvas.width, canvas.width);
+  const mouseProduct = normalize(mousePos.x * mousePos.y, -canvas.width, canvas.width);
+  const mouseQuotient = normalize(mousePos.y !== 0 ? mousePos.x / mousePos.y : 0, 0, 10);
+
   for (let x = 0; x < canvas.width; x += stepSize) {
     const carrierFreq = frequency / 10;
     
@@ -78,25 +88,25 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
     if (systemActive && amActive) {
       if (am1Active) {
         const tremoloFreq = 0.003;
-        totalAM += 0.3 * Math.sin(2 * Math.PI * tremoloFreq * x);
+        totalAM += 0.5 * Math.sin(2 * Math.PI * tremoloFreq * x);
       }
       
       if (am2Active) {
         const ringFreq = (mousePos.x / canvas.width) * 0.015 + 0.005;
-        totalAM += 0.25 * Math.sin(2 * Math.PI * ringFreq * x) * Math.sin(2 * Math.PI * carrierFreq * x);
+        totalAM += 0.67 * Math.sin(2 * Math.PI * ringFreq * x) * Math.sin(2 * Math.PI * carrierFreq * x);
       }
       
       if (am3Active) {
         const mouseAMFreq = (mousePos.y / canvas.height) * 0.02 + 0.008;
-        totalAM += 0.2 * Math.sin(2 * Math.PI * mouseAMFreq * x);
+        totalAM += 0.8 * Math.sin(2 * Math.PI * mouseAMFreq * x);
       }
     }
     
     if (systemActive && fmActive) {
       if (fm1Active) {
-        const modFreq = 0.004;
+        const modFreq = 0.001;
         const modIndex = 2;
-        totalFM += modIndex * Math.sin(2 * Math.PI * modFreq * x);
+        totalFM += (1 * modIndex) * Math.sin(2 * Math.PI * modFreq * x);
       }
       
       if (fm2Active) {
@@ -122,7 +132,7 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
   }
   
   ctx.lineWidth = 1;
-  ctx.strokeStyle = `hsla(0, 0%, 0%, 0.99)`;
+  ctx.strokeStyle = "rgba(0, 0, 0, 0.67)";
   ctx.stroke();
 }
 
@@ -249,7 +259,7 @@ const Wavy = () => {
             className={`modButton mainModButton ${systemActive ? 'active' : 'inactive'}`}
             onClick={() => setSystemActive(!systemActive)}
           >
-            System
+            WaveMod
           </button>
 
           <button

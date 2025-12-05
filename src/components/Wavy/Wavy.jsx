@@ -98,7 +98,8 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
       
       if (am3Active) {
         const mouseAMFreq = (mousePos.y / canvas.height) * 0.02 + 0.008;
-        totalAM += 0.8 * Math.sin(2 * Math.PI * mouseAMFreq * x);
+        const intensity = 0.6 + 0.4 * Math.abs(normMouseX);
+        totalAM += intensity * Math.sin(2 * Math.PI * mouseAMFreq * x);
       }
     }
     
@@ -116,7 +117,7 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
       }
       
       if (fm3Active) {
-        const modFreq = 0.006;
+        const modFreq = 0.0006 / mouseQuotient;
         const modIndex = 1.5;
         const complexMod = Math.sin(2 * Math.PI * modFreq * x) + 
                           0.5 * Math.sin(2 * Math.PI * modFreq * 2 * x);
@@ -259,7 +260,7 @@ const Wavy = () => {
             className={`modButton mainModButton ${systemActive ? 'active' : 'inactive'}`}
             onClick={() => setSystemActive(!systemActive)}
           >
-            WaveMod
+            MOD
           </button>
 
           <button

@@ -66,7 +66,7 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
   ctx.beginPath();
   ctx.moveTo(-4, canvas.height / 2);
   
-  const numPoints = 5000;
+  const numPoints = 4000;
   const stepSize = canvas.width / numPoints;
 
   function normalize(x, fromMin, fromMax) {
@@ -152,11 +152,11 @@ const Wavy = () => {
   });
 
   // wave constants
-  const constants = {
+  const constants = { 
     amplitudeChange: 0.075,
     frequencyChange: 0.0002533333,
-    ampMax: 40,
-    ampMin: 0,
+    ampMax: 55,
+    ampMin: -5,
     freqMax: 1,
     freqMin: 0.01,
   };

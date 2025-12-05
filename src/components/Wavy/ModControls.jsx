@@ -31,7 +31,7 @@ const ModulationControls = ({
                 </button>
 
 
-                <div className='modulation-controls' style={{ visibility: menuVisible ? 'visible' : 'hidden' }}>
+                <div className={`modulation-controls ${menuVisible ? 'visible' : ''}`}>
 
                     <Readout />
                     <ModButton

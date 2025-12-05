@@ -1,245 +1,342 @@
-import React, { useEffect, useRef } from "react";
-import { useMousePosition } from "../../hooks/useMousePosition";
-import "./Wavy.css"
+import React, { useEffect, useRef, useState } from "react";
 
-function updateWave(amplitudeRef, frequencyRef, flags, constants) {
-  const { ampMaxReached, ampMinReached, freqMaxReached, freqMinReached } = flags;
-  const { amplitudeChange, frequencyChange, ampMax, ampMin, freqMax, freqMin } = constants;
+// custom hook for mouse position
+function useMousePosition(delay = 1) {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  const amplitude = amplitudeRef.current;
-  const frequency = frequencyRef.current;
+  useEffect(() => {
+    let timeoutId;
+    const handleMouseMove = (e) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setMousePos({ x: e.clientX, y: e.clientY });
+      }, delay);
+    };
 
-  if (!ampMaxReached.current) {
-    if (amplitude >= ampMax) {
-      ampMaxReached.current = true;
-      ampMinReached.current = false;
-    } else if (amplitude < ampMax) {
-      amplitudeRef.current = amplitude + (amplitudeChange * Math.random());
-    }
-  } else if (!ampMinReached.current) {
-    if (amplitude <= ampMin) {
-      ampMinReached.current = true;
-      ampMaxReached.current = false;
-    } else if (amplitude > ampMin) {
-      amplitudeRef.current = amplitude - amplitudeChange;
-    }
-  }
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      clearTimeout(timeoutId);
+    };
+  }, [delay]);
 
-  if (!freqMaxReached.current) {
-    if (frequency >= freqMax) {
-      freqMaxReached.current = true;
-      freqMinReached.current = false;
-    } else if (frequency < freqMax) {
-      frequencyRef.current = frequency + (frequencyChange * Math.random());
-    }
-  } else if (!freqMinReached.current) {
-    if (frequency <= freqMin) {
-      freqMinReached.current = true;
-      freqMaxReached.current = false;
-    } else if (frequency > freqMin) {
-      frequencyRef.current = frequency - frequencyChange;
-    }
-  }
+  return mousePos;
 }
 
-function updatePhase(phaseRef) {
+// helper function to update wave parameters
+function updateParameter(value, maxReached, minReached, change, max, min) {
+  if (!maxReached.current) {
+    if (value >= max) {
+      maxReached.current = true;
+      minReached.current = false;
+      return value;
+    }
+    return value + (change * Math.random());
+  } else if (!minReached.current) {
+    if (value <= min) {
+      minReached.current = true;
+      maxReached.current = false;
+      return value;
+    }
+    return value - change;
+  }
+  return value;
+}
+
+function updateWave(waveConfig, constants) {
+  waveConfig.current.amplitude = updateParameter(
+    waveConfig.current.amplitude,
+    waveConfig.current.ampMaxReached,
+    waveConfig.current.ampMinReached,
+    constants.amplitudeChange,
+    constants.ampMax,
+    constants.ampMin
+  );
+
+  waveConfig.current.frequency = updateParameter(
+    waveConfig.current.frequency,
+    waveConfig.current.freqMaxReached,
+    waveConfig.current.freqMinReached,
+    constants.frequencyChange,
+    constants.freqMax,
+    constants.freqMin
+  );
+}
+
+function updatePhase(waveConfig) {
   const random = Math.random();
-  phaseRef.current += random < 0.01 ? -0.000012 : 0.0000125;
+  waveConfig.current.phase += random < 0.01 ? -0.000012 : 0.0000125;
 }
 
-function drawWave(ctx, canvas, { amplitude, frequency, phase, mousePos, modOneActive, modTwoActive, modThreeActive, modMainActive }) {
+function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
+  const { amplitude, frequency, phase } = waveConfig.current;
+  const {
+    systemActive,
+    amActive,
+    fmActive,
+    am1Active,
+    am2Active,
+    am3Active,
+    fm1Active,
+    fm2Active,
+    fm3Active,
+  } = modState;
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
   ctx.moveTo(-4, canvas.height / 2);
+  
   const numPoints = 5000;
   const stepSize = canvas.width / numPoints;
-  for (let x = 0; x < canvas.width; x += (stepSize)) {
-
-    //  wave modulation ternaries - a quick and dirty implementation 
-    // of the idea (three sets of mod, one overall sum value)
-    // some cool effects by messing with that wave, would be cool to 
-    // make a button/mod selector switch to turn on 1, 2, and/or 3, 
-    // and to add some other buttons/sliders to adjust the wave further. 
-    // 
-    // maybe multiply ampMod, either individually or altogether, possibly both, 
-    // possibly in combination - also might be interesting to incorporate 
-    // the date/time as a variable, or some user-set or user-derived numbers
-
-    const ampModOne = modOneActive ? Math.sin(mousePos.x % (x - canvas.width)) : 0;
-    const ampModTwo = modTwoActive ? Math.sin(mousePos.y % (x - canvas.width)) : 0;
-    const ampModThree = modThreeActive ? (mousePos.y * mousePos.x) % (x - canvas.width) - phase : 0;
-    const ampModMain = modMainActive ? 10 * (Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree)) : 0;
-
-    // a few of the other wave mod ideas:
-
-    //  const ampModMain = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree))
-    //  const ampModMain = !onClick ? 0: 10*(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() / Math.sin(ampModThree))
-    //  const ampModMain = !onClick ? 0: 10/(Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() - Math.sin(ampModThree))
-    //  const ampModMain = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + (Date.now()/80000000000) - Math.sin(ampModThree))
-    //  const ampModMain = !onClick ? 0: (Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.sqrt(Date.now()) * Math.sin(ampModThree))
-    //  const ampModMain = !onClick ? 0: Math.sin(ampModOne) - Math.sin(ampModTwo) * Math.sin(ampModThree) / Math.cos(Date.now())      // this is one gets a bit wierd
-
-    // issue with some more fun AM wave-shaping is that it can 
-    // tend to hit the ceiling of the container if it's left 
-    // uncapped, which looks bad/ruins the illusion
-    // 
-    // i also quite like the idea of giving the wave the whole page to play 
-    // with (maybe using the z value to push it to the back of the CSS), but that 
-    // isn't really in keeping with the look/style 
-
-    // also, reminder to self, re-do the FM stuff you deleted, i think 
-    // that may be more interesting than endless AM fiddling 
-
-    const y = canvas.height / 2 + ampModMain + amplitude * Math.sin((x + phase) * (frequency / 10));
+  
+  for (let x = 0; x < canvas.width; x += stepSize) {
+    const carrierFreq = frequency / 10;
+    
+    let totalAM = 0;
+    let totalFM = 0;
+    
+    if (systemActive && amActive) {
+      if (am1Active) {
+        const tremoloFreq = 0.003;
+        totalAM += 0.3 * Math.sin(2 * Math.PI * tremoloFreq * x);
+      }
+      
+      if (am2Active) {
+        const ringFreq = (mousePos.x / canvas.width) * 0.015 + 0.005;
+        totalAM += 0.25 * Math.sin(2 * Math.PI * ringFreq * x) * Math.sin(2 * Math.PI * carrierFreq * x);
+      }
+      
+      if (am3Active) {
+        const mouseAMFreq = (mousePos.y / canvas.height) * 0.02 + 0.008;
+        totalAM += 0.2 * Math.sin(2 * Math.PI * mouseAMFreq * x);
+      }
+    }
+    
+    if (systemActive && fmActive) {
+      if (fm1Active) {
+        const modFreq = 0.004;
+        const modIndex = 2;
+        totalFM += modIndex * Math.sin(2 * Math.PI * modFreq * x);
+      }
+      
+      if (fm2Active) {
+        const modFreq = (mousePos.x / canvas.width) * 0.01 + 0.002;
+        const modIndex = 3;
+        totalFM += modIndex * Math.sin(2 * Math.PI * modFreq * x);
+      }
+      
+      if (fm3Active) {
+        const modFreq = 0.006;
+        const modIndex = 1.5;
+        const complexMod = Math.sin(2 * Math.PI * modFreq * x) + 
+                          0.5 * Math.sin(2 * Math.PI * modFreq * 2 * x);
+        totalFM += modIndex * complexMod;
+      }
+    }
+    
+    const y = canvas.height / 2 + 
+      amplitude * (1 + totalAM) * 
+      Math.sin((x + phase) * (carrierFreq + totalFM));
 
     ctx.lineTo(x, y);
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = `hsla(0, 0%, 0%, 0.99)`;
-
   }
+  
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = `hsla(0, 0%, 0%, 0.99)`;
   ctx.stroke();
 }
 
-
-const Wavy = (props) => {
+const Wavy = () => {
   const canvasRef = useRef();
-
-  const phaseRef = useRef(0.000000001);
-  const amplitudeRef = useRef(10);
-  const frequencyRef = useRef(0.0101);
-
-  const ampMaxReached = useRef(false);
-  const ampMinReached = useRef(false);
-  const freqMaxReached = useRef(false);
-  const freqMinReached = useRef(false);
-
-  const { 
-    modOneActive, 
-    modTwoActive,
-    modThreeActive,
-    modMainActive 
-  } = props;
-
   
+  // consolidated wave configuration
+  const waveConfig = useRef({
+    amplitude: 10,
+    frequency: 0.0101,
+    phase: 0.000000001,
+    ampMaxReached: { current: false },
+    ampMinReached: { current: false },
+    freqMaxReached: { current: false },
+    freqMinReached: { current: false },
+  });
+
+  // wave constants
+  const constants = {
+    amplitudeChange: 0.075,
+    frequencyChange: 0.0002533333,
+    ampMax: 40,
+    ampMin: 0,
+    freqMax: 1,
+    freqMin: 0.01,
+  };
+
+  // UI state
+  const [menuExpanded, setMenuExpanded] = useState(false);
+  const [systemActive, setSystemActive] = useState(false);
+  const [amActive, setAmActive] = useState(false);
+  const [fmActive, setFmActive] = useState(false);
+  const [am1Active, setAm1Active] = useState(false);
+  const [am2Active, setAm2Active] = useState(false);
+  const [am3Active, setAm3Active] = useState(false);
+  const [fm1Active, setFm1Active] = useState(false);
+  const [fm2Active, setFm2Active] = useState(false);
+  const [fm3Active, setFm3Active] = useState(false);
 
   const mousePos = useMousePosition(50);
-  // const [onClick, setOnClick] = useState(false);
-  // const [modulation, setModulation] = useState(null);
-
-
-  const frequencyChange = 0.0002533333;
-  const amplitudeChange = 0.075;
-  const ampMax = 40;
-  const ampMin = 0;
-  const freqMax = 1;
-  const freqMin = 0.01;
-
-  // basic wave stuff, if you're curious:
-  // y = Math.sin(x) * (frequency modifier)
-  // y = (amplitude modifier) + Math.sin(x)
-  // the more complicated looking stuff is just variations on that basic form
-  // to change wave amplitude and frequency (and wavelength is inversely related to frequency).
-  // canvas.height/2 places it in the middle of the defined canvas, nudged slightly 
-  // to the side because canvas draws a weird line at the edge of waves and i wanted a cleaner look
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    const flags = {
-      ampMaxReached,
-      ampMinReached,
-      freqMaxReached,
-      freqMinReached,
-    };
-
-    const constants = {
-      frequencyChange,
-      amplitudeChange,
-      ampMax,
-      ampMin,
-      freqMax,
-      freqMin,
+    const modState = {
+      systemActive,
+      amActive,
+      fmActive,
+      am1Active,
+      am2Active,
+      am3Active,
+      fm1Active,
+      fm2Active,
+      fm3Active,
     };
 
     let frameId;
     const render = () => {
-      updateWave(amplitudeRef, frequencyRef, flags, constants);
-      updatePhase(phaseRef);
-      drawWave(ctx, canvas, {
-        amplitude: amplitudeRef.current,
-        frequency: frequencyRef.current,
-        phase: phaseRef.current,
-        mousePos,
-        modOneActive,
-        modTwoActive,
-        modThreeActive,
-        modMainActive,
-      });
-
+      updateWave(waveConfig, constants);
+      updatePhase(waveConfig);
+      drawWave(ctx, canvas, waveConfig, mousePos, modState);
       frameId = requestAnimationFrame(render);
     };
 
     frameId = requestAnimationFrame(render);
     return () => cancelAnimationFrame(frameId);
-  }, [modOneActive, modTwoActive, modThreeActive, modMainActive, mousePos]);
+  }, [mousePos, systemActive, amActive, fmActive, am1Active, am2Active, am3Active, fm1Active, fm2Active, fm3Active]);
 
+  // auto-disable sub-toggles when main toggle is turned off
+  useEffect(() => {
+    if (!amActive) {
+      setAm1Active(false);
+      setAm2Active(false);
+      setAm3Active(false);
+    }
+  }, [amActive]);
 
+  useEffect(() => {
+    if (!fmActive) {
+      setFm1Active(false);
+      setFm2Active(false);
+      setFm3Active(false);
+    }
+  }, [fmActive]);
 
-
-  //  mouse stuff, position and click events:
-
-  // commenting out this bit rather than deleting because i think will use it for 
-  // something else, but for now it is getting in the way of my modulation buttons
-
-  // useEffect(() => {
-  //   const handleClick = () => {
-  //     handleModMaintoggle();
-  //     // setFrequency((prevFreq) => prevFreq - (prevFreq / 3));
-  //     // setAmplitude(amplitude/3);
-  //     // setPhase(0.0000000125);
-  //   };
-  //   window.addEventListener("click", handleClick);
-  //   return () => {
-  //     window.removeEventListener("click", handleClick);
-  //   };
-  // }, []);
+  useEffect(() => {
+    if (!systemActive) {
+      setAmActive(false);
+      setFmActive(false);
+      setAm1Active(false);
+      setAm2Active(false);
+      setAm3Active(false);
+      setFm1Active(false);
+      setFm2Active(false);
+      setFm3Active(false);
+    }
+  }, [systemActive]);
 
   return (
-    <>
-
+    <div className="wavy-container">
       <canvas
         ref={canvasRef}
-        width={document.documentElement.clientWidth}
-        height={document.documentElement.clientHeight / 2}
-      ></canvas>
-    </>
+        width={typeof window !== 'undefined' ? window.innerWidth : 800}
+        height={typeof window !== 'undefined' ? window.innerHeight / 2 : 400}
+        className="wave-canvas"
+      />
+
+      <div className="modulation-controls-container">
+        <button
+          className="toggle-modulation-menu"
+          onClick={() => setMenuExpanded(!menuExpanded)}
+        >
+          <div className={`wave-icon ${menuExpanded ? 'expanded' : ''}`}>
+            ≋
+          </div>
+        </button>
+
+        <div className={`modulation-controls ${menuExpanded ? 'visible' : ''}`}>
+          <button
+            className={`modButton mainModButton ${systemActive ? 'active' : 'inactive'}`}
+            onClick={() => setSystemActive(!systemActive)}
+          >
+            System
+          </button>
+
+          <button
+            className={`modButton amMainButton ${amActive ? 'active' : 'inactive'}`}
+            onClick={() => setAmActive(!amActive)}
+            disabled={!systemActive}
+          >
+            AM
+          </button>
+
+          <button
+            className={`modButton fmMainButton ${fmActive ? 'active' : 'inactive'}`}
+            onClick={() => setFmActive(!fmActive)}
+            disabled={!systemActive}
+          >
+            FM
+          </button>
+
+          <button
+            className={`modButton ${am1Active ? 'active' : 'inactive'}`}
+            onClick={() => setAm1Active(!am1Active)}
+            disabled={!amActive}
+          >
+            AM1
+          </button>
+
+          <button
+            className={`modButton ${fm1Active ? 'active' : 'inactive'}`}
+            onClick={() => setFm1Active(!fm1Active)}
+            disabled={!fmActive}
+          >
+            FM1
+          </button>
+
+          <button
+            className={`modButton ${am2Active ? 'active' : 'inactive'}`}
+            onClick={() => setAm2Active(!am2Active)}
+            disabled={!amActive}
+          >
+            AM2
+          </button>
+
+          <button
+            className={`modButton ${fm2Active ? 'active' : 'inactive'}`}
+            onClick={() => setFm2Active(!fm2Active)}
+            disabled={!fmActive}
+          >
+            FM2
+          </button>
+
+          <button
+            className={`modButton ${am3Active ? 'active' : 'inactive'}`}
+            onClick={() => setAm3Active(!am3Active)}
+            disabled={!amActive}
+          >
+            AM3
+          </button>
+
+          <button
+            className={`modButton ${fm3Active ? 'active' : 'inactive'}`}
+            onClick={() => setFm3Active(!fm3Active)}
+            disabled={!fmActive}
+          >
+            FM3
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default Wavy;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const ampModOne = onClick ? Math.sin(mousePos.x%(x - canvas.width)): 0;
-// const ampModTwo = onClick ? Math.sin(mousePos.y%(x  - canvas.width)): 0;
-// const ampModThree = onClick ? (mousePos.y * mousePos.x)%(x  - canvas.width)-phase: 0;
-
-// Math.sin(ampModOne) + Math.sin(ampModTwo) + Math.random() * Math.sin(ampModThree)

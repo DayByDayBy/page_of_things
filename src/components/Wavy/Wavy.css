@@ -3,6 +3,7 @@
   top: 5rem;
   left:0;
   z-index: 3;
+  text-align: left;
 
 }
 
@@ -16,7 +17,7 @@
 }
 
 .wave-icon {
-  margin: 0;
+  margin: 1rem;
   transition: 0.5s ease;
 }
 .wave-icon.expanded {
@@ -34,7 +35,7 @@
   left: 0;
   top: -2rem;
   gap:  0 0.25rem;
-  padding: 1rem 4rem;
+  padding: 1rem 3rem;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -77,7 +78,7 @@
 
 .readout{
   align-self: center;
-  width: 4rem;
+  width: 3rem;
   color: #33ff33;
   height: 2rem;
   background-color: #64636390;
@@ -88,14 +89,200 @@
   }
 
 @media (max-width: 810px) {
+  .modulation-controls-container {
+    display: block;
+  }
+
+  .toggle-modulation-menu {
+    position: static;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
   .modulation-controls {
+    position: static;
     flex-direction: column;
     align-items: flex-start;
+    padding: 0.5rem 0;
+    margin: 0;
   }
 
   .modButton,
   .mainModButton {
-    min-width: 90px;
+    min-width: 20vw;
     min-height: 2rem;
+    align-self: center;
   }
+
+  .readout {
+    padding: 1rem;
+    align-self:center;
+  }
+}
+
+
+
+
+.wavy-container {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+}
+
+.wave-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.modulation-controls-container {
+    position: absolute;
+    top: 5rem;
+    left: 0;
+    z-index: 3;
+    text-align: left;
+}
+
+.toggle-modulation-menu {
+    position: absolute;
+    left: 1rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 2rem;
+}
+
+.wave-icon {
+    margin: 1rem;
+    transition: 0.5s ease;
+}
+
+.wave-icon.expanded {
+    opacity: 0.2;
+    transition: 0.7s ease;
+}
+
+.modulation-controls {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 0.25rem 0.5rem;
+    position: absolute;
+    left: 0;
+    top: -2rem;
+    padding: 1rem 3rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.modulation-controls.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modButton {
+    width: 4vw;
+    min-width: 3rem;
+    height: 2.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.modButton:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.mainModButton {
+    grid-column: 1;
+    grid-row: 1;
+    width: 5vw;
+    min-width: 4rem;
+}
+
+.amMainButton {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.fmMainButton {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.modButton:nth-child(4) {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.modButton:nth-child(5) {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.modButton:nth-child(6) {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.modButton:nth-child(7) {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+.modButton:nth-child(8) {
+    grid-column: 2;
+    grid-row: 4;
+}
+
+.modButton:nth-child(9) {
+    grid-column: 3;
+    grid-row: 4;
+}
+
+.modButton.active {
+    background-color: green;
+    color: white;
+}
+
+.modButton.inactive {
+    background-color: hsla(344, 13%, 74%, 0.384);
+    color: black;
+}
+
+@media (max-width: 810px) {
+    .modulation-controls-container {
+    display: block;
+    }
+
+    .toggle-modulation-menu {
+    position: static;
+    display: block;
+    margin-bottom: 0.5rem;
+    }
+
+    .modulation-controls {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem 0;
+    margin: 0;
+    gap: 0.25rem;
+    }
+
+    .modButton,
+    .mainModButton,
+    .amMainButton,
+    .fmMainButton {
+    min-width: 20vw;
+    width: auto;
+    grid-column: auto;
+    grid-row: auto;
+    }
 }

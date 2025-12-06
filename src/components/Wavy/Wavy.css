@@ -169,7 +169,7 @@
 
 .oscilloscope-container {
     position: fixed;
-    margin: 1rem;
+    margin: 1rem 1rem 0 0;
     top: 5rem;
     left: 1.5rem;
     z-index: 2;

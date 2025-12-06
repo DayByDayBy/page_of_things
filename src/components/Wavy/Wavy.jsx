@@ -217,7 +217,7 @@ function drawOscilloscopeFromBuffer(oscCtx, oscCanvas, buffer, min, max) {
   if (!count) return;
 
   const padding = 4;
-  const usableHeight = Math.max(1, height - 2 * padding);
+  const usableHeight = Math.max(1, height - 2 * padding)-3;
   const mid = (min + max) / 2;
   const range = max - min;
   const halfRange = range / 2 || 1; // avoid divide by zero

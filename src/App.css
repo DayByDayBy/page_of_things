@@ -30,10 +30,11 @@ flex-direction: column;
 min-height: 70vh;
 padding: 0rem 3rem;
 margin: 0 1rem;
+border: 1px outset hsl(33, 100%, 88%, 0.3); 
 border-radius: 3rem;
 background:linear-gradient( 110deg,
-  hsla(145, 10%, 80%, 0.1) 37%,
-  hsla(235, 12%, 60%, 0.084)) 0%;
+  hsla(145, 10%, 80%, 0.175) 37%,
+  hsla(235, 12%, 60%, 0.085)) 0%;
 z-index: 1;
 }
 

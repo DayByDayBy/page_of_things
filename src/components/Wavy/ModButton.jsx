@@ -8,7 +8,7 @@ const ModButton = ({ label, active, description, onClick, isMain, disabled }) =>
     className = {buttonClassName}
         onClick={disabled ? undefined : onClick}
         aria-pressed={active}
-        aria-label={description}
+        aria-label={description || undefined}
         disabled={disabled}
     >
         {label}

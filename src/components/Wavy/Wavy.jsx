@@ -4,13 +4,13 @@ import { useMousePosition } from "../../hooks/useMousePosition";
 import WaveSVG from "../../assets/wave.svg";
 import ModButton from "./ModButton";
 
-// Normalizes a value from [fromMin, fromMax] to [-1, 1]
+// normalizes a value from [fromMin, fromMax] to [-1, 1]
 function normalize(x, fromMin, fromMax) {
   if (fromMax === fromMin) return 0;
   return ((x - fromMin) / (fromMax - fromMin)) * 2 - 1;
 }
 
-// Generic parameter updater used for amplitude/frequency oscillation
+// generic parameter updater used for amplitude/frequency oscillation
 function updateParameter(value, maxReached, minReached, change, max, min) {
   if (!maxReached.current) {
     if (value >= max) {
@@ -30,7 +30,7 @@ function updateParameter(value, maxReached, minReached, change, max, min) {
   return value;
 }
 
-// Updates wave amplitude/frequency using the oscillation helper
+// updates wave amplitude/frequency using oscillation helper
 function updateWave(waveConfig, constants) {
   waveConfig.current.amplitude = updateParameter(
     waveConfig.current.amplitude,
@@ -51,13 +51,13 @@ function updateWave(waveConfig, constants) {
   );
 }
 
-// Advances the carrier phase for slow drift
+// advances carrier phase for slow drift
 function updatePhase(waveConfig) {
   const random = Math.random();
   waveConfig.current.phase += random < 0.01 ? -0.000012 : 0.0000125;
 }
 
-// Main rendering loop: draws the carrier with AM/FM modulation
+// main rendering loop: draws the carrier (with any active AM/FM modulation)
 function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
   const { amplitude, frequency, phase } = waveConfig.current;
   const {
@@ -79,7 +79,7 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
   const numPoints = NUM_POINTS;
   const stepSize = canvas.width / numPoints;
 
-  // Precompute normalized mouse-derived scalars once per frame
+  // precompute normalized mouse-derived scalars (once per frame)
   const normMouseX = normalize(mousePos.x, 0, canvas.width);
   const mouseDiff = normalize(
     mousePos.x - mousePos.y,
@@ -165,7 +165,7 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
   ctx.stroke();
 }
 
-// --- Constants -----------------------------------------------------------
+// --- constants (collected here to aid refactoring, etc)-----------------------------------------------------------
 
 const NUM_POINTS = 4000;
 const WAVE_COLOR = "rgba(0, 0, 0, 0.67)";
@@ -174,7 +174,7 @@ const WAVE_COLOR = "rgba(0, 0, 0, 0.67)";
 const TREMOLO_FREQ = 0.003;
 const AM1_DEPTH = 0.5;
 const AM2_DEPTH = 0.67;
-const AM3_DEPTH_BASE = 0.8; // reserved for future use
+const AM3_DEPTH_BASE = 0.8; // not yet used, do plan to tho 
 
 const FM1_BASE_FREQ = 0.001;
 const FM1_INDEX = 2;
@@ -184,8 +184,8 @@ const FM3_INDEX = 1.5;
 
 // --- Subcomponent --------------------------------------------------------
 
-// ModulationControls: Renders the toggle icon and the 9-button grid.
-// All state and handlers are owned by the parent Wavy component.
+// `ModulationControls`: renders  toggle icon and 9-button grid.
+// all state and handlers are owned by parent `Wavy component.
 function ModulationControls({
   menuExpanded,
   setMenuExpanded,
@@ -213,6 +213,9 @@ function ModulationControls({
       <button
         className="toggle-modulation-menu"
         onClick={() => setMenuExpanded(!menuExpanded)}
+        aria-expanded={menuExpanded}
+        aria-controls="modulation-controls"
+        aria-label={menuExpanded ? "Hide modulation controls" : "Show modulation controls"}
       >
         <img
           src={WaveSVG}
@@ -221,7 +224,12 @@ function ModulationControls({
         />
       </button>
 
-      <div className={`modulation-controls ${menuExpanded ? "visible" : ""}`}>
+      <div
+        id="modulation-controls"
+        className={`modulation-controls ${menuExpanded ? "visible" : ""}`}
+        role="group"
+        aria-label="Wave modulation controls"
+      >
         <ModButton
           label="⏻"
           active={systemActive}
@@ -233,6 +241,7 @@ function ModulationControls({
           label="AM"
           active={amActive}
           onClick={() => setAmActive(!amActive)}
+          description="amplitude modulation toggle"
           disabled={!systemActive}
         />
 
@@ -240,6 +249,7 @@ function ModulationControls({
           label="FM"
           active={fmActive}
           onClick={() => setFmActive(!fmActive)}
+          description="frequency modulation toggle"
           disabled={!systemActive}
         />
 
@@ -247,6 +257,7 @@ function ModulationControls({
           label="AM1"
           active={am1Active}
           onClick={() => setAm1Active(!am1Active)}
+          description="AM one"
           disabled={!amActive}
         />
 
@@ -254,6 +265,7 @@ function ModulationControls({
           label="FM1"
           active={fm1Active}
           onClick={() => setFm1Active(!fm1Active)}
+          description="FM one"
           disabled={!fmActive}
         />
 
@@ -261,6 +273,7 @@ function ModulationControls({
           label="AM2"
           active={am2Active}
           onClick={() => setAm2Active(!am2Active)}
+          description="AM two"
           disabled={!amActive}
         />
 
@@ -268,6 +281,7 @@ function ModulationControls({
           label="FM2"
           active={fm2Active}
           onClick={() => setFm2Active(!fm2Active)}
+          description="FM two"
           disabled={!fmActive}
         />
 
@@ -275,6 +289,7 @@ function ModulationControls({
           label="AM3"
           active={am3Active}
           onClick={() => setAm3Active(!am3Active)}
+          description="AM three"
           disabled={!amActive}
         />
 
@@ -282,6 +297,7 @@ function ModulationControls({
           label="FM3"
           active={fm3Active}
           onClick={() => setFm3Active(!fm3Active)}
+          description="FM three"
           disabled={!fmActive}
         />
       </div>
@@ -289,18 +305,51 @@ function ModulationControls({
   );
 }
 
-// --- Reducer for modulation toggles -------------------------------------
-
-// modulationReducer: Manages the 9 boolean toggles.
-// Actions are named to mirror the old setter names.
+// modulationReducer: manages 9 boolean toggles.
+// actions are named to mirror old setter names.
+// invariant: turning off a main toggle disables all its sub-toggles
 function modulationReducer(state, action) {
   switch (action.type) {
-    case "setSystemActive":
-      return { ...state, systemActive: action.payload };
-    case "setAmActive":
-      return { ...state, amActive: action.payload };
-    case "setFmActive":
-      return { ...state, fmActive: action.payload };
+    case "setSystemActive": {
+      if (!action.payload) {
+        return {
+          systemActive: false,
+          amActive: false,
+          fmActive: false,
+          am1Active: false,
+          am2Active: false,
+          am3Active: false,
+          fm1Active: false,
+          fm2Active: false,
+          fm3Active: false,
+        };
+      }
+      return { ...state, systemActive: true };
+    }
+    case "setAmActive": {
+      if (!action.payload) {
+        return {
+          ...state,
+          amActive: false,
+          am1Active: false,
+          am2Active: false,
+          am3Active: false,
+        };
+      }
+      return { ...state, amActive: true };
+    }
+    case "setFmActive": {
+      if (!action.payload) {
+        return {
+          ...state,
+          fmActive: false,
+          fm1Active: false,
+          fm2Active: false,
+          fm3Active: false,
+        };
+      }
+      return { ...state, fmActive: true };
+    }
     case "setAm1Active":
       return { ...state, am1Active: action.payload };
     case "setAm2Active":
@@ -334,7 +383,7 @@ const Wavy = () => {
     freqMinReached: { current: false },
   });
 
-  // animation constants (bounds and change rates)
+  // animation constants (bounds, change rates - stops wave going too wild)
   const constants = {
     amplitudeChange: 0.075,
     frequencyChange: 0.0002533333,
@@ -391,36 +440,6 @@ const Wavy = () => {
     return () => cancelAnimationFrame(frameId);
   }, [mousePos, modState, constants]);
 
-  // invariant: turning off a main toggle disables all its sub-toggles
-  useEffect(() => {
-    if (!amActive) {
-      dispatch({ type: "setAm1Active", payload: false });
-      dispatch({ type: "setAm2Active", payload: false });
-      dispatch({ type: "setAm3Active", payload: false });
-    }
-  }, [amActive]);
-
-  useEffect(() => {
-    if (!fmActive) {
-      dispatch({ type: "setFm1Active", payload: false });
-      dispatch({ type: "setFm2Active", payload: false });
-      dispatch({ type: "setFm3Active", payload: false });
-    }
-  }, [fmActive]);
-
-  useEffect(() => {
-    if (!systemActive) {
-      dispatch({ type: "setAmActive", payload: false });
-      dispatch({ type: "setFmActive", payload: false });
-      dispatch({ type: "setAm1Active", payload: false });
-      dispatch({ type: "setAm2Active", payload: false });
-      dispatch({ type: "setAm3Active", payload: false });
-      dispatch({ type: "setFm1Active", payload: false });
-      dispatch({ type: "setFm2Active", payload: false });
-      dispatch({ type: "setFm3Active", payload: false });
-    }
-  }, [systemActive]);
-
   return (
     <div className="wavy-container">
       <canvas
@@ -430,6 +449,8 @@ const Wavy = () => {
           typeof window !== "undefined" ? Math.floor(window.innerHeight / 2) : 400
         }
         className="wave-canvas"
+        role="img"
+        aria-label="Animated wave visualization"
       />
 
       <ModulationControls

@@ -3,6 +3,7 @@ import "./Wavy.css";
 import { useMousePosition } from "../../hooks/useMousePosition";
 import WaveSVG from "../../assets/wave.svg";
 import ModButton from "./ModButton";
+import OscilloscopeDisplay from "./OscilloscopeDisplay";
 
 // normalizes a value from [fromMin, fromMax] to [-1, 1]
 function normalize(x, fromMin, fromMax) {
@@ -58,7 +59,7 @@ function updatePhase(waveConfig) {
 }
 
 // main rendering loop: draws the carrier (with any active AM/FM modulation)
-function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
+function drawWave(ctx, canvas, waveConfig, mousePos, modState, strokeStyle = WAVE_COLOR) {
   const { amplitude, frequency, phase } = waveConfig.current;
   const {
     systemActive,
@@ -161,7 +162,7 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
   }
 
   ctx.lineWidth = 1;
-  ctx.strokeStyle = WAVE_COLOR;
+  ctx.strokeStyle = strokeStyle;
   ctx.stroke();
 }
 
@@ -169,6 +170,7 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
 
 const NUM_POINTS = 4000;
 const WAVE_COLOR = "rgba(0, 0, 0, 0.67)";
+const OSCILLOSCOPE_WAVE_COLOR = "rgba(160, 196, 224, 0.8)";
 
 // AM/FM modulation depths and base frequencies
 const TREMOLO_FREQ = 0.003;
@@ -371,6 +373,7 @@ function modulationReducer(state, action) {
 
 const Wavy = () => {
   const canvasRef = useRef();
+  const oscilloscopeRef = useRef();
 
   // consolidated wave configuration
   const waveConfig = useRef({
@@ -425,20 +428,32 @@ const Wavy = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    const oscCanvas = oscilloscopeRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
+    const oscCtx = oscCanvas ? oscCanvas.getContext("2d") : null;
 
     let frameId;
     const render = () => {
       updateWave(waveConfig, constants);
       updatePhase(waveConfig);
       drawWave(ctx, canvas, waveConfig, mousePos, modState);
+      if (oscCtx && oscCanvas && systemActive) {
+        drawWave(
+          oscCtx,
+          oscCanvas,
+          waveConfig,
+          mousePos,
+          modState,
+          OSCILLOSCOPE_WAVE_COLOR
+        );
+      }
       frameId = requestAnimationFrame(render);
     };
 
     frameId = requestAnimationFrame(render);
     return () => cancelAnimationFrame(frameId);
-  }, [mousePos, modState, constants]);
+  }, [mousePos, modState, constants, systemActive]);
 
   return (
     <div className="wavy-container">
@@ -475,6 +490,7 @@ const Wavy = () => {
         fm3Active={fm3Active}
         setFm3Active={(v) => dispatch({ type: "setFm3Active", payload: v })}
       />
+      {systemActive && <OscilloscopeDisplay ref={oscilloscopeRef} />}
     </div>
   );
 };

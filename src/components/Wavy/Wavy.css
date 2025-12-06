@@ -161,3 +161,29 @@
     grid-row: auto;
     }
 }
+
+.oscilloscope-container {
+    position: fixed;
+    margin: 1rem;
+    top: 5rem;
+    left: 1.5rem;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+}
+
+.oscilloscope-canvas {
+    width: 150px;
+    height: 100px;
+    border-radius: 0.5rem;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.oscilloscope-formula {
+    margin: 1.5rem 1rem;
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.7);
+}

@@ -1,4 +1,6 @@
 import React, { forwardRef } from "react";
+import "katex/dist/katex.min.css";
+import { BlockMath } from "react-katex";
 
 const OscilloscopeDisplay = forwardRef(function OscilloscopeDisplay(_, ref) {
   return (
@@ -12,7 +14,7 @@ const OscilloscopeDisplay = forwardRef(function OscilloscopeDisplay(_, ref) {
         aria-label="Oscilloscope view of the wave"
       />
       <div className="oscilloscope-formula">
-        y = A(1 + AM) * sin((x + phi)(f + FM))
+        <BlockMath math={"y = A(1 + AM) \\cdot \\sin((x + \\phi)(f + FM))"} />
       </div>
     </div>
   );

@@ -58,8 +58,10 @@ function updatePhase(waveConfig) {
   waveConfig.current.phase += random < 0.01 ? -0.000012 : 0.0000125;
 }
 
-// main rendering loop: draws the carrier (with any active AM/FM modulation)
-function drawWave(ctx, canvas, waveConfig, mousePos, modState, strokeStyle = WAVE_COLOR) {
+// main rendering helpers ------------------------------------------------------
+
+// computes a single y-value for the current wave configuration at a given x
+function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
   const { amplitude, frequency, phase } = waveConfig.current;
   const {
     systemActive,
@@ -72,10 +74,6 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState, strokeStyle = WAV
     fm2Active,
     fm3Active,
   } = modState;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-  ctx.moveTo(-4, canvas.height / 2);
 
   const numPoints = NUM_POINTS;
   const stepSize = canvas.width / numPoints;
@@ -103,61 +101,73 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState, strokeStyle = WAV
     10
   );
 
+  const carrierFreq = frequency / 10;
+
+  let totalAM = 0;
+  let totalFM = 0;
+
+  if (systemActive && amActive) {
+    if (am1Active) {
+      const tremoloFreq = TREMOLO_FREQ;
+      totalAM += AM1_DEPTH * Math.sin(2 * Math.PI * tremoloFreq * x);
+    }
+
+    if (am2Active) {
+      const ringFreq = (mousePos.x / canvas.width) * 0.015 + 0.005;
+      totalAM +=
+        AM2_DEPTH *
+        Math.sin(2 * Math.PI * ringFreq * x) *
+        Math.sin(2 * Math.PI * carrierFreq * x);
+    }
+
+    if (am3Active) {
+      const mouseAMFreq = (mousePos.y / canvas.height) * 0.02 + 0.008;
+      const intensity = 0.6 + 0.4 * Math.abs(normMouseX);
+      totalAM += intensity * Math.sin(2 * Math.PI * mouseAMFreq * x);
+    }
+  }
+
+  if (systemActive && fmActive) {
+    if (fm1Active) {
+      const modFreq = FM1_BASE_FREQ;
+      const modIndex = FM1_INDEX;
+      totalFM += modIndex * Math.sin(2 * Math.PI * modFreq * x);
+    }
+
+    if (fm2Active) {
+      const modFreq = (mousePos.x / canvas.width) * 0.01 + 0.002;
+      const modIndex = FM2_INDEX;
+      totalFM += modIndex * Math.sin(2 * Math.PI * modFreq * x);
+    }
+
+    if (fm3Active) {
+      const modFreq = FM3_BASE_FREQ / mouseQuotient;
+      const modIndex = FM3_INDEX;
+      const complexMod =
+        Math.sin(2 * Math.PI * modFreq * x) +
+        0.5 * Math.sin(2 * Math.PI * modFreq * 2 * x);
+      totalFM += modIndex * complexMod;
+    }
+  }
+
+  return (
+    canvas.height / 2 +
+    amplitude * (1 + totalAM) *
+    Math.sin((x + phase) * (carrierFreq + totalFM))
+  );
+}
+
+// main rendering loop: draws the carrier (with any active AM/FM modulation)
+function drawWave(ctx, canvas, waveConfig, mousePos, modState, strokeStyle = WAVE_COLOR) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+  ctx.moveTo(-4, canvas.height / 2);
+
+  const numPoints = NUM_POINTS;
+  const stepSize = canvas.width / numPoints;
+
   for (let x = 0; x < canvas.width; x += stepSize) {
-    const carrierFreq = frequency / 10;
-
-    let totalAM = 0;
-    let totalFM = 0;
-
-    if (systemActive && amActive) {
-      if (am1Active) {
-        const tremoloFreq = TREMOLO_FREQ;
-        totalAM += AM1_DEPTH * Math.sin(2 * Math.PI * tremoloFreq * x);
-      }
-
-      if (am2Active) {
-        const ringFreq = (mousePos.x / canvas.width) * 0.015 + 0.005;
-        totalAM +=
-          AM2_DEPTH *
-          Math.sin(2 * Math.PI * ringFreq * x) *
-          Math.sin(2 * Math.PI * carrierFreq * x);
-      }
-
-      if (am3Active) {
-        const mouseAMFreq = (mousePos.y / canvas.height) * 0.02 + 0.008;
-        const intensity = 0.6 + 0.4 * Math.abs(normMouseX);
-        totalAM += intensity * Math.sin(2 * Math.PI * mouseAMFreq * x);
-      }
-    }
-
-    if (systemActive && fmActive) {
-      if (fm1Active) {
-        const modFreq = FM1_BASE_FREQ;
-        const modIndex = FM1_INDEX;
-        totalFM += modIndex * Math.sin(2 * Math.PI * modFreq * x);
-      }
-
-      if (fm2Active) {
-        const modFreq = (mousePos.x / canvas.width) * 0.01 + 0.002;
-        const modIndex = FM2_INDEX;
-        totalFM += modIndex * Math.sin(2 * Math.PI * modFreq * x);
-      }
-
-      if (fm3Active) {
-        const modFreq = FM3_BASE_FREQ / mouseQuotient;
-        const modIndex = FM3_INDEX;
-        const complexMod =
-          Math.sin(2 * Math.PI * modFreq * x) +
-          0.5 * Math.sin(2 * Math.PI * modFreq * 2 * x);
-        totalFM += modIndex * complexMod;
-      }
-    }
-
-    const y =
-      canvas.height / 2 +
-      amplitude * (1 + totalAM) *
-      Math.sin((x + phase) * (carrierFreq + totalFM));
-
+    const y = computeWaveY(x, canvas, waveConfig, mousePos, modState);
     ctx.lineTo(x, y);
   }
 
@@ -166,11 +176,80 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState, strokeStyle = WAV
   ctx.stroke();
 }
 
+// samples OSC_SAMPLES points into the oscilloscope buffer and returns min/max
+function sampleOscilloscope(oscCanvas, waveConfig, mousePos, modState, buffer) {
+  const width = oscCanvas.width;
+  const height = oscCanvas.height;
+  const count = buffer.length;
+
+  if (!count) {
+    return { min: height / 2, max: height / 2 };
+  }
+
+  const stepX = count > 1 ? width / (count - 1) : 0;
+
+  let min = Infinity;
+  let max = -Infinity;
+
+  for (let i = 0; i < count; i++) {
+    const x = i * stepX;
+    const y = computeWaveY(x, oscCanvas, waveConfig, mousePos, modState);
+    buffer[i] = y;
+    if (y < min) min = y;
+    if (y > max) max = y;
+  }
+
+  if (!isFinite(min) || !isFinite(max)) {
+    const mid = height / 2;
+    return { min: mid, max: mid };
+  }
+
+  return { min, max };
+}
+
+// draws the oscilloscope buffer into the small canvas, normalized to always fit
+function drawOscilloscopeFromBuffer(oscCtx, oscCanvas, buffer, min, max) {
+  const width = oscCanvas.width;
+  const height = oscCanvas.height;
+  const count = buffer.length;
+
+  oscCtx.clearRect(0, 0, width, height);
+  if (!count) return;
+
+  const padding = 4;
+  const usableHeight = Math.max(1, height - 2 * padding);
+  const mid = (min + max) / 2;
+  const range = max - min;
+  const halfRange = range / 2 || 1; // avoid divide by zero
+
+  const stepX = count > 1 ? width / (count - 1) : 0;
+
+  oscCtx.beginPath();
+
+  for (let i = 0; i < count; i++) {
+    const x = i * stepX;
+    const yRaw = buffer[i];
+    const norm = (yRaw - mid) / halfRange; // -1..1
+    const y = height / 2 - norm * (usableHeight / 2);
+
+    if (i === 0) {
+      oscCtx.moveTo(x, y);
+    } else {
+      oscCtx.lineTo(x, y);
+    }
+  }
+
+  oscCtx.lineWidth = 1;
+  oscCtx.strokeStyle = OSCILLOSCOPE_WAVE_COLOR;
+  oscCtx.stroke();
+}
+
 // --- constants (collected here to aid refactoring, etc)-----------------------------------------------------------
 
 const NUM_POINTS = 4000;
 const WAVE_COLOR = "rgba(0, 0, 0, 0.67)";
 const OSCILLOSCOPE_WAVE_COLOR = "rgba(160, 196, 224, 0.8)";
+const OSC_SAMPLES = 128;
 
 // AM/FM modulation depths and base frequencies
 const TREMOLO_FREQ = 0.003;
@@ -374,6 +453,7 @@ function modulationReducer(state, action) {
 const Wavy = () => {
   const canvasRef = useRef();
   const oscilloscopeRef = useRef();
+  const oscBufferRef = useRef(new Array(OSC_SAMPLES).fill(0));
 
   // consolidated wave configuration
   const waveConfig = useRef({
@@ -439,13 +519,19 @@ const Wavy = () => {
       updatePhase(waveConfig);
       drawWave(ctx, canvas, waveConfig, mousePos, modState);
       if (oscCtx && oscCanvas && systemActive) {
-        drawWave(
-          oscCtx,
+        const { min, max } = sampleOscilloscope(
           oscCanvas,
           waveConfig,
           mousePos,
           modState,
-          OSCILLOSCOPE_WAVE_COLOR
+          oscBufferRef.current
+        );
+        drawOscilloscopeFromBuffer(
+          oscCtx,
+          oscCanvas,
+          oscBufferRef.current,
+          min,
+          max
         );
       }
       frameId = requestAnimationFrame(render);

@@ -160,6 +160,11 @@
     grid-column: auto;
     grid-row: auto;
     }
+
+    .oscilloscope-container {
+      position: static;
+      margin: 1rem 0 0 0;
+    }
 }
 
 .oscilloscope-container {
@@ -183,7 +188,7 @@
 }
 
 .oscilloscope-formula {
-    margin: 1.5rem 1rem;
+    margin: 1.5rem 1rem 0rem 0rem;
     font-size: 0.75rem;
     color: rgba(0, 0, 0, 0.7);
 }

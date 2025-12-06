@@ -18,7 +18,7 @@ function updateParameter(value, maxReached, minReached, change, max, min) {
       minReached.current = false;
       return value;
     }
-    return value + (change * Math.random());
+    return value + change * Math.random();
   } else if (!minReached.current) {
     if (value <= min) {
       minReached.current = true;
@@ -81,10 +81,26 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
 
   // Precompute normalized mouse-derived scalars once per frame
   const normMouseX = normalize(mousePos.x, 0, canvas.width);
-  const mouseDiff = normalize(mousePos.x - mousePos.y, -canvas.width, canvas.width);
-  const mouseSum = normalize(mousePos.x + mousePos.y, -canvas.width, canvas.width);
-  const mouseProduct = normalize(mousePos.x * mousePos.y, -canvas.width, canvas.width);
-  const mouseQuotient = normalize(mousePos.y !== 0 ? mousePos.x / mousePos.y : 0, 0, 10);
+  const mouseDiff = normalize(
+    mousePos.x - mousePos.y,
+    -canvas.width,
+    canvas.width
+  );
+  const mouseSum = normalize(
+    mousePos.x + mousePos.y,
+    -canvas.width,
+    canvas.width
+  );
+  const mouseProduct = normalize(
+    mousePos.x * mousePos.y,
+    -canvas.width,
+    canvas.width
+  );
+  const mouseQuotient = normalize(
+    mousePos.y !== 0 ? mousePos.x / mousePos.y : 0,
+    0,
+    10
+  );
 
   for (let x = 0; x < canvas.width; x += stepSize) {
     const carrierFreq = frequency / 10;
@@ -100,7 +116,10 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
 
       if (am2Active) {
         const ringFreq = (mousePos.x / canvas.width) * 0.015 + 0.005;
-        totalAM += AM2_DEPTH * Math.sin(2 * Math.PI * ringFreq * x) * Math.sin(2 * Math.PI * carrierFreq * x);
+        totalAM +=
+          AM2_DEPTH *
+          Math.sin(2 * Math.PI * ringFreq * x) *
+          Math.sin(2 * Math.PI * carrierFreq * x);
       }
 
       if (am3Active) {
@@ -114,7 +133,7 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
       if (fm1Active) {
         const modFreq = FM1_BASE_FREQ;
         const modIndex = FM1_INDEX;
-        totalFM += (1 * modIndex) * Math.sin(2 * Math.PI * modFreq * x);
+        totalFM += modIndex * Math.sin(2 * Math.PI * modFreq * x);
       }
 
       if (fm2Active) {
@@ -126,13 +145,15 @@ function drawWave(ctx, canvas, waveConfig, mousePos, modState) {
       if (fm3Active) {
         const modFreq = FM3_BASE_FREQ / mouseQuotient;
         const modIndex = FM3_INDEX;
-        const complexMod = Math.sin(2 * Math.PI * modFreq * x) +
-                          0.5 * Math.sin(2 * Math.PI * modFreq * 2 * x);
+        const complexMod =
+          Math.sin(2 * Math.PI * modFreq * x) +
+          0.5 * Math.sin(2 * Math.PI * modFreq * 2 * x);
         totalFM += modIndex * complexMod;
       }
     }
 
-    const y = canvas.height / 2 +
+    const y =
+      canvas.height / 2 +
       amplitude * (1 + totalAM) *
       Math.sin((x + phase) * (carrierFreq + totalFM));
 
@@ -153,7 +174,7 @@ const WAVE_COLOR = "rgba(0, 0, 0, 0.67)";
 const TREMOLO_FREQ = 0.003;
 const AM1_DEPTH = 0.5;
 const AM2_DEPTH = 0.67;
-const AM3_DEPTH_BASE = 0.8; // used indirectly via intensity
+const AM3_DEPTH_BASE = 0.8; // reserved for future use
 
 const FM1_BASE_FREQ = 0.001;
 const FM1_INDEX = 2;
@@ -163,10 +184,8 @@ const FM3_INDEX = 1.5;
 
 // --- Subcomponent --------------------------------------------------------
 
-/**
- * ModulationControls: Renders the toggle icon and the 9-button grid.
- * All state and handlers are owned by the parent Wavy component.
- */
+// ModulationControls: Renders the toggle icon and the 9-button grid.
+// All state and handlers are owned by the parent Wavy component.
 function ModulationControls({
   menuExpanded,
   setMenuExpanded,
@@ -198,13 +217,13 @@ function ModulationControls({
         <img
           src={WaveSVG}
           alt="Wave Icon"
-          className={`wave-icon ${menuExpanded ? 'expanded' : ''}`}
+          className={`wave-icon ${menuExpanded ? "expanded" : ""}`}
         />
       </button>
 
-      <div className={`modulation-controls ${menuExpanded ? 'visible' : ''}`}>
+      <div className={`modulation-controls ${menuExpanded ? "visible" : ""}`}>
         <ModButton
-          label="MOD"
+          label="⏻"
           active={systemActive}
           onClick={() => setSystemActive(!systemActive)}
           isMain
@@ -272,29 +291,27 @@ function ModulationControls({
 
 // --- Reducer for modulation toggles -------------------------------------
 
-/**
- * modulationReducer: Manages the 9 boolean toggles.
- * Actions are named exactly like the previous setters for safety.
- */
+// modulationReducer: Manages the 9 boolean toggles.
+// Actions are named to mirror the old setter names.
 function modulationReducer(state, action) {
   switch (action.type) {
-    case 'setSystemActive':
+    case "setSystemActive":
       return { ...state, systemActive: action.payload };
-    case 'setAmActive':
+    case "setAmActive":
       return { ...state, amActive: action.payload };
-    case 'setFmActive':
+    case "setFmActive":
       return { ...state, fmActive: action.payload };
-    case 'setAm1Active':
+    case "setAm1Active":
       return { ...state, am1Active: action.payload };
-    case 'setAm2Active':
+    case "setAm2Active":
       return { ...state, am2Active: action.payload };
-    case 'setAm3Active':
+    case "setAm3Active":
       return { ...state, am3Active: action.payload };
-    case 'setFm1Active':
+    case "setFm1Active":
       return { ...state, fm1Active: action.payload };
-    case 'setFm2Active':
+    case "setFm2Active":
       return { ...state, fm2Active: action.payload };
-    case 'setFm3Active':
+    case "setFm3Active":
       return { ...state, fm3Active: action.payload };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -305,7 +322,7 @@ function modulationReducer(state, action) {
 
 const Wavy = () => {
   const canvasRef = useRef();
-  
+
   // consolidated wave configuration
   const waveConfig = useRef({
     amplitude: 10,
@@ -317,12 +334,12 @@ const Wavy = () => {
     freqMinReached: { current: false },
   });
 
-  // wave constants
-  const constants = { 
+  // animation constants (bounds and change rates)
+  const constants = {
     amplitudeChange: 0.075,
     frequencyChange: 0.0002533333,
-    ampMax: 55,
-    ampMin: -5,
+    ampMax: 50,
+    ampMin: -25,
     freqMax: 1,
     freqMin: 0.01,
   };
@@ -343,7 +360,6 @@ const Wavy = () => {
     fm3Active: false,
   });
 
-  // Destructure for compatibility with existing code
   const {
     systemActive,
     amActive,
@@ -363,7 +379,6 @@ const Wavy = () => {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    
     let frameId;
     const render = () => {
       updateWave(waveConfig, constants);
@@ -374,35 +389,35 @@ const Wavy = () => {
 
     frameId = requestAnimationFrame(render);
     return () => cancelAnimationFrame(frameId);
-  }, [mousePos, systemActive, amActive, fmActive, am1Active, am2Active, am3Active, fm1Active, fm2Active, fm3Active]);
+  }, [mousePos, modState, constants]);
 
-  // Invariant: turning off a main toggle disables all its sub-toggles
+  // invariant: turning off a main toggle disables all its sub-toggles
   useEffect(() => {
     if (!amActive) {
-      dispatch({ type: 'setAm1Active', payload: false });
-      dispatch({ type: 'setAm2Active', payload: false });
-      dispatch({ type: 'setAm3Active', payload: false });
+      dispatch({ type: "setAm1Active", payload: false });
+      dispatch({ type: "setAm2Active", payload: false });
+      dispatch({ type: "setAm3Active", payload: false });
     }
   }, [amActive]);
 
   useEffect(() => {
     if (!fmActive) {
-      dispatch({ type: 'setFm1Active', payload: false });
-      dispatch({ type: 'setFm2Active', payload: false });
-      dispatch({ type: 'setFm3Active', payload: false });
+      dispatch({ type: "setFm1Active", payload: false });
+      dispatch({ type: "setFm2Active", payload: false });
+      dispatch({ type: "setFm3Active", payload: false });
     }
   }, [fmActive]);
 
   useEffect(() => {
     if (!systemActive) {
-      dispatch({ type: 'setAmActive', payload: false });
-      dispatch({ type: 'setFmActive', payload: false });
-      dispatch({ type: 'setAm1Active', payload: false });
-      dispatch({ type: 'setAm2Active', payload: false });
-      dispatch({ type: 'setAm3Active', payload: false });
-      dispatch({ type: 'setFm1Active', payload: false });
-      dispatch({ type: 'setFm2Active', payload: false });
-      dispatch({ type: 'setFm3Active', payload: false });
+      dispatch({ type: "setAmActive", payload: false });
+      dispatch({ type: "setFmActive", payload: false });
+      dispatch({ type: "setAm1Active", payload: false });
+      dispatch({ type: "setAm2Active", payload: false });
+      dispatch({ type: "setAm3Active", payload: false });
+      dispatch({ type: "setFm1Active", payload: false });
+      dispatch({ type: "setFm2Active", payload: false });
+      dispatch({ type: "setFm3Active", payload: false });
     }
   }, [systemActive]);
 
@@ -410,8 +425,10 @@ const Wavy = () => {
     <div className="wavy-container">
       <canvas
         ref={canvasRef}
-        width={typeof window !== 'undefined' ? window.innerWidth : 800}
-        height={typeof window !== 'undefined' ? window.innerHeight / 2 : 400}
+        width={typeof window !== "undefined" ? window.innerWidth : 800}
+        height={
+          typeof window !== "undefined" ? Math.floor(window.innerHeight / 2) : 400
+        }
         className="wave-canvas"
       />
 
@@ -419,23 +436,23 @@ const Wavy = () => {
         menuExpanded={menuExpanded}
         setMenuExpanded={setMenuExpanded}
         systemActive={systemActive}
-        setSystemActive={(v) => dispatch({ type: 'setSystemActive', payload: v })}
+        setSystemActive={(v) => dispatch({ type: "setSystemActive", payload: v })}
         amActive={amActive}
-        setAmActive={(v) => dispatch({ type: 'setAmActive', payload: v })}
+        setAmActive={(v) => dispatch({ type: "setAmActive", payload: v })}
         fmActive={fmActive}
-        setFmActive={(v) => dispatch({ type: 'setFmActive', payload: v })}
+        setFmActive={(v) => dispatch({ type: "setFmActive", payload: v })}
         am1Active={am1Active}
-        setAm1Active={(v) => dispatch({ type: 'setAm1Active', payload: v })}
+        setAm1Active={(v) => dispatch({ type: "setAm1Active", payload: v })}
         am2Active={am2Active}
-        setAm2Active={(v) => dispatch({ type: 'setAm2Active', payload: v })}
+        setAm2Active={(v) => dispatch({ type: "setAm2Active", payload: v })}
         am3Active={am3Active}
-        setAm3Active={(v) => dispatch({ type: 'setAm3Active', payload: v })}
+        setAm3Active={(v) => dispatch({ type: "setAm3Active", payload: v })}
         fm1Active={fm1Active}
-        setFm1Active={(v) => dispatch({ type: 'setFm1Active', payload: v })}
+        setFm1Active={(v) => dispatch({ type: "setFm1Active", payload: v })}
         fm2Active={fm2Active}
-        setFm2Active={(v) => dispatch({ type: 'setFm2Active', payload: v })}
+        setFm2Active={(v) => dispatch({ type: "setFm2Active", payload: v })}
         fm3Active={fm3Active}
-        setFm3Active={(v) => dispatch({ type: 'setFm3Active', payload: v })}
+        setFm3Active={(v) => dispatch({ type: "setFm3Active", payload: v })}
       />
     </div>
   );

@@ -1,12 +1,12 @@
 import React from 'react';
 
 const ModButton = ({ label, active, description, onClick, isMain, disabled }) => {
-    const buttonClassName = `modButton ${active ? 'active' : 'inactive'} ${isMain ? 'mainModButton' : ''}`;
+    const buttonClassName = `modButton ${active ? 'active' : 'inactive'} ${isMain ? 'mainModButton' : ''} ${disabled ? 'disabled' : ''}`;
 
     
     return <button
     className = {buttonClassName}
-        onClick={onClick}
+        onClick={disabled ? undefined : onClick}
         aria-pressed={active}
         aria-label={description}
         disabled={disabled}
@@ -17,8 +17,5 @@ const ModButton = ({ label, active, description, onClick, isMain, disabled }) =>
 };
 
 export default ModButton;
-
-
-
 
 

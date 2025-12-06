@@ -1,8 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Courier New', Courier, monospace;
-  background-color: hsla(344, 13%, 74%, 0.3);
-  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Courier New', Courier, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

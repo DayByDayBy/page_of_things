@@ -11,7 +11,7 @@ const PageContainer = () => {
       {/* <Menu onSelect={handleModSelect}/> */}
       <NavBar />
       <p className="text">
-        theboag<br></br>[@]<br></br>gmail
+        lab<br></br>[@]<br></br>boag<br></br>dev
       </p>
     </>
   );

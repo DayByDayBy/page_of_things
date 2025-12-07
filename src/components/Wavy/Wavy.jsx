@@ -343,6 +343,7 @@ function ModulationControls({
           onClick={() => setAmActive(!amActive)}
           description="amplitude modulation toggle"
           disabled={!systemActive}
+          className="amMainButton"
         />
 
         <ModButton
@@ -351,6 +352,7 @@ function ModulationControls({
           onClick={() => setFmActive(!fmActive)}
           description="frequency modulation toggle"
           disabled={!systemActive}
+          className="fmMainButton"
         />
 
         <ModButton
@@ -359,6 +361,7 @@ function ModulationControls({
           onClick={() => setAm1Active(!am1Active)}
           description="AM one"
           disabled={!amActive}
+          className="am1Button"
         />
 
         <ModButton
@@ -367,6 +370,7 @@ function ModulationControls({
           onClick={() => setFm1Active(!fm1Active)}
           description="FM one"
           disabled={!fmActive}
+          className="fm1Button"
         />
 
         <ModButton
@@ -375,6 +379,7 @@ function ModulationControls({
           onClick={() => setAm2Active(!am2Active)}
           description="AM two"
           disabled={!amActive}
+          className="am2Button"
         />
 
         <ModButton
@@ -383,6 +388,7 @@ function ModulationControls({
           onClick={() => setFm2Active(!fm2Active)}
           description="FM two"
           disabled={!fmActive}
+          className="fm2Button"
         />
 
         <ModButton
@@ -391,6 +397,7 @@ function ModulationControls({
           onClick={() => setAm3Active(!am3Active)}
           description="AM three"
           disabled={!amActive}
+          className="am3Button"
         />
 
         <ModButton
@@ -399,6 +406,7 @@ function ModulationControls({
           onClick={() => setFm3Active(!fm3Active)}
           description="FM three"
           disabled={!fmActive}
+          className="fm3Button"
         />
       </div>
     </div>

@@ -90,32 +90,32 @@
     grid-row: 1;
 }
 
-.modButton:nth-child(4) {
+.am1Button {
     grid-column: 2;
     grid-row: 2;
 }
 
-.modButton:nth-child(5) {
+.fm1Button {
     grid-column: 3;
     grid-row: 2;
 }
 
-.modButton:nth-child(6) {
+.am2Button {
     grid-column: 2;
     grid-row: 3;
 }
 
-.modButton:nth-child(7) {
+.fm2Button {
     grid-column: 3;
     grid-row: 3;
 }
 
-.modButton:nth-child(8) {
+.am3Button {
     grid-column: 2;
     grid-row: 4;
 }
 
-.modButton:nth-child(9) {
+.fm3Button {
     grid-column: 3;
     grid-row: 4;
 }

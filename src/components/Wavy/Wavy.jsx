@@ -277,11 +277,11 @@ function sampleReadoutWave(canvas, waveConfig, mousePos, modState, samplesRef) {
 
 // --- constants (collected here to aid refactoring, etc)-----------------------------------------------------------
 
-const NUM_POINTS = 3000;
+const NUM_POINTS = ;
 const WAVE_COLOR = "rgba(0, 0, 0, 0.67)";
 const OSCILLOSCOPE_WAVE_COLOR = "rgba(160, 196, 224, 0.8)";
-const OSC_SAMPLES = 128;
-const READOUT_SAMPLES = 256;
+const OSC_SAMPLES = 64;
+const READOUT_SAMPLES = 128;
 
 // AM/FM modulation depths and base frequencies
 const TREMOLO_FREQ = 0.003;

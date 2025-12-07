@@ -98,10 +98,10 @@ function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
   const mouseQuotient = normalize(
     mousePos.y !== 0 ? mousePos.x / mousePos.y : 0,
     0,
-    10
+    MOUSE_QUOTIENT_MAX
   );
 
-  const carrierFreq = frequency / 10;
+  const carrierFreq = frequency / CARRIER_FREQ_DIVISOR;
 
   let totalAM = 0;
   let totalFM = 0;
@@ -113,7 +113,8 @@ function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
     }
 
     if (am2Active) {
-      const ringFreq = (mousePos.x / canvas.width) * 0.015 + 0.005;
+      const ringFreq =
+        (mousePos.x / canvas.width) * AM2_MOUSE_FREQ_SCALE + AM2_MOUSE_FREQ_BASE;
       totalAM +=
         AM2_DEPTH *
         Math.sin(2 * Math.PI * ringFreq * x) *
@@ -121,8 +122,10 @@ function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
     }
 
     if (am3Active) {
-      const mouseAMFreq = (mousePos.y / canvas.height) * 0.02 + 0.008;
-      const intensity = 0.6 + 0.4 * Math.abs(normMouseX);
+      const mouseAMFreq =
+        (mousePos.y / canvas.height) * AM3_MOUSE_FREQ_SCALE + AM3_MOUSE_FREQ_BASE;
+      const intensity =
+        AM3_INTENSITY_BASE + AM3_INTENSITY_VARIATION * Math.abs(normMouseX);
       totalAM += intensity * Math.sin(2 * Math.PI * mouseAMFreq * x);
     }
   }
@@ -135,7 +138,8 @@ function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
     }
 
     if (fm2Active) {
-      const modFreq = (mousePos.x / canvas.width) * 0.01 + 0.002;
+      const modFreq =
+        (mousePos.x / canvas.width) * FM2_MOUSE_FREQ_SCALE + FM2_MOUSE_FREQ_BASE;
       const modIndex = FM2_INDEX;
       totalFM += modIndex * Math.sin(2 * Math.PI * modFreq * x);
     }
@@ -145,7 +149,8 @@ function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
       const modIndex = FM3_INDEX;
       const complexMod =
         Math.sin(2 * Math.PI * modFreq * x) +
-        0.5 * Math.sin(2 * Math.PI * modFreq * 2 * x);
+        FM3_SECOND_HARMONIC_WEIGHT *
+          Math.sin(2 * Math.PI * modFreq * 2 * x);
       totalFM += modIndex * complexMod;
     }
   }
@@ -257,11 +262,25 @@ const AM1_DEPTH = 0.5;
 const AM2_DEPTH = 0.67;
 const AM3_DEPTH_BASE = 0.8; // not yet used, do plan to tho 
 
+const CARRIER_FREQ_DIVISOR = 10;
+const MOUSE_QUOTIENT_MAX = 10;
+
+const AM2_MOUSE_FREQ_SCALE = 0.015;
+const AM2_MOUSE_FREQ_BASE = 0.005;
+
+const AM3_MOUSE_FREQ_SCALE = 0.02;
+const AM3_MOUSE_FREQ_BASE = 0.008;
+const AM3_INTENSITY_BASE = 0.6;
+const AM3_INTENSITY_VARIATION = 0.4;
+
 const FM1_BASE_FREQ = 0.001;
 const FM1_INDEX = 2;
 const FM2_INDEX = 3;
 const FM3_BASE_FREQ = 0.0006;
 const FM3_INDEX = 1.5;
+const FM2_MOUSE_FREQ_SCALE = 0.01;
+const FM2_MOUSE_FREQ_BASE = 0.002;
+const FM3_SECOND_HARMONIC_WEIGHT = 0.5;
 
 // --- Subcomponent --------------------------------------------------------
 

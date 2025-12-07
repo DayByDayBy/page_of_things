@@ -100,7 +100,7 @@ p.text {
   font-family: 'Courier New', Courier, monospace;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   main {
     margin: 1rem;
     padding: 1rem;

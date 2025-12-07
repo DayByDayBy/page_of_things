@@ -277,7 +277,7 @@ function sampleReadoutWave(canvas, waveConfig, mousePos, modState, samplesRef) {
 
 // --- constants (collected here to aid refactoring, etc)-----------------------------------------------------------
 
-const NUM_POINTS = ;
+const NUM_POINTS = 3000;
 const WAVE_COLOR = "rgba(0, 0, 0, 0.67)";
 const OSCILLOSCOPE_WAVE_COLOR = "rgba(160, 196, 224, 0.8)";
 const OSC_SAMPLES = 64;

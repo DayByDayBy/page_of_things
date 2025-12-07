@@ -1,34 +1,134 @@
+import React, { useEffect, useState } from "react";
 
+function formatAlgoLabel(prefix, one, two, three) {
+  const parts = [];
+  if (one) parts.push(`${prefix}1`);
+  if (two) parts.push(`${prefix}2`);
+  if (three) parts.push(`${prefix}3`);
+  if (parts.length === 0) return "None";
+  return parts.join(" + ");
+}
 
-import { useState, useEffect } from "react";
+const Readout = ({ samplesRef, flags }) => {
+  const {
+    amActive,
+    am1Active,
+    am2Active,
+    am3Active,
+    fmActive,
+    fm1Active,
+    fm2Active,
+    fm3Active,
+  } = flags;
 
+  const [stats, setStats] = useState({
+    amplitudePx: 0,
+    peakToPeak: 0,
+    cycles: 0,
+    amDepthPx: 0,
+    fmShift: 0,
+  });
 
+  useEffect(() => {
+    const id = setInterval(() => {
+      const pts = (samplesRef && samplesRef.current) || [];
+      if (!pts || pts.length < 2) {
+        return;
+      }
 
-const Readout = () => {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+      const ys = pts.map((p) => p.y);
+      const minY = Math.min(...ys);
+      const maxY = Math.max(...ys);
+      const peakToPeak = maxY - minY;
+      const amplitudePx = peakToPeak / 2;
 
-    useEffect(() => {
-        const updateMousePosition = (e) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
+      let zeroCrossings = 0;
+      for (let i = 1; i < ys.length; i++) {
+        const prev = ys[i - 1];
+        const curr = ys[i];
+        if ((prev <= 0 && curr > 0) || (prev >= 0 && curr < 0)) {
+          zeroCrossings++;
+        }
+      }
+      const cycles = zeroCrossings / 2;
 
-        };
-        document.addEventListener("mousemove", updateMousePosition);
-        return () => {
-            document.removeEventListener("mousemove", updateMousePosition);
-        };
-    }, []);
+      let totalAbsDy = 0;
+      for (let i = 1; i < ys.length; i++) {
+        totalAbsDy += Math.abs(ys[i] - ys[i - 1]);
+      }
+      const fmShiftRaw = ys.length > 1 ? totalAbsDy / (ys.length - 1) : 0;
 
+      const amDepthPx = amActive ? amplitudePx : 0;
+      const fmShift = fmActive ? fmShiftRaw : 0;
 
-    return (
+      setStats({
+        amplitudePx,
+        peakToPeak,
+        cycles,
+        amDepthPx,
+        fmShift,
+      });
+    }, 100);
 
-        <div className="readout">
-            {/* AM: {(modBoolean ? 'on' : 'off')}<br></br> */}
-            X:{mousePosition.x}
-            <br></br>
-            Y:{mousePosition.y}
+    return () => clearInterval(id);
+  }, [samplesRef, amActive, fmActive]);
+
+  const amAlgo = amActive
+    ? formatAlgoLabel("AM", am1Active, am2Active, am3Active)
+    : "Off";
+  const fmAlgo = fmActive
+    ? formatAlgoLabel("FM", fm1Active, fm2Active, fm3Active)
+    : "Off";
+
+  const formatPx = (value) => `${value.toFixed(1)} px`;
+
+  return (
+    <div className="modulation-readout-container" aria-live="polite">
+      <div className={`modulation-card am-card ${amActive ? "visible" : ""}`}>
+        <div className="modulation-card-title">AM Modulation</div>
+        <div className="modulation-card-body">
+          <div className="modulation-card-row">
+            <span className="modulation-card-label">Depth</span>
+            <span className="modulation-card-value">
+              {amActive ? `±${stats.amDepthPx.toFixed(1)} px` : "-"}
+            </span>
+          </div>
+          <div className="modulation-card-row">
+            <span className="modulation-card-label">Peak-to-Peak</span>
+            <span className="modulation-card-value">
+              {formatPx(stats.peakToPeak)}
+            </span>
+          </div>
+          <div className="modulation-card-row">
+            <span className="modulation-card-label">Algo</span>
+            <span className="modulation-card-value">{amAlgo}</span>
+          </div>
         </div>
-    )
+      </div>
 
+      <div className={`modulation-card fm-card ${fmActive ? "visible" : ""}`}>
+        <div className="modulation-card-title">FM Modulation</div>
+        <div className="modulation-card-body">
+          <div className="modulation-card-row">
+            <span className="modulation-card-label">Cycles</span>
+            <span className="modulation-card-value">
+              {stats.cycles.toFixed(2)}
+            </span>
+          </div>
+          <div className="modulation-card-row">
+            <span className="modulation-card-label">FM Shift</span>
+            <span className="modulation-card-value">
+              {fmActive ? stats.fmShift.toFixed(2) : "-"}
+            </span>
+          </div>
+          <div className="modulation-card-row">
+            <span className="modulation-card-label">Algo</span>
+            <span className="modulation-card-value">{fmAlgo}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Readout;

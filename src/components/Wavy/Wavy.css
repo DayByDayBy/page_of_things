@@ -121,7 +121,7 @@
 }
 
 .modButton.active {
-    background-color: green;
+    background-color: rgb(34, 129, 34);
     color: white;
 }
 

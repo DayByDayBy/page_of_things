@@ -4,6 +4,7 @@ import { useMousePosition } from "../../hooks/useMousePosition";
 import WaveSVG from "../../assets/wave.svg";
 import ModButton from "./ModButton";
 import OscilloscopeDisplay from "./OscilloscopeDisplay";
+import Readout from "./Readout";
 
 // normalizes a value from [fromMin, fromMax] to [-1, 1]
 function normalize(x, fromMin, fromMax) {
@@ -249,12 +250,38 @@ function drawOscilloscopeFromBuffer(oscCtx, oscCanvas, buffer, min, max) {
   oscCtx.stroke();
 }
 
+// samples a reduced set of main-canvas points for metrics/readout
+function sampleReadoutWave(canvas, waveConfig, mousePos, modState, samplesRef) {
+  const width = canvas.width;
+  const height = canvas.height;
+  const count = READOUT_SAMPLES;
+
+  if (!canvas || count <= 1) {
+    samplesRef.current = [];
+    return;
+  }
+
+  if (!samplesRef.current || samplesRef.current.length !== count) {
+    samplesRef.current = new Array(count);
+  }
+
+  const stepX = width / (count - 1);
+  const mid = height / 2;
+
+  for (let i = 0; i < count; i++) {
+    const x = i * stepX;
+    const y = computeWaveY(x, canvas, waveConfig, mousePos, modState);
+    samplesRef.current[i] = { x, y: y - mid };
+  }
+}
+
 // --- constants (collected here to aid refactoring, etc)-----------------------------------------------------------
 
-const NUM_POINTS = 4000;
+const NUM_POINTS = 3000;
 const WAVE_COLOR = "rgba(0, 0, 0, 0.67)";
 const OSCILLOSCOPE_WAVE_COLOR = "rgba(160, 196, 224, 0.8)";
 const OSC_SAMPLES = 128;
+const READOUT_SAMPLES = 256;
 
 // AM/FM modulation depths and base frequencies
 const TREMOLO_FREQ = 0.003;
@@ -481,6 +508,7 @@ const Wavy = () => {
   const canvasRef = useRef();
   const oscilloscopeRef = useRef();
   const oscBufferRef = useRef(new Array(OSC_SAMPLES).fill(0));
+  const readoutSamplesRef = useRef([]);
 
   // consolidated wave configuration
   const waveConfig = useRef({
@@ -544,6 +572,9 @@ const Wavy = () => {
     const render = () => {
       updateWave(waveConfig, constants);
       updatePhase(waveConfig);
+      if (systemActive) {
+        sampleReadoutWave(canvas, waveConfig, mousePos, modState, readoutSamplesRef);
+      }
       drawWave(ctx, canvas, waveConfig, mousePos, modState);
       if (oscCtx && oscCanvas && systemActive) {
         const { min, max } = sampleOscilloscope(
@@ -603,7 +634,15 @@ const Wavy = () => {
         fm3Active={fm3Active}
         setFm3Active={(v) => dispatch({ type: "setFm3Active", payload: v })}
       />
-      {systemActive && <OscilloscopeDisplay ref={oscilloscopeRef} />}
+      {systemActive && (
+        <>
+          <OscilloscopeDisplay ref={oscilloscopeRef} />
+          <Readout
+            samplesRef={readoutSamplesRef}
+            flags={modState}
+          />
+        </>
+      )}
     </div>
   );
 };

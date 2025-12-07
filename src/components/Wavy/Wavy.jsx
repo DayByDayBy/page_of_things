@@ -612,37 +612,39 @@ const Wavy = () => {
         aria-label="Animated wave visualization"
       />
 
-      <ModulationControls
-        menuExpanded={menuExpanded}
-        setMenuExpanded={setMenuExpanded}
-        systemActive={systemActive}
-        setSystemActive={(v) => dispatch({ type: "setSystemActive", payload: v })}
-        amActive={amActive}
-        setAmActive={(v) => dispatch({ type: "setAmActive", payload: v })}
-        fmActive={fmActive}
-        setFmActive={(v) => dispatch({ type: "setFmActive", payload: v })}
-        am1Active={am1Active}
-        setAm1Active={(v) => dispatch({ type: "setAm1Active", payload: v })}
-        am2Active={am2Active}
-        setAm2Active={(v) => dispatch({ type: "setAm2Active", payload: v })}
-        am3Active={am3Active}
-        setAm3Active={(v) => dispatch({ type: "setAm3Active", payload: v })}
-        fm1Active={fm1Active}
-        setFm1Active={(v) => dispatch({ type: "setFm1Active", payload: v })}
-        fm2Active={fm2Active}
-        setFm2Active={(v) => dispatch({ type: "setFm2Active", payload: v })}
-        fm3Active={fm3Active}
-        setFm3Active={(v) => dispatch({ type: "setFm3Active", payload: v })}
-      />
-      {systemActive && (
-        <>
-          <OscilloscopeDisplay ref={oscilloscopeRef} />
-          <Readout
-            samplesRef={readoutSamplesRef}
-            flags={modState}
-          />
-        </>
-      )}
+      <div className="wavy-controls-grid">
+        <ModulationControls
+          menuExpanded={menuExpanded}
+          setMenuExpanded={setMenuExpanded}
+          systemActive={systemActive}
+          setSystemActive={(v) => dispatch({ type: "setSystemActive", payload: v })}
+          amActive={amActive}
+          setAmActive={(v) => dispatch({ type: "setAmActive", payload: v })}
+          fmActive={fmActive}
+          setFmActive={(v) => dispatch({ type: "setFmActive", payload: v })}
+          am1Active={am1Active}
+          setAm1Active={(v) => dispatch({ type: "setAm1Active", payload: v })}
+          am2Active={am2Active}
+          setAm2Active={(v) => dispatch({ type: "setAm2Active", payload: v })}
+          am3Active={am3Active}
+          setAm3Active={(v) => dispatch({ type: "setAm3Active", payload: v })}
+          fm1Active={fm1Active}
+          setFm1Active={(v) => dispatch({ type: "setFm1Active", payload: v })}
+          fm2Active={fm2Active}
+          setFm2Active={(v) => dispatch({ type: "setFm2Active", payload: v })}
+          fm3Active={fm3Active}
+          setFm3Active={(v) => dispatch({ type: "setFm3Active", payload: v })}
+        />
+        {systemActive && (
+          <>
+            <OscilloscopeDisplay ref={oscilloscopeRef} />
+            <Readout
+              samplesRef={readoutSamplesRef}
+              flags={modState}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 };

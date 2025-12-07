@@ -11,12 +11,30 @@
     z-index: 0;
 }
 
+.wavy-controls-grid {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "controls"
+      "osc"
+      "readout";
+    row-gap: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
 .modulation-controls-container {
     position: fixed;
     top: 1.5rem;
     left: 1.5rem;
     z-index: 3;
     text-align: left;
+    grid-area: controls;
+    pointer-events: auto;
 }
 
 .toggle-modulation-menu {
@@ -183,6 +201,9 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
+    grid-area: osc;
+    margin-top: 3.5rem;
+    pointer-events: auto;
 }
 
 .oscilloscope-canvas {
@@ -210,6 +231,9 @@
     gap: 0.5rem;
     font-size: 0.7rem;
     color: rgba(0, 0, 0, 0.8);
+    grid-area: readout;
+    margin-top: 3rem;
+    pointer-events: auto;
 }
 
 .modulation-card {

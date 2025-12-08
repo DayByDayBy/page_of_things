@@ -204,7 +204,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-@media (max-width: 810px) {
+@media (max-width: 800px) {
   .modulation-controls-container {
     display: block;
     position: static;

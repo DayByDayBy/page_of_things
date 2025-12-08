@@ -114,7 +114,7 @@ h2{
   font-family: 'Courier New', Courier, monospace;
 }
 
-@media (max-width: 810px) {
+@media (max-width: 800px) {
   .content-grid{
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;

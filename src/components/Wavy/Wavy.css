@@ -64,6 +64,7 @@
     pointer-events: auto;
 }
 
+
 .modButton {
     width: 4vw;
     min-width: 3rem;
@@ -135,6 +136,31 @@
     background-color: hsla(344, 13%, 74%, 0.384);
     color: black;
 }
+
+/* a wee tooltip for the mod buttons */
+
+.formula-tooltip {
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  z-index: 999;
+  font-size: 0.8rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.mod-button:hover .formula-tooltip {
+  opacity: 1;
+}
+
+
 
 @media (max-width: 810px) {
     .modulation-controls-container {

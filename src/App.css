@@ -94,7 +94,7 @@ h1{
     margin: 0;
     padding: .1vw;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 3.5vw;
+    font-size: 3.2vw;
     font-weight: 800;
 }
 
@@ -144,16 +144,25 @@ h2{
     grid-template-areas: "main" "controls";
   }
 
+  h1{
+    margin: 0;
+    padding: 0.1vw;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 4vw;
+    transition: 0.15s ease;
+    font-weight: 700;
+    }
+
+
   .controls-column{
     position: static;
   }
 
   .main-column{
-    max-width: 20vw;
+    max-width: 25vw;
     justify-self: center;
     grid-area: main;
 }
-
 
   .svglink img {
     width: 40px;

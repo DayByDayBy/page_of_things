@@ -88,7 +88,7 @@ const READOUT_SAMPLES = 128;
 const CONSTANTS = {
   amplitudeChange: 0.075,
   frequencyChange: 0.00008046,
-  ampMax: 80.46,
+  ampMax: 60,
   ampMin: -80.46,
   freqMax: 0.8046,
   freqMin: 0.008046,

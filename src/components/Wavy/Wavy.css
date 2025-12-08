@@ -12,19 +12,8 @@
 }
 
 .wavy-controls-grid {
-    position: fixed;
-    top: 1.5rem;
-    left: 1.5rem;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      "controls"
-      "osc"
-      "readout";
-    row-gap: 0;
-    pointer-events: none;
-    z-index: 2;
+    /* Grid exists but doesn't control layout yet */
+    display: contents; /* This makes the wrapper invisible to layout */
 }
 
 .modulation-controls-container {
@@ -33,8 +22,6 @@
     left: 1.5rem;
     z-index: 3;
     text-align: left;
-    grid-area: controls;
-    pointer-events: auto;
 }
 
 .toggle-modulation-menu {
@@ -151,45 +138,46 @@
 
 @media (max-width: 810px) {
     .modulation-controls-container {
-    display: block;
+      display: block;
+      position: static;
+      top: auto;
+      left: auto;
+      margin-top: 0.5rem;
     }
 
     .toggle-modulation-menu {
-    position: static;
-    display: block;
-    margin-bottom: 0.5rem;
+      position: static;
+      display: block;
+      margin-bottom: 0.5rem;
     }
 
     .modulation-controls {
-    position: static;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.5rem 0;
-    margin: 0;
-    gap: 0.25rem;
+      position: static;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0.5rem 0;
+      margin: 0;
+      gap: 0.25rem;
     }
 
     .modButton,
     .mainModButton,
     .amMainButton,
     .fmMainButton {
-    min-width: 20vw;
-    width: auto;
-    grid-column: auto;
-    grid-row: auto;
+      min-width: 20vw;
+      width: auto;
+      grid-column: auto;
+      grid-row: auto;
     }
 
     .oscilloscope-container {
-      position: static;
-      margin: 1rem 0 0 0;
+      position: static !important;
+      top: auto !important;
+      left: auto !important;
+      margin: 1rem 0 0 0 !important;
     }
 
-    .modulation-readout-container {
-      position: static;
-      margin: 0.5rem 0 0 0;
-    }
-}
 
 .oscilloscope-container {
     position: fixed;
@@ -201,9 +189,6 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
-    grid-area: osc;
-    margin-top: 3.5rem;
-    pointer-events: auto;
 }
 
 .oscilloscope-canvas {
@@ -220,21 +205,7 @@
     color: rgba(0, 0, 0, 0.7);
 }
 
-.modulation-readout-container {
-    position: fixed;
-    top: 11.5rem;
-    left: 1.5rem;
-    margin: 3rem 0 0 0;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: 0.7rem;
-    color: rgba(0, 0, 0, 0.8);
-    grid-area: readout;
-    margin-top: 3rem;
-    pointer-events: auto;
-}
+
 
 .modulation-card {
     width: 140px;
@@ -274,9 +245,6 @@
     gap: 0.5rem;
 }
 
-.modulation-card-label {
-    font-weight: 100;
-}
 
 .modulation-card-value {
     font-variant-numeric: tabular-nums;

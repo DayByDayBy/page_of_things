@@ -6,19 +6,16 @@ body{
 }
 
 main{
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   padding: 1.5rem;
   margin: 2rem auto;
-  max-width: 900px;
+  max-width: 90vw;
   min-height: 60vh;
   border-radius: 3rem;
   /* background: linear-gradient(
     to top right, 
     hsla(235, 17%, 74%, 0.1) 0%, 
     hsla(265, 1%, 74%, 0.19) 67%); */
+  position: relative;
   z-index: 1;
 }
 
@@ -38,6 +35,23 @@ background:linear-gradient( 110deg,
 z-index: 1;
 }
 
+.main-column{
+    max-width: 20vw;
+    justify-self: center;
+}
+
+.content-grid{
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.controls-column{
+  position: sticky;
+  top: 1.5rem;
+}
+
 .wave-container{
   position: absolute;
   width:101%;
@@ -55,7 +69,7 @@ a {
 
 .svglink{
   padding: auto 1rem;
-  margin: 3rem 1rem;
+  margin: 3rem 1rem 2rem;
 }
 
 .svglink img {
@@ -64,9 +78,23 @@ a {
 }
 
 p.text {
-  margin: 0rem 1rem 3rem 1rem;
-  padding: 1rem 0 2rem 0;
+  margin: 2rem 1rem 1rem 1rem;
+  padding: 1rem 0 0rem 0;
   text-align: left;
+}
+
+h1{
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+h2{
+  margin:  1rem 0;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 
@@ -94,21 +122,21 @@ p.text {
 }
 
 .name{
-  margin: 0 0 1rem 0;
-  padding: 0rem 1rem 1rem 1rem;
+  margin: 0 0 0rem 0;
+  padding: 1rem 1rem 1rem 1rem;
   display: flex;
+  flex-direction: column; 
   font-family: 'Courier New', Courier, monospace;
 }
 
-@media (max-width: 800px) {
-  main {
-    margin: 1rem;
-    padding: 1rem;
-    min-height: auto;
+@media (max-width: 810px) {
+  .content-grid{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
   }
 
-  .page-content {
-    padding: 1rem 1.5rem;
+  .controls-column{
+    position: static;
   }
 
   .svglink img {

@@ -15,7 +15,7 @@
     "katex": "^0.16.9"
   },
   "scripts": {
-    "predeploy": "npm run build",
+    "predeploy": "pnpm run build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -1,0 +1,232 @@
+.wave-controls-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.modulation-controls-container {
+  text-align: left;
+  position: relative;
+}
+
+.toggle-modulation-menu {
+  position: absolute;
+  left: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 2rem;
+}
+
+.wave-icon {
+  margin: 1rem;
+  transition: 0.5s ease;
+}
+
+.wave-icon.expanded {
+  opacity: 0.2;
+  transition: 0.7s ease;
+}
+
+.modulation-controls {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  grid-template-rows: auto auto auto auto;
+  gap: 0.25rem 0.5rem;
+  position: absolute;
+  left: 4.5rem;
+  top: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+}
+
+.modulation-controls.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modButton {
+  width: 4vw;
+  min-width: 3rem;
+  height: 2.5rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.modButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.mainModButton {
+  grid-column: 1;
+  grid-row: 1;
+  width: 5vw;
+  min-width: 4rem;
+}
+
+.amMainButton {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.fmMainButton {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.am1Button {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.fm1Button {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.am2Button {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.fm2Button {
+  grid-column: 3;
+  grid-row: 3;
+}
+
+.am3Button {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+.fm3Button {
+  grid-column: 3;
+  grid-row: 4;
+}
+
+.modButton.active {
+  background-color: rgb(34, 129, 34);
+  color: white;
+}
+
+.modButton.inactive {
+  background-color: hsla(344, 13%, 74%, 0.384);
+  color: black;
+}
+
+.oscilloscope-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.oscilloscope-canvas {
+  width: 150px;
+  height: 100px;
+  margin: 3rem 0 0 0;
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.oscilloscope-formula {
+  margin: 0rem 1rem 0rem 0rem;
+  font-size: 0.5rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.modulation-readout-container {
+  margin-top: 0rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.6rem;
+  color: rgba(0, 0, 0, 0.8);
+  pointer-events: auto;
+}
+
+.modulation-card {
+  width: 140px;
+  padding: 1rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.modulation-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.modulation-card-title {
+  margin: 0.1rem 0 0 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.modulation-card-body {
+  margin: 0;
+}
+
+.modulation-card-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.modulation-card-label {
+  font-weight: 100;
+}
+
+.modulation-card-value {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 810px) {
+  .modulation-controls-container {
+    display: block;
+    position: static;
+    margin-top: 0.5rem;
+  }
+
+  .toggle-modulation-menu {
+    position: static;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .modulation-controls {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem 0;
+    margin: 0;
+    gap: 0.25rem;
+  }
+
+  .modButton,
+  .mainModButton,
+  .amMainButton,
+  .fmMainButton {
+    min-width: 20vw;
+    width: auto;
+    grid-column: auto;
+    grid-row: auto;
+  }
+}

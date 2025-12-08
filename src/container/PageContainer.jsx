@@ -6,9 +6,10 @@ const PageContainer = () => {
   return (
     <>
       <div className="name">
-        <h3>boagDev</h3>
+        <h1>boagDev</h1>
+        <h2>engineering intelligence</h2>
       </div>
-      {/* <Menu onSelect={handleModSelect}/> */}
+
       <NavBar />
       <p className="text">
         lab<br></br>[@]<br></br>boag<br></br>dev

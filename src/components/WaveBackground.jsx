@@ -79,7 +79,7 @@ const FM1_INDEX = 2;
 const FM2_INDEX = 3;
 const FM3_BASE_FREQ = 0.0006;
 const FM3_INDEX = 1.5;
-const FM2_MOUSE_FREQ_SCALE = 0.01;
+const FM2_MOUSE_FREQ_SCALE = 0.001;
 const FM2_MOUSE_FREQ_BASE = 0.002;
 const FM3_SECOND_HARMONIC_WEIGHT = 0.5;
 
@@ -87,11 +87,11 @@ const READOUT_SAMPLES = 128;
 
 const CONSTANTS = {
   amplitudeChange: 0.075,
-  frequencyChange: 0.0002533333,
-  ampMax: 50,
-  ampMin: -25,
-  freqMax: 1,
-  freqMin: 0.01,
+  frequencyChange: 0.00008046,
+  ampMax: 80.46,
+  ampMin: -80.46,
+  freqMax: 0.8046,
+  freqMin: 0.008046,
 };
 
 // computes a single y-value for the current wave configuration at a given x
@@ -266,16 +266,6 @@ const WaveBackground = ({ mousePosition, modulationState, systemActive, samplesR
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
-
-    if (!systemActive) {
-      const width = canvas.width;
-      const height = canvas.height;
-      ctx.clearRect(0, 0, width, height);
-
-      return () => {
-        window.removeEventListener("resize", resizeCanvas);
-      };
-    }
 
     let frameId;
 

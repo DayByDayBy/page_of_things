@@ -24,7 +24,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
-min-height: 70vh;
+min-height: 80vh;
 padding: 0rem 3rem;
 margin: 0 1rem;
 border: 1px outset hsl(33, 100%, 88%, 0.3); 
@@ -35,21 +35,28 @@ background:linear-gradient( 110deg,
 z-index: 1;
 }
 
-.main-column{
-    max-width: 20vw;
-    justify-self: center;
-}
-
 .content-grid{
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   gap: 2rem;
   align-items: flex-start;
+  grid-template-areas: "controls main spacer";
 }
 
 .controls-column{
   position: sticky;
   top: 1.5rem;
+  grid-area: controls;
+}
+
+.main-column{
+    max-width: 20vw;
+    justify-self: center;
+    grid-area: main;
+}
+
+.spacer-column{
+    grid-area: spacer;
 }
 
 .wave-container{
@@ -78,22 +85,23 @@ a {
 }
 
 p.text {
-  margin: 2rem 1rem 1rem 1rem;
+  margin: 10rem 1rem 1rem 1rem;
   padding: 1rem 0 0rem 0;
   text-align: left;
 }
 
 h1{
     margin: 0;
+    padding: .1vw;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 2rem;
+    font-size: 3.5vw;
     font-weight: 800;
 }
 
 h2{
   margin:  1rem 0;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1rem;
+  font-size: 1.75vw;
   font-weight: 500;
 }
 
@@ -133,11 +141,19 @@ h2{
   .content-grid{
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
+    grid-template-areas: "main" "controls";
   }
 
   .controls-column{
     position: static;
   }
+
+  .main-column{
+    max-width: 20vw;
+    justify-self: center;
+    grid-area: main;
+}
+
 
   .svglink img {
     width: 40px;

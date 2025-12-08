@@ -84,17 +84,17 @@ a {
   height: 50px;
 }
 
-p.text {
-  margin: 10rem 1rem 1rem 1rem;
+p.text{
+  margin: 12rem 1rem 0rem 1rem;
   padding: 1rem 0 0rem 0;
-  text-align: left;
+  text-align: center;
 }
 
 h1{
     margin: 0;
     padding: .1vw;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 3.2vw;
+    font-size: 3vw;
     font-weight: 800;
 }
 
@@ -104,34 +104,13 @@ h2{
   font-size: 1.75vw;
   font-weight: 500;
 }
-
-
-/* .redbox{
-  display: flex;
-  justify-content:space-between;
-  margin: 1rem 1rem 0rem 1rem;
-  background-color: #f44336;
-  color: white;
-  padding: 1rem 2rem;
-  display: inline-block;
-  border-radius: 3rem;  
-} */
-
-/* .textBox{
-
-  padding: 0rem 12rem;
-  margin: 5rem 1rem -1rem 1rem;
-  border-radius: 1.5rem;
-  background-color: hsl(157, 42%, 58%, 0.2);
-} */
-
 .nav{
   list-style: none;
 }
 
 .name{
-  margin: 0 0 0rem 0;
-  padding: 1rem 1rem 1rem 1rem;
+  margin: 0 0 1rem 0;
+
   display: flex;
   flex-direction: column; 
   font-family: 'Courier New', Courier, monospace;

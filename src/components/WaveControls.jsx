@@ -3,7 +3,7 @@ import WaveSVG from "../assets/wave.svg";
 import ModButton from "./Wavy/ModButton";
 import OscilloscopeDisplay from "./Wavy/OscilloscopeDisplay";
 import Readout from "./Wavy/Readout";
-import "../styles/WaveControls.css";
+import "../styles/Wave.css";
 
 function ModulationControls({
   menuExpanded,
@@ -62,7 +62,7 @@ function ModulationControls({
           label="AM"
           active={amActive}
           onClick={() => setAmActive(!amActive)}
-          description="amplitude modulation toggle"
+          description="on/off for amplitude modulation"
           disabled={!systemActive}
           className="amMainButton"
         />
@@ -71,7 +71,7 @@ function ModulationControls({
           label="FM"
           active={fmActive}
           onClick={() => setFmActive(!fmActive)}
-          description="frequency modulation toggle"
+          description="on/off for frequency modulation"
           disabled={!systemActive}
           className="fmMainButton"
         />
@@ -81,9 +81,9 @@ function ModulationControls({
           active={am1Active}
           onClick={() => setAm1Active(!am1Active)}
           description="AM one"
+          formula="AM1(x) = A₁ sin(2π fₜ x)"
           disabled={!amActive}
           className="am1Button"
-          
         />
 
         <ModButton
@@ -91,6 +91,7 @@ function ModulationControls({
           active={fm1Active}
           onClick={() => setFm1Active(!fm1Active)}
           description="FM one"
+          formula="FM1(x) = I₁ sin(2π f_m x)"
           disabled={!fmActive}
           className="fm1Button"
         />
@@ -100,6 +101,7 @@ function ModulationControls({
           active={am2Active}
           onClick={() => setAm2Active(!am2Active)}
           description="AM two"
+          formula="AM2(x) = A₂ sin(2π f_r x) · sin(2π f_c x)"
           disabled={!amActive}
           className="am2Button"
         />
@@ -109,6 +111,7 @@ function ModulationControls({
           active={fm2Active}
           onClick={() => setFm2Active(!fm2Active)}
           description="FM two"
+          formula="FM2(x) = I₂ sin(2π f_m(mouse) x)"
           disabled={!fmActive}
           className="fm2Button"
         />
@@ -118,6 +121,7 @@ function ModulationControls({
           active={am3Active}
           onClick={() => setAm3Active(!am3Active)}
           description="AM three"
+          formula="AM3(x) = (A₃ + ΔA₃ · |x_mouse|) sin(2π f_m x)"
           disabled={!amActive}
           className="am3Button"
         />
@@ -127,6 +131,7 @@ function ModulationControls({
           active={fm3Active}
           onClick={() => setFm3Active(!fm3Active)}
           description="FM three"
+          formula="FM3(x) = I₃ (sin(2π f_m x) + 0.5 sin(2π 2 f_m x))"
           disabled={!fmActive}
           className="fm3Button"
         />

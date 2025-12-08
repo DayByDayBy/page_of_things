@@ -1,15 +1,16 @@
 import './App.css';
-import { useState, useRef } from 'react';
+import { useReducer, useRef } from 'react';
 import WaveBackground from './components/WaveBackground';
 import WaveControls from './components/WaveControls';
 import { useMousePosition } from './hooks/useMousePosition';
 import PageContainer from './container/PageContainer';
+import { modulationReducer } from './state/modulationReducer';
 
 function App() {
   const mousePosition = useMousePosition(50);
 
-  const [systemActive, setSystemActive] = useState(false);
-  const [modulationState, setModulationState] = useState({
+  const [modState, dispatch] = useReducer(modulationReducer, {
+    systemActive: false,
     amActive: false,
     fmActive: false,
     am1Active: false,
@@ -20,49 +21,24 @@ function App() {
     fm3Active: false,
   });
 
+  const { systemActive, ...modulationState } = modState;
+
   const samplesRef = useRef([]);
 
   const handleSetSystemActive = (value) => {
-    setSystemActive(value);
-    if (!value) {
-      setModulationState({
-        amActive: false,
-        fmActive: false,
-        am1Active: false,
-        am2Active: false,
-        am3Active: false,
-        fm1Active: false,
-        fm2Active: false,
-        fm3Active: false,
-      });
-    }
+    dispatch({ type: 'setSystemActive', payload: value });
   };
 
   const handleSetAmActive = (value) => {
-    setModulationState((prev) => ({
-      ...prev,
-      amActive: value,
-      ...(value
-        ? {}
-        : { am1Active: false, am2Active: false, am3Active: false }),
-    }));
+    dispatch({ type: 'setAmActive', payload: value });
   };
 
   const handleSetFmActive = (value) => {
-    setModulationState((prev) => ({
-      ...prev,
-      fmActive: value,
-      ...(value
-        ? {}
-        : { fm1Active: false, fm2Active: false, fm3Active: false }),
-    }));
+    dispatch({ type: 'setFmActive', payload: value });
   };
 
-  const makeFlagSetter = (key) => (value) => {
-    setModulationState((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+  const makeFlagSetter = (actionType) => (value) => {
+    dispatch({ type: actionType, payload: value });
   };
 
   return (
@@ -83,12 +59,12 @@ function App() {
               setSystemActive={handleSetSystemActive}
               setAmActive={handleSetAmActive}
               setFmActive={handleSetFmActive}
-              setAm1Active={makeFlagSetter('am1Active')}
-              setAm2Active={makeFlagSetter('am2Active')}
-              setAm3Active={makeFlagSetter('am3Active')}
-              setFm1Active={makeFlagSetter('fm1Active')}
-              setFm2Active={makeFlagSetter('fm2Active')}
-              setFm3Active={makeFlagSetter('fm3Active')}
+              setAm1Active={makeFlagSetter('setAm1Active')}
+              setAm2Active={makeFlagSetter('setAm2Active')}
+              setAm3Active={makeFlagSetter('setAm3Active')}
+              setFm1Active={makeFlagSetter('setFm1Active')}
+              setFm2Active={makeFlagSetter('setFm2Active')}
+              setFm3Active={makeFlagSetter('setFm3Active')}
               samplesRef={samplesRef}
               mousePosition={mousePosition}
             />

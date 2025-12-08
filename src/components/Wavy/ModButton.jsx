@@ -1,5 +1,4 @@
 import React from 'react';
-import FormulaTooltip from './FormulaTooltip';
 
 const ModButton = ({ 
     label, 
@@ -20,10 +19,10 @@ const ModButton = ({
             onClick={disabled ? undefined : onClick}
             aria-pressed={active}
             aria-label={description || undefined}
+            title={formula || description || undefined}
             disabled={disabled}
         >
             {label}
-            {formula && <FormulaTooltip formula={formula} />}
         </button>
     );
 };

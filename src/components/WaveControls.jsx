@@ -81,7 +81,6 @@ function ModulationControls({
           active={am1Active}
           onClick={() => setAm1Active(!am1Active)}
           description="AM one"
-          formula="AM1(x) = A_{1} \sin(2\pi f_{t} x)"
           disabled={!amActive}
           className="am1Button"
           

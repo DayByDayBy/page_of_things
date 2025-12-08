@@ -337,8 +337,8 @@ const Wavy = () => {
   const constants = {
     amplitudeChange: 0.075,
     frequencyChange: 0.0002533333,
-    ampMax: 50,
-    ampMin: -25,
+    ampMax: 40,
+    ampMin: -20,
     freqMax: 1,
     freqMin: 0.01,
   };

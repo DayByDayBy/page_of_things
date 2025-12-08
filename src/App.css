@@ -50,7 +50,7 @@ z-index: 1;
 }
 
 .main-column{
-    max-width: 25vw;
+    max-width: 24vw;
     justify-self: center;
     grid-area: main;
 }

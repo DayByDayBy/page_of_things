@@ -26,5 +26,5 @@ yarn-error.log*
 pnpm-debug.log*
 
 reference
-.planning
-prompts
+# .planning
+# prompts

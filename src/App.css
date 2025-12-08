@@ -94,14 +94,14 @@ h1{
     margin: 0;
     padding: .1vw;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 3vw;
+    font-size: 2vw;
     font-weight: 800;
 }
 
 h2{
   margin:  1rem 0;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.75vw;
+  font-size: 1.25vw;
   font-weight: 500;
 }
 .nav{

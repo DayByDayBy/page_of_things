@@ -8,6 +8,12 @@
     display: block;
     width: 100%;
     height: 100%;
+    z-index: 0;
+}
+
+.wavy-controls-grid {
+    /* Grid exists but doesn't control layout yet */
+    display: contents; /* This makes the wrapper invisible to layout */
 }
 
 .modulation-controls-container {
@@ -48,7 +54,7 @@
     top: 0.5rem;
     padding: 0.5rem 1.5rem;
     opacity: 0;
-    pointer-events: none;
+    pointer-events: auto;
     transition: opacity 0.3s ease;
     z-index: 3;
 }
@@ -57,6 +63,7 @@
     opacity: 1;
     pointer-events: auto;
 }
+
 
 .modButton {
     width: 4vw;
@@ -130,47 +137,73 @@
     color: black;
 }
 
+/* a wee tooltip for the mod buttons */
+
+/* .formula-tooltip {
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  z-index: 999;
+  font-size: 0.8rem;
+  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.mod-button:hover .formula-tooltip {
+  opacity: 1;
+} */
+
+
+
 @media (max-width: 810px) {
     .modulation-controls-container {
-    display: block;
+      display: block;
+      position: static;
+      top: auto;
+      left: auto;
+      margin-top: 0.5rem;
     }
 
     .toggle-modulation-menu {
-    position: static;
-    display: block;
-    margin-bottom: 0.5rem;
+      position: static;
+      display: block;
+      margin-bottom: 0.5rem;
     }
 
     .modulation-controls {
-    position: static;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.5rem 0;
-    margin: 0;
-    gap: 0.25rem;
+      position: static;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0.5rem 0;
+      margin: 0;
+      gap: 0.25rem;
     }
 
     .modButton,
     .mainModButton,
     .amMainButton,
     .fmMainButton {
-    min-width: 20vw;
-    width: auto;
-    grid-column: auto;
-    grid-row: auto;
+      min-width: 20vw;
+      width: auto;
+      grid-column: auto;
+      grid-row: auto;
     }
 
     .oscilloscope-container {
-      position: static;
-      margin: 1rem 0 0 0;
+      position: static !important;
+      top: auto !important;
+      left: auto !important;
+      margin: 1rem 0 0 0 !important;
     }
 
-    .modulation-readout-container {
-      position: static;
-      margin: 0.5rem 0 0 0;
-    }
-}
 
 .oscilloscope-container {
     position: fixed;
@@ -198,18 +231,6 @@
     color: rgba(0, 0, 0, 0.7);
 }
 
-.modulation-readout-container {
-    position: fixed;
-    top: 11.5rem;
-    left: 1.5rem;
-    margin: 3rem 0 0 0;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: 0.7rem;
-    color: rgba(0, 0, 0, 0.8);
-}
 
 .modulation-card {
     width: 140px;
@@ -221,11 +242,13 @@
     opacity: 0;
     transform: translateY(4px);
     transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 3;
 }
 
 .modulation-card.visible {
     opacity: 1;
     transform: translateY(0);
+    z-index: 3;
 }
 
 .modulation-card-title {
@@ -234,6 +257,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.03em;
+    z-index: 3;
 }
 
 .modulation-card-body {
@@ -246,9 +270,6 @@
     gap: 0.5rem;
 }
 
-.modulation-card-label {
-    font-weight: 100;
-}
 
 .modulation-card-value {
     font-variant-numeric: tabular-nums;

@@ -36,12 +36,12 @@
 
 .wave-icon {
     margin: 1rem;
-    transition: 0.5s ease;
+    transition: 0.8046s ease;
 }
 
 .wave-icon.expanded {
     opacity: 0.2;
-    transition: 0.7s ease;
+    transition: 0.8046s ease;
 }
 
 .modulation-controls {
@@ -133,7 +133,7 @@
 }
 
 .modButton.inactive {
-    background-color: hsla(344, 13%, 74%, 0.384);
+    background-color: hsla(344, 13%, 74%, 0.3046);
     color: black;
 }
 
@@ -222,7 +222,7 @@
     height: 100px;
     border-radius: 0.5rem;
     background: rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.8046);
 }
 
 .oscilloscope-formula {
@@ -238,7 +238,7 @@
     border-radius: 0.5rem;
     border: 1px solid rgba(0, 0, 0, 0.7);
     background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08046);
     opacity: 0;
     transform: translateY(4px);
     transition: opacity 0.25s ease, transform 0.25s ease;

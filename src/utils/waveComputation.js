@@ -172,7 +172,7 @@ export function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
   }
 
   return (
-    canvas.height / 2 +
+    (canvas.height / 1.67) +
     amplitude * (1 + totalAM) *
     Math.sin((x + phase) * (carrierFreq + totalFM))
   );
@@ -199,7 +199,8 @@ export function drawWave(
     ctx.lineTo(x, y);
   }
 
-  ctx.lineWidth = 1;
+  const dpr = window.devicePixelRatio || 1;
+  ctx.lineWidth = 1 * dpr;
   ctx.strokeStyle = strokeStyle;
   ctx.stroke();
 }

@@ -1,6 +1,6 @@
 body{
   margin: 0;
-  background-color:hsla(344, 13%, 74%, 0.3);
+  background-color:hsla(344, 13%, 74%, 0.3046);
   font-family: 'Courier New', Courier, monospace;
   text-align:center;
 }
@@ -13,8 +13,8 @@ main{
   border-radius: 3rem;
   /* background: linear-gradient(
     to top right, 
-    hsla(235, 17%, 74%, 0.1) 0%, 
-    hsla(265, 1%, 74%, 0.19) 67%); */
+    hsla(235, 17%, 0.1) 0%, 
+    hsla(265, 1%, 0.19) 67%); */
   position: relative;
   z-index: 1;
 }

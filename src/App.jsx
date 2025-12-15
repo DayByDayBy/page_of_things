@@ -1,9 +1,11 @@
 import './App.css';
 import { useReducer, useRef } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import WaveBackground from './components/WaveBackground';
 import WaveControls from './components/WaveControls';
 import { useMousePosition } from './hooks/useMousePosition';
 import PageContainer from './container/PageContainer';
+import ProjectsPage from './pages/ProjectsPage';
 import { modulationReducer } from './state/modulationReducer';
 
 function App() {
@@ -72,7 +74,10 @@ function App() {
 
           <section className="main-column">
             <div className="page-content">
-              <PageContainer />
+              <Routes>
+                <Route path="/" element={<PageContainer />} />
+                <Route path="/projects" element={<ProjectsPage />} />
+              </Routes>
             </div>
           </section>
 

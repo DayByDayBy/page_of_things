@@ -1,14 +1,25 @@
 import gitSVG from "../assets/git.svg";
 import liSVG from "../assets/linkedIn.svg";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
     <>
-      <div className="svglink">
+      <nav className="svglink" aria-label="primary navigation">
         <div className="svglink-links">
-          <Link to="/">home</Link>
-          <Link to="/projects">projects</Link>
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) => (isActive ? "active" : undefined)}
+          >
+            home
+          </NavLink>
+          <NavLink
+            to="/projects"
+            className={({ isActive }) => (isActive ? "active" : undefined)}
+          >
+            projects
+          </NavLink>
         </div>
 
         <div className="svglink-icons">
@@ -28,7 +39,7 @@ const NavBar = () => {
             <img src={liSVG} alt="linkedIn, James Boag" />
           </a>
         </div>
-      </div>
+      </nav>
     </>
   );
 };

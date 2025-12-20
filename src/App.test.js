@@ -11,3 +11,20 @@ test('renders home page', () => {
   const headingElement = screen.getByRole('heading', { name: /boagdev/i });
   expect(headingElement).toBeInTheDocument();
 });
+
+test('renders projects page', () => {
+  render(
+    <MemoryRouter initialEntries={['/projects']}>
+      <App />
+    </MemoryRouter>
+  );
+
+  const headingElement = screen.getByRole('heading', { name: /projects/i });
+  expect(headingElement).toBeInTheDocument();
+
+  const projectTitle = screen.getByText('boag_dev');
+  expect(projectTitle).toBeInTheDocument();
+
+  const projectsLink = screen.getByRole('link', { name: /projects/i });
+  expect(projectsLink).toHaveClass('active');
+});

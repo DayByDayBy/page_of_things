@@ -17,6 +17,13 @@ const ProjectsPage = () => {
           <li key={project.id}>
             <strong>{project.title}</strong>
             {project.summary ? <div>{project.summary}</div> : null}
+            {project.highlights?.length ? (
+              <ul className="projects-highlights">
+                {project.highlights.map((highlight, i) => (
+                  <li key={i}>{highlight}</li>
+                ))}
+              </ul>
+            ) : null}
             <div>
               {project.links.map((link, i) => (
                 <span key={link.href}>

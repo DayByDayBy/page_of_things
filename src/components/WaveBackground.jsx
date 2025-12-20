@@ -55,6 +55,28 @@ const CONSTANTS = WAVE_MOTION_CONSTANTS;
 
 const WaveBackground = ({ mousePosition, modulationState, systemActive, samplesRef }) => {
   const canvasRef = useRef(null);
+  const mousePosRef = useRef(mousePosition);
+  const modStateRef = useRef(modulationState);
+  const systemActiveRef = useRef(systemActive);
+  const samplesRefRef = useRef(samplesRef);
+  
+  // Update refs when props change
+  useEffect(() => {
+    mousePosRef.current = mousePosition;
+  }, [mousePosition]);
+  
+  useEffect(() => {
+    modStateRef.current = modulationState;
+  }, [modulationState]);
+  
+  useEffect(() => {
+    systemActiveRef.current = systemActive;
+  }, [systemActive]);
+  
+  useEffect(() => {
+    samplesRefRef.current = samplesRef;
+  }, [samplesRef]);
+  
   const waveConfig = useRef({
     amplitude: 10,
     frequency: 0.0101,
@@ -87,18 +109,18 @@ const WaveBackground = ({ mousePosition, modulationState, systemActive, samplesR
 
     const render = () => {
       const modState = {
-        ...modulationState,
-        systemActive,
+        ...modStateRef.current,
+        systemActive: systemActiveRef.current,
       };
 
       updateWave(waveConfig, CONSTANTS);
       updatePhase(waveConfig);
 
-      if (systemActive && samplesRef) {
-        sampleReadoutWave(canvas, waveConfig, mousePosition, modState, samplesRef);
+      if (systemActiveRef.current && samplesRefRef.current) {
+        sampleReadoutWave(canvas, waveConfig, mousePosRef.current, modState, samplesRefRef.current);
       }
 
-      drawWave(ctx, canvas, waveConfig, mousePosition, modState);
+      drawWave(ctx, canvas, waveConfig, mousePosRef.current, modState);
 
       frameId = requestAnimationFrame(render);
     };
@@ -109,7 +131,7 @@ const WaveBackground = ({ mousePosition, modulationState, systemActive, samplesR
       cancelAnimationFrame(frameId);
       window.removeEventListener("resize", resizeCanvas);
     };
-  }, [mousePosition, modulationState, systemActive, samplesRef]);
+  }, []);
 
   return (
     <div className="wave-background">

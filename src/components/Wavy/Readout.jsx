@@ -31,8 +31,8 @@ const Readout = ({ samplesRef, flags }) => {
 
   useEffect(() => {
     const id = setInterval(() => {
-      const pts = (samplesRef && samplesRef.current) || [];
-      if (!pts || pts.length < 2) {
+      const pts = (samplesRef?.current) || [];
+      if (pts.length < 2) {
         return;
       }
 
@@ -71,7 +71,7 @@ const Readout = ({ samplesRef, flags }) => {
     }, 100);
 
     return () => clearInterval(id);
-  }, [samplesRef, amActive, fmActive]);
+  }, [amActive, fmActive]);
 
   const amAlgo = amActive
     ? formatAlgoLabel("AM", am1Active, am2Active, am3Active)

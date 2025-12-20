@@ -29,6 +29,9 @@ export function modulationReducer(state, action) {
           am3Active: false,
         };
       }
+      if (!state.systemActive) {
+        throw new Error("Cannot enable amActive when systemActive is false");
+      }
       return { ...state, amActive: true };
     }
     case "setFmActive": {
@@ -41,20 +44,30 @@ export function modulationReducer(state, action) {
           fm3Active: false,
         };
       }
-      return { ...state, fmActive: true };
+      return { ...state, systemActive: true, fmActive: true };
     }
-    case "setAm1Active":
-      return { ...state, am1Active: action.payload };
-    case "setAm2Active":
-      return { ...state, am2Active: action.payload };
-    case "setAm3Active":
-      return { ...state, am3Active: action.payload };
-    case "setFm1Active":
-      return { ...state, fm1Active: action.payload };
-    case "setFm2Active":
-      return { ...state, fm2Active: action.payload };
-    case "setFm3Active":
-      return { ...state, fm3Active: action.payload };
+    const subToggleConfig = {
+      "setAm1Active": { subKey: "am1Active", parentKeys: ["amActive", "systemActive"] },
+      "setAm2Active": { subKey: "am2Active", parentKeys: ["amActive", "systemActive"] },
+      "setAm3Active": { subKey: "am3Active", parentKeys: ["amActive", "systemActive"] },
+      "setFm1Active": { subKey: "fm1Active", parentKeys: ["fmActive", "systemActive"] },
+      "setFm2Active": { subKey: "fm2Active", parentKeys: ["fmActive", "systemActive"] },
+      "setFm3Active": { subKey: "fm3Active", parentKeys: ["fmActive", "systemActive"] },
+    };
+
+    if (subToggleConfig[action.type]) {
+      const { subKey, parentKeys } = subToggleConfig[action.type];
+      const newState = { ...state, [subKey]: action.payload };
+      
+      if (action.payload === true) {
+        parentKeys.forEach(parentKey => {
+          newState[parentKey] = true;
+        });
+      }
+      
+      return newState;
+    }
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }

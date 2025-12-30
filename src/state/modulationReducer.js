@@ -24,6 +24,10 @@ const subToggleConfig = {
 };
 
 export function modulationReducer(state = initialModulationState, action) {
+  if (!action || typeof action.type !== "string") {
+    return state;
+  }
+
   switch (action.type) {
     case "setSystemActive": {
       if (typeof action.payload !== "boolean") {
@@ -51,7 +55,7 @@ export function modulationReducer(state = initialModulationState, action) {
         }
         return { ...state, [subKey]: action.payload };
       }
-      throw new Error(`Unhandled action type: ${action.type}`);
+      return state;
     }
   }
 }

@@ -104,7 +104,7 @@ function computeWaveY(x, canvas, waveConfig, mouseScalars, modState) {
     fm3Active,
   } = modState;
 
-  const { normMouseX, mouseDiff, mouseSum, mouseProduct, mouseQuotient } = mouseScalars;
+  const { normMouseX, mouseDiff, mouseSum, mouseQuotient } = mouseScalars;
 
   const carrierFreq = frequency / CARRIER_FREQ_DIVISOR;
 
@@ -147,8 +147,8 @@ function computeWaveY(x, canvas, waveConfig, mouseScalars, modState) {
     }
 
     if (fm3Active) {
-      const safeQuotient = Math.abs(mouseQuotient) < 1e-3 
-        ? Math.sign(mouseQuotient) * 1e-3 
+      const safeQuotient = Math.abs(mouseQuotient) < 1e-3
+        ? (Math.sign(mouseQuotient) || 1) * 1e-3
         : mouseQuotient;
       const modFreq = FM3_BASE_FREQ / safeQuotient;
       const modIndex = FM3_INDEX;

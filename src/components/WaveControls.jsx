@@ -153,7 +153,6 @@ const WaveControls = ({
   setFm2Active,
   setFm3Active,
   samplesRef,
-  mousePosition,
 }) => {
   const [menuExpanded, setMenuExpanded] = useState(false);
 

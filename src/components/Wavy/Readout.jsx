@@ -43,12 +43,12 @@ const Readout = ({ samplesRef, flags }) => {
       const amplitudePx = peakToPeak / 2;
 
       let zeroCrossings = 0;
+      let prevNonZero = 0;
       for (let i = 1; i < ys.length; i++) {
-        const prev = ys[i - 1];
         const curr = ys[i];
-        if ((prev <= 0 && curr > 0) || (prev >= 0 && curr < 0)) {
-          zeroCrossings++;
-        }
+        if (curr === 0) continue;
+        if (prevNonZero !== 0 && prevNonZero * curr < 0) zeroCrossings++;
+        prevNonZero = curr;
       }
       const cycles = zeroCrossings / 2;
 

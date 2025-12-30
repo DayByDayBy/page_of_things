@@ -2,6 +2,18 @@
 // actions are named to mirror old setter names.
 // behavior: toggles preserve sub-toggle states (hardware-like memory)
 
+export const initialModulationState = {
+  systemActive: false,
+  amActive: false,
+  fmActive: false,
+  am1Active: false,
+  am2Active: false,
+  am3Active: false,
+  fm1Active: false,
+  fm2Active: false,
+  fm3Active: false,
+};
+
 const subToggleConfig = {
   setAm1Active: "am1Active",
   setAm2Active: "am2Active",
@@ -11,7 +23,7 @@ const subToggleConfig = {
   setFm3Active: "fm3Active",
 };
 
-export function modulationReducer(state, action) {
+export function modulationReducer(state = initialModulationState, action) {
   switch (action.type) {
     case "setSystemActive": {
       return { ...state, systemActive: action.payload };

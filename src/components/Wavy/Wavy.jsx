@@ -5,7 +5,7 @@ import OscilloscopeDisplay from "./OscilloscopeDisplay";
 import Readout from "./Readout";
 import WaveBackground from "./WaveBackground";
 import WaveControls from "./WaveControls";
-import { modulationReducer } from "../../state/modulationReducer";
+import { initialModulationState, modulationReducer } from "../../state/modulationReducer";
 
 // normalizes a value from [fromMin, fromMax] to [-1, 1]
 function normalize(x, fromMin, fromMax) {
@@ -344,17 +344,7 @@ const Wavy = () => {
   };
 
   // UI state: modulation toggles via useReducer
-  const [modState, dispatch] = useReducer(modulationReducer, {
-    systemActive: false,
-    amActive: false,
-    fmActive: false,
-    am1Active: false,
-    am2Active: false,
-    am3Active: false,
-    fm1Active: false,
-    fm2Active: false,
-    fm3Active: false,
-  });
+  const [modState, dispatch] = useReducer(modulationReducer, initialModulationState);
 
   const {
     systemActive,

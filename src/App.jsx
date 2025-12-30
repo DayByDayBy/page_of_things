@@ -6,23 +6,13 @@ import WaveControls from './components/WaveControls';
 import { useMousePosition } from './hooks/useMousePosition';
 import PageContainer from './container/PageContainer';
 import ProjectsPage from './pages/ProjectsPage';
-import { modulationReducer } from './state/modulationReducer';
+import { initialModulationState, modulationReducer } from './state/modulationReducer';
 
 function App() {
     const location = useLocation();
     const mousePosition = useMousePosition(50);
 
-    const [modState, dispatch] = useReducer(modulationReducer, {
-        systemActive: false,
-        amActive: false,
-        fmActive: false,
-        am1Active: false,
-        am2Active: false,
-        am3Active: false,
-        fm1Active: false,
-        fm2Active: false,
-        fm3Active: false,
-    });
+    const [modState, dispatch] = useReducer(modulationReducer, initialModulationState);
 
     const { systemActive, ...modulationState } = modState;
 
@@ -69,7 +59,6 @@ function App() {
                             setFm2Active={makeFlagSetter('setFm2Active')}
                             setFm3Active={makeFlagSetter('setFm3Active')}
                             samplesRef={samplesRef}
-                            mousePosition={mousePosition}
                         />
                     </aside>
 

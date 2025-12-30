@@ -27,7 +27,7 @@ export const FM3_SECOND_HARMONIC_WEIGHT = 0.5;
 export const READOUT_SAMPLES = 128;
 
 export const WAVE_MOTION_CONSTANTS = {
-  amplitudeChange: 0.3103046,
+  amplitudeChange: 0.03046,
   frequencyChange: 0.00008046,
   ampMax: 304.6,
   ampMin: -304.6,

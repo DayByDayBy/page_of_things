@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState, useReducer } from "react";
 import "./Wavy.css";
 import { useMousePosition } from "../../hooks/useMousePosition";
 import OscilloscopeDisplay from "./OscilloscopeDisplay";
-import Readout from "./Readout";
 import WaveBackground from "./WaveBackground";
 import WaveControls from "./WaveControls";
 import { initialModulationState, modulationReducer } from "../../state/modulationReducer";
@@ -310,6 +309,16 @@ const FM2_MOUSE_FREQ_SCALE = 0.01;
 const FM2_MOUSE_FREQ_BASE = 0.002;
 const FM3_SECOND_HARMONIC_WEIGHT = 0.5;
 
+// animation constants (bounds, change rates - stops wave going too wild)
+const ANIMATION_CONSTANTS = {
+  amplitudeChange: 0.075,
+  frequencyChange: 0.0002533333,
+  ampMax: 40,
+  ampMin: -20,
+  freqMax: 1,
+  freqMin: 0.01,
+};
+
 // modulationReducer: manages 9 boolean toggles.
 // actions are named to mirror old setter names.
 // behavior: toggles preserve sub-toggle states (hardware-like memory)
@@ -333,15 +342,6 @@ const Wavy = () => {
     freqMinReached: { current: false },
   });
 
-  // animation constants (bounds, change rates - stops wave going too wild)
-  const constants = {
-    amplitudeChange: 0.075,
-    frequencyChange: 0.0002533333,
-    ampMax: 40,
-    ampMin: -20,
-    freqMax: 1,
-    freqMin: 0.01,
-  };
 
   // UI state: modulation toggles via useReducer
   const [modState, dispatch] = useReducer(modulationReducer, initialModulationState);
@@ -369,7 +369,7 @@ const Wavy = () => {
 
     let frameId;
     const render = () => {
-      updateWave(waveConfig, constants);
+      updateWave(waveConfig, ANIMATION_CONSTANTS);
       updatePhase(waveConfig);
       if (systemActive) {
         sampleReadoutWave(canvas, waveConfig, mousePos, modState, readoutSamplesRef);
@@ -396,7 +396,7 @@ const Wavy = () => {
 
     frameId = requestAnimationFrame(render);
     return () => cancelAnimationFrame(frameId);
-  }, [mousePos, modState, constants, systemActive]);
+  }, [mousePos, modState, systemActive]);
 
   return (
     <div className="wavy-container">

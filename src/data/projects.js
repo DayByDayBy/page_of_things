@@ -20,7 +20,7 @@ export const projects = [
         title: 'The_Divination_Engine',
         summary: 'An app to help you read your subconscious: toss a ~4.5 sextillion-sided coin.',
         type: 'project',
-        tags: ['TypeScript', 'Java'],
+        tags: ['typescript', 'java'],
         pinned: true,
         links: [
             {
@@ -33,7 +33,7 @@ export const projects = [
     {
         id: 'cluas',
         title: 'Cluas_Huginn',
-        summary: 'a gathering of guides, a council of counsels. An agentic MCP server for the Hugging Face hackathon',
+        summary: 'A gathering of guides, a council of counsels. An agentic MCP server for the Hugging Face hackathon',
         type: 'project',
         tags: ['python'],
         pinned: true,
@@ -48,7 +48,7 @@ export const projects = [
     {
         id: 'page-of-things',
         title: 'Page_of_Things',
-        summary: 'custom Canvas-based wave background with real-time AM/FM modulation controls.',
+        summary: 'Custom Canvas-based wave background with real-time AM/FM modulation controls.',
         type: 'project',
         tags: ['javascript', 'react'],
         pinned: true,

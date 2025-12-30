@@ -18,9 +18,10 @@ const ProjectsPage = () => {
               <div className="projects-header-left">
                 <strong>
                   {(() => {
+                    const links = project.links || [];
                     const href =
-                      project.links.find((l) => l.label === 'repo' || l.kind === 'github')?.href ||
-                      project.links[0]?.href;
+                      links.find((l) => l.label === 'repo' || l.kind === 'github')?.href ||
+                      links[0]?.href;
 
                     return href ? (
                       <a href={href} target="_blank" rel="noreferrer noopener">

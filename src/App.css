@@ -13,8 +13,8 @@ main {
     border-radius: 3rem;
     /* background: linear-gradient(
     to top right, 
-    hsla(235, 17%, 0.1) 0%, 
-    hsla(265, 1%, 0.19) 67%); */
+    hsla(235, 17%, 10%, 1) 0%, 
+    hsla(265, 1%, 19%, 1) 67%); */
     position: relative;
     z-index: 1;
 }
@@ -31,14 +31,14 @@ main {
     border-radius: 3rem;
     background: linear-gradient(110deg,
             hsla(145, 10%, 80%, 0.175) 37%,
-            hsla(235, 12%, 60%, 0.085)) 0%;
+            hsla(235, 12%, 60%, 0.085));
     z-index: 1;
 }
 
 .page-content.projects-page {
     background: linear-gradient(110deg,
             hsla(20, 0%, 91%, 0.8046) 37%,
-            hsla(280, 9%, 86%, 0.8046)) 0%;
+            hsla(280, 9%, 86%, 0.8046));
 }
 
 .content-grid {
@@ -92,7 +92,7 @@ a:visited {
 }
 
 a:hover {
-  color: hsla(330, 100%, 71%, 80%);
+  color: hsla(330, 100%, 71%, .8);
 }
 
 /* selected link */
@@ -142,14 +142,14 @@ h1 {
     margin: 0;
     padding: 5vh 0 0 0;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 3.33vw;
+    font-size: clamp(1.5rem, 3.33vw, 4rem);
     font-weight: 800;
 }
 
 h2 {
     margin: 1rem 0;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 1.5vw;
+    font-size: clamp(1rem, 1.5vw, 2rem);
     font-weight: 500;
 }
 

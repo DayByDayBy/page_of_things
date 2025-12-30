@@ -35,23 +35,7 @@ import {
   sampleReadoutWave,
 } from "../utils/waveComputation";
 
-// normalizes a value from [fromMin, fromMax] to [-1, 1]
-
-// generic parameter updater used for amplitude/frequency oscillation
-
-// updates wave amplitude/frequency using oscillation helper
-
-// advances carrier phase for slow drift
-
-// --- constants -----------------------------------------------------------
-
 const CONSTANTS = WAVE_MOTION_CONSTANTS;
-
-// computes a single y-value for the current wave configuration at a given x
-
-// main rendering loop: draws the carrier (with any active AM/FM modulation)
-
-// samples a reduced set of main-canvas points for metrics/readout
 
 const WaveBackground = ({ mousePosition, modulationState, systemActive, samplesRef }) => {
   const canvasRef = useRef(null);

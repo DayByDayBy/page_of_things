@@ -91,30 +91,28 @@ export function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
     fm3Active,
   } = modState;
 
-  const numPoints = NUM_POINTS;
-  const stepSize = canvas.width / numPoints;
-
   // precompute normalized mouse-derived scalars (once per frame)
   const normMouseX = normalize(mousePos.x, 0, canvas.width);
   const mouseDiff = normalize(
     mousePos.x - mousePos.y,
-    -canvas.width,
+    -canvas.height,
     canvas.width
   );
   const mouseSum = normalize(
     mousePos.x + mousePos.y,
-    -canvas.width,
-    canvas.width
+    0,
+    canvas.width + canvas.height
   );
   const mouseProduct = normalize(
     mousePos.x * mousePos.y,
-    -canvas.width,
-    canvas.width
-  );
-  const mouseQuotient = normalize(
-    mousePos.y !== 0 ? mousePos.x / mousePos.y : 0,
     0,
-    MOUSE_QUOTIENT_MAX
+    canvas.width * canvas.height
+  );
+  const rawQuotient = mousePos.y !== 0 ? mousePos.x / mousePos.y : canvas.width;
+  const mouseQuotient = normalize(
+    rawQuotient,
+    0,
+    canvas.width
   );
 
   const carrierFreq = frequency / CARRIER_FREQ_DIVISOR;
@@ -161,7 +159,10 @@ export function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
     }
 
     if (fm3Active) {
-      const modFreq = FM3_BASE_FREQ / mouseQuotient;
+      const safeQuotient = Math.abs(mouseQuotient) < 1e-6 
+        ? Math.sign(mouseQuotient) * 1e-6 
+        : mouseQuotient;
+      const modFreq = FM3_BASE_FREQ / safeQuotient;
       const modIndex = FM3_INDEX;
       const complexMod =
         Math.sin(2 * Math.PI * modFreq * x) +
@@ -213,11 +214,16 @@ export function sampleReadoutWave(
   modState,
   samplesRef
 ) {
+  if (!canvas) {
+    samplesRef.current = [];
+    return;
+  }
+
   const width = canvas.width;
   const height = canvas.height;
   const count = READOUT_SAMPLES;
 
-  if (!canvas || count <= 1) {
+  if (count <= 1) {
     samplesRef.current = [];
     return;
   }

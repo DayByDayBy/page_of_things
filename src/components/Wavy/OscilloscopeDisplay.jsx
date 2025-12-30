@@ -26,8 +26,16 @@ const OscilloscopeDisplay = ({ samplesRef }) => {
             const usableHeight = Math.max(1, height - 3 * padding);
 
             const ys = pts.map((p) => p.y);
-            const minY = Math.min(...ys);
-            const maxY = Math.max(...ys);
+            let minY = Infinity;
+            let maxY = -Infinity;
+            for (let i = 0; i < ys.length; i++) {
+                if (ys[i] < minY) minY = ys[i];
+                if (ys[i] > maxY) maxY = ys[i];
+            }
+            if (!isFinite(minY) || !isFinite(maxY)) {
+                minY = 0;
+                maxY = 0;
+            }
             const mid = (minY + maxY) / 2;
             const range = maxY - minY || 1;
             const halfRange = range / 2 || 1;

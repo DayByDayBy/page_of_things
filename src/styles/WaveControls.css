@@ -26,6 +26,12 @@
   font-size: 2rem;
 }
 
+.toggle-modulation-menu:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.6);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
 .wave-icon {
   margin: 1rem;
   transition: 0.5s ease;
@@ -66,9 +72,18 @@
   transition: all 0.2s ease;
 }
 
+.modButton:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.6);
+  outline-offset: 2px;
+}
+
 .modButton:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+.modButton:disabled:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.3);
 }
 
 .mainModButton {
@@ -246,7 +261,7 @@
   border: 1px solid rgba(0, 0, 0, 0.8046);
 }
 
-.oscilloscope-formula{
+.oscilloscope-formula {
     max-width: 25vw;
     white-space: normal; 
     display: block;

@@ -66,7 +66,7 @@ function ModulationControls({
                         disabled={!systemActive}
                         className="amMainButton"
                     />
-                </div >
+                </div>
 
                 <div title="on/off for frequency modulation">
                     <ModButton

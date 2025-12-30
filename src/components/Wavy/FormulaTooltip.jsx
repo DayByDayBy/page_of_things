@@ -8,6 +8,8 @@ const FormulaTooltip = ({ formula }) => {
   return (
     <div
       className="formula-tooltip"
+      role="img"
+      aria-label={safeFormula}
       dangerouslySetInnerHTML={{
         __html: katex.renderToString(safeFormula, {
           throwOnError: false,

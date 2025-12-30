@@ -32,8 +32,8 @@ export const projects = [
     },
     {
         id: 'cluas',
-        title: 'cluas',
-        summary: 'a gathering of guides, a council of counsels.',
+        title: 'Cluas Huginn',
+        summary: 'a gathering of guides, a council of counsels. An agentic MCP server for the Hugging Face hackathon',
         type: 'project',
         tags: ['python'],
         pinned: true,
@@ -47,22 +47,22 @@ export const projects = [
     },
     {
         id: 'page-of-things',
-        title: 'page_of_things',
+        title: 'Page_of_Things',
         summary: 'custom Canvas-based wave background with real-time AM/FM modulation controls.',
         type: 'project',
-        tags: ['javascript', 'react', 'canvas'],
+        tags: ['javascript', 'react'],
         pinned: true,
         links: [
-            {
-                label: 'repo',
-                kind: 'github',
-                href: 'https://github.com/DayByDayBy/page_of_things',
-            },
-            {
-                label: 'site',
-                kind: 'homepage',
-                href: 'https://theboag.com',
-            },
+            // {
+            //     label: 'repo',
+            //     kind: 'github',
+            //     href: 'https://github.com/DayByDayBy/page_of_things',
+            // },
+            // {
+            //     label: 'site',
+            //     kind: 'homepage',
+            //     href: 'https://theboag.com',
+            // },
         ],
     },
 ];

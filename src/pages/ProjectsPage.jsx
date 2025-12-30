@@ -16,20 +16,18 @@ const ProjectsPage = () => {
           <li key={project.id}>
             <div className="projects-header">
               <div className="projects-header-left">
-                <strong>{project.title}</strong>
+                <strong>
+                  <a
+                    href={project.links.find((l) => l.label === 'repo' || l.kind === 'github')?.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {project.title}
+                  </a>
+                </strong>
                 {project.tags?.length ? (
                   <span className="projects-tags">[{project.tags.join(' · ')}]</span>
                 ) : null}
-              </div>
-              <div className="projects-header-links">
-                {project.links.map((link, i) => (
-                  <span key={link.href}>
-                    {i > 0 && ' · '}
-                    <a href={link.href} target="_blank" rel="noreferrer noopener">
-                      {link.label}
-                    </a>
-                  </span>
-                ))}
               </div>
             </div>
             {project.summary ? <div>{project.summary}</div> : null}

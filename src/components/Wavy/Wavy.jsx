@@ -312,7 +312,7 @@ const FM3_SECOND_HARMONIC_WEIGHT = 0.5;
 
 // modulationReducer: manages 9 boolean toggles.
 // actions are named to mirror old setter names.
-// invariant: turning off a main toggle disables all its sub-toggles
+// behavior: toggles preserve sub-toggle states (hardware-like memory)
 
 // --- Component -----------------------------------------------------------
 

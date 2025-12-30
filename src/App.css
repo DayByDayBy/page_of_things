@@ -35,6 +35,12 @@ main {
     z-index: 1;
 }
 
+.page-content.projects-page {
+    background: linear-gradient(110deg,
+            hsla(20, 0%, 91%, 0.8046) 37%,
+            hsla(280, 9%, 86%, 0.8046)) 0%;
+}
+
 .content-grid {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
@@ -73,7 +79,30 @@ main {
 
 a {
     text-decoration: none;
+    font-weight: bold;
+    color: inherit;
 }
+
+a:link {
+  color: hsl(0, 100%, 8%);
+}
+
+a:visited {
+  color: hsl(120, 73%, 7%);
+}
+
+a:hover {
+  color: hsl(330, 100%, 71%, 80%);
+}
+
+/* selected link */
+a:active {
+  color: hsl(330, 41%, 35%);
+}
+
+
+
+
 
 .svglink {
     padding: 0 1rem;
@@ -104,7 +133,7 @@ a {
 }
 
 p.text {
-    margin: 20vh 1rem 0vh 1rem;
+    margin: .75vh 1vw 0vh 1vw;
     padding: 1rem 0 0rem 0;
     text-align: center;
 }
@@ -130,10 +159,40 @@ h2 {
 
 .projects-list {
     padding: 0;
+    margin: 1.5rem 0;
+    text-align: left;
+    width: 100%;
 }
 
 .projects-list li {
-    margin-bottom: 1rem;
+    margin-bottom: 1.15rem;
+}
+
+.projects-header {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    column-gap: 0.75rem;
+    justify-content: space-between;
+}
+
+.projects-header-left {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    column-gap: 0.75rem;
+}
+
+.projects-header-links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.75rem;
+}
+
+.projects-tags {
+    display: inline-block;
+    opacity: 0.8;
+    font-size: 0.9em;
 }
 
 .projects-highlights {
@@ -178,7 +237,7 @@ h2 {
     .page-content {
         min-height: 60vh;
         min-width: 18vw;
-        padding: 2rem 0;
+        padding: 1rem 0;
         margin: 0rem;
         border: 1px outset hsl(33, 100%, 88%, 0.3046);
         border-radius: 3rem;
@@ -211,7 +270,7 @@ h2 {
     }
 
     p.text {
-        margin: 6vh 1rem 0vh 1rem;
+        margin: .75vh 1rem 0vh 1rem;
         padding: 1rem 0 0rem 0;
         text-align: center;
 

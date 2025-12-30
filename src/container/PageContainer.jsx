@@ -11,9 +11,6 @@ const PageContainer = () => {
       </div>
 
       <NavBar />
-      <p className="text">
-        lab<br></br>[@]<br></br>boag<br></br>dev
-      </p>
     </>
   );
 };

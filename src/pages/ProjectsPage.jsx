@@ -11,11 +11,27 @@ const ProjectsPage = () => {
 
       <NavBar />
 
-      <h3>projects</h3>
       <ul className="nav projects-list">
         {projects.map((project) => (
           <li key={project.id}>
-            <strong>{project.title}</strong>
+            <div className="projects-header">
+              <div className="projects-header-left">
+                <strong>{project.title}</strong>
+                {project.tags?.length ? (
+                  <span className="projects-tags">[{project.tags.join(' · ')}]</span>
+                ) : null}
+              </div>
+              <div className="projects-header-links">
+                {project.links.map((link, i) => (
+                  <span key={link.href}>
+                    {i > 0 && ' · '}
+                    <a href={link.href} target="_blank" rel="noreferrer noopener">
+                      {link.label}
+                    </a>
+                  </span>
+                ))}
+              </div>
+            </div>
             {project.summary ? <div>{project.summary}</div> : null}
             {project.highlights?.length ? (
               <ul className="projects-highlights">
@@ -24,16 +40,6 @@ const ProjectsPage = () => {
                 ))}
               </ul>
             ) : null}
-            <div>
-              {project.links.map((link, i) => (
-                <span key={link.href}>
-                  {i > 0 && ' · '}
-                  <a href={link.href} target="_blank" rel="noreferrer noopener">
-                    {link.label}
-                  </a>
-                </span>
-              ))}
-            </div>
           </li>
         ))}
       </ul>

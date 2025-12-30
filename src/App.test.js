@@ -19,10 +19,10 @@ test('renders projects page', () => {
     </MemoryRouter>
   );
 
-  const headingElement = screen.getByRole('heading', { name: /projects/i });
+  const headingElement = screen.getByRole('heading', { name: /boagdev/i });
   expect(headingElement).toBeInTheDocument();
 
-  const projectTitle = screen.getByText('boag_dev');
+  const projectTitle = screen.getByText('page_of_things');
   expect(projectTitle).toBeInTheDocument();
 
   const projectsLink = screen.getByRole('link', { name: /projects/i });

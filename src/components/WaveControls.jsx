@@ -82,7 +82,7 @@ function ModulationControls({
           onClick={() => setAm1Active(!am1Active)}
           description="AM one"
           formula="AM1(x) = A₁ sin(2π fₜ x)"
-          disabled={!amActive}
+          disabled={!systemActive || !amActive}
           className="am1Button"
         />
 
@@ -92,7 +92,7 @@ function ModulationControls({
           onClick={() => setFm1Active(!fm1Active)}
           description="FM one"
           formula="FM1(x) = I₁ sin(2π f_m x)"
-          disabled={!fmActive}
+          disabled={!systemActive || !fmActive}
           className="fm1Button"
         />
 
@@ -102,7 +102,7 @@ function ModulationControls({
           onClick={() => setAm2Active(!am2Active)}
           description="AM two"
           formula="AM2(x) = A₂ sin(2π f_r x) · sin(2π f_c x)"
-          disabled={!amActive}
+          disabled={!systemActive || !amActive}
           className="am2Button"
         />
 
@@ -112,7 +112,7 @@ function ModulationControls({
           onClick={() => setFm2Active(!fm2Active)}
           description="FM two"
           formula="FM2(x) = I₂ sin(2π f_m(mouse) x)"
-          disabled={!fmActive}
+          disabled={!systemActive || !fmActive}
           className="fm2Button"
         />
 
@@ -122,7 +122,7 @@ function ModulationControls({
           onClick={() => setAm3Active(!am3Active)}
           description="AM three"
           formula="AM3(x) = (A₃ + ΔA₃ · |x_mouse|) sin(2π f_m x)"
-          disabled={!amActive}
+          disabled={!systemActive || !amActive}
           className="am3Button"
         />
 
@@ -132,7 +132,7 @@ function ModulationControls({
           onClick={() => setFm3Active(!fm3Active)}
           description="FM three"
           formula="FM3(x) = I₃ (sin(2π f_m x) + 0.5 sin(2π 2 f_m x))"
-          disabled={!fmActive}
+          disabled={!systemActive || !fmActive}
           className="fm3Button"
         />
       </div>

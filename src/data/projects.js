@@ -1,41 +1,69 @@
 export const projects = [
-  {
-    id: 'boag-dev',
-    title: 'boag_dev',
-    summary: 'Personal site + wave modulation playground.',
-    highlights: [
-      'Canvas-based wave background with real-time AM/FM modulation controls.',
-      'Reducer-driven modulation state keeps controls and rendering loop in sync.',
-      'SPA routing (`/projects`) with Vercel rewrite for refresh-safe deep links.',
-    ],
-    type: 'project',
-    tags: ['react', 'canvas'],
-    pinned: true,
-    links: [
-      {
-        label: 'repo',
-        kind: 'github',
-        href: 'https://github.com/DayByDayBy/boag_dev',
-      },
-      {
-        label: 'site',
-        kind: 'demo',
-        href: 'https://page-of-things.vercel.app',
-      },
-    ],
-  },
-  {
-    id: 'github',
-    title: 'GitHub profile',
-    summary: 'More repos and experiments.',
-    type: 'link',
-    tags: ['github'],
-    links: [
-      {
-        label: 'github',
-        kind: 'github',
-        href: 'https://github.com/DayByDayBy',
-      },
-    ],
-  },
+
+    {
+        id: 'bmmt-lite',
+        title: 'BMMT_lite',
+        summary: 'A simplified, public-facing version of the audio-printing modular synthesis engine for OPECC.',
+        type: 'project',
+        tags: ['python'],
+        pinned: true,
+        links: [
+            {
+                label: 'repo',
+                kind: 'github',
+                href: 'https://github.com/DayByDayBy/BMMT_lite',
+            },
+        ],
+    },
+    {
+        id: 'the-divination-engine',
+        title: 'The_Divination_Engine',
+        summary: 'An app to help you read your subconscious: toss a ~4.5 sextillion-sided coin.',
+        type: 'project',
+        tags: ['TypeScript', 'Java'],
+        pinned: true,
+        links: [
+            {
+                label: 'repo',
+                kind: 'github',
+                href: 'https://github.com/DayByDayBy/The_Divination_Engine',
+            },
+        ],
+    },
+    {
+        id: 'cluas',
+        title: 'cluas',
+        summary: 'a gathering of guides, a council of counsels.',
+        type: 'project',
+        tags: ['python'],
+        pinned: true,
+        links: [
+            {
+                label: 'repo',
+                kind: 'github',
+                href: 'https://github.com/DayByDayBy/cluas',
+            },
+        ],
+    },
+    {
+        id: 'page-of-things',
+        title: 'page_of_things',
+        summary: 'custom Canvas-based wave background with real-time AM/FM modulation controls.',
+        type: 'project',
+        tags: ['javascript', 'react', 'canvas'],
+        pinned: true,
+        links: [
+            {
+                label: 'repo',
+                kind: 'github',
+                href: 'https://github.com/DayByDayBy/page_of_things',
+            },
+            {
+                label: 'site',
+                kind: 'homepage',
+                href: 'https://theboag.com',
+            },
+        ],
+    },
 ];
+

@@ -84,7 +84,7 @@ function ModulationControls({
                         active={am1Active}
                         onClick={() => setAm1Active(!am1Active)}
                         description="AM one"
-                        disabled={!amActive}
+                        disabled={!systemActive || !amActive}
                         className="am1Button"
                     />
                 </div>
@@ -95,7 +95,7 @@ function ModulationControls({
                         active={fm1Active}
                         onClick={() => setFm1Active(!fm1Active)}
                         description="FM one"
-                        disabled={!fmActive}
+                        disabled={!systemActive || !fmActive}
                         className="fm1Button"
                     />
                 </div>
@@ -106,7 +106,7 @@ function ModulationControls({
                         active={am2Active}
                         onClick={() => setAm2Active(!am2Active)}
                         description="AM two"
-                        disabled={!amActive}
+                        disabled={!systemActive || !amActive}
                         className="am2Button"
                     /></div>
                 <div title="FM2(x) = I₂ sin(2π f_m(mouse) x)">
@@ -115,7 +115,7 @@ function ModulationControls({
                         active={fm2Active}
                         onClick={() => setFm2Active(!fm2Active)}
                         description="FM two"
-                        disabled={!fmActive}
+                        disabled={!systemActive || !fmActive}
                         className="fm2Button"
                     />
                 </div>
@@ -126,7 +126,7 @@ function ModulationControls({
                         active={am3Active}
                         onClick={() => setAm3Active(!am3Active)}
                         description="AM three"
-                        disabled={!amActive}
+                        disabled={!systemActive || !amActive}
                         className="am3Button"
                     />
                 </div>
@@ -137,7 +137,7 @@ function ModulationControls({
                         active={fm3Active}
                         onClick={() => setFm3Active(!fm3Active)}
                         description="FM three"
-                        disabled={!fmActive}
+                        disabled={!systemActive || !fmActive}
                         className="fm3Button"
                     />
                 </div>

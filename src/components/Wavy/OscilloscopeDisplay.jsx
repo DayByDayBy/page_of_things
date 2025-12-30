@@ -88,7 +88,6 @@ const OscilloscopeDisplay = ({ samplesRef }) => {
                         "y = A(1 + AM) \\cdot \\allowbreak \\sin((x + \\phi)(f + FM))",
                         {
                             displayMode: true,
-                            breakLines: true,
                             throwOnError: false,
                         }
                     ),

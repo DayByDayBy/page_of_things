@@ -76,22 +76,10 @@ export function updatePhase(waveConfig) {
   waveConfig.current.phase += random < 0.01 ? -0.000012 : 0.0000125;
 }
 
-// computes a single y-value for the current wave configuration at a given x
-export function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
-  const { amplitude, frequency, phase } = waveConfig.current;
-  const {
-    systemActive,
-    amActive,
-    fmActive,
-    am1Active,
-    am2Active,
-    am3Active,
-    fm1Active,
-    fm2Active,
-    fm3Active,
-  } = modState;
-
-  // precompute normalized mouse-derived scalars (once per frame)
+// compute mouse-derived scalars once per frame
+export function computeMouseScalars(canvas, mousePos) {
+  const MAX_QUOTIENT = Math.max(canvas.width, 1000);
+  
   const normMouseX = normalize(mousePos.x, 0, canvas.width);
   const mouseDiff = normalize(
     mousePos.x - mousePos.y,
@@ -109,12 +97,29 @@ export function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
     canvas.width * canvas.height
   );
   const rawQuotient = mousePos.y !== 0 ? mousePos.x / mousePos.y : canvas.width;
-  const mouseQuotient = normalize(
-    rawQuotient,
-    0,
-    canvas.width
-  );
+  const boundedQuotient = Math.min(Math.abs(rawQuotient), MAX_QUOTIENT);
+  const normalizedQuotient = normalize(boundedQuotient, 0, MAX_QUOTIENT);
+  const mouseQuotient = Math.max(-1, Math.min(1, normalizedQuotient));
+  
+  return { normMouseX, mouseDiff, mouseSum, mouseProduct, mouseQuotient };
+}
 
+// computes a single y-value for the current wave configuration at a given x
+export function computeWaveY(x, canvas, waveConfig, mouseScalars, modState) {
+  const { amplitude, frequency, phase } = waveConfig.current;
+  const {
+    systemActive,
+    amActive,
+    fmActive,
+    am1Active,
+    am2Active,
+    am3Active,
+    fm1Active,
+    fm2Active,
+    fm3Active,
+  } = modState;
+
+  const { normMouseX, mouseDiff, mouseSum, mouseProduct, mouseQuotient } = mouseScalars;
   const carrierFreq = frequency / CARRIER_FREQ_DIVISOR;
 
   let totalAM = 0;
@@ -127,8 +132,7 @@ export function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
     }
 
     if (am2Active) {
-      const ringFreq =
-        (mousePos.x / canvas.width) * AM2_MOUSE_FREQ_SCALE + AM2_MOUSE_FREQ_BASE;
+      const ringFreq = mouseSum * AM2_MOUSE_FREQ_SCALE + AM2_MOUSE_FREQ_BASE;
       totalAM +=
         AM2_DEPTH *
         Math.sin(2 * Math.PI * ringFreq * x) *
@@ -136,8 +140,7 @@ export function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
     }
 
     if (am3Active) {
-      const mouseAMFreq =
-        (mousePos.y / canvas.height) * AM3_MOUSE_FREQ_SCALE + AM3_MOUSE_FREQ_BASE;
+      const mouseAMFreq = mouseDiff * AM3_MOUSE_FREQ_SCALE + AM3_MOUSE_FREQ_BASE;
       const intensity =
         AM3_INTENSITY_BASE + AM3_INTENSITY_VARIATION * Math.abs(normMouseX);
       totalAM += intensity * Math.sin(2 * Math.PI * mouseAMFreq * x);
@@ -152,15 +155,14 @@ export function computeWaveY(x, canvas, waveConfig, mousePos, modState) {
     }
 
     if (fm2Active) {
-      const modFreq =
-        (mousePos.x / canvas.width) * FM2_MOUSE_FREQ_SCALE + FM2_MOUSE_FREQ_BASE;
+      const modFreq = normMouseX * FM2_MOUSE_FREQ_SCALE + FM2_MOUSE_FREQ_BASE;
       const modIndex = FM2_INDEX;
       totalFM += modIndex * Math.sin(2 * Math.PI * modFreq * x);
     }
 
     if (fm3Active) {
-      const safeQuotient = Math.abs(mouseQuotient) < 1e-6 
-        ? Math.sign(mouseQuotient) * 1e-6 
+      const safeQuotient = Math.abs(mouseQuotient) < 1e-3 
+        ? Math.sign(mouseQuotient) * 1e-3 
         : mouseQuotient;
       const modFreq = FM3_BASE_FREQ / safeQuotient;
       const modIndex = FM3_INDEX;
@@ -192,11 +194,12 @@ export function drawWave(
   ctx.beginPath();
   ctx.moveTo(-4, canvas.height / 2);
 
+  const mouseScalars = computeMouseScalars(canvas, mousePos);
   const numPoints = NUM_POINTS;
   const stepSize = canvas.width / numPoints;
 
   for (let x = 0; x < canvas.width; x += stepSize) {
-    const y = computeWaveY(x, canvas, waveConfig, mousePos, modState);
+    const y = computeWaveY(x, canvas, waveConfig, mouseScalars, modState);
     ctx.lineTo(x, y);
   }
 
@@ -232,12 +235,13 @@ export function sampleReadoutWave(
     samplesRef.current = new Array(count);
   }
 
+  const mouseScalars = computeMouseScalars(canvas, mousePos);
   const stepX = width / (count - 1);
   const mid = height / 2;
 
   for (let i = 0; i < count; i++) {
     const x = i * stepX;
-    const y = computeWaveY(x, canvas, waveConfig, mousePos, modState);
+    const y = computeWaveY(x, canvas, waveConfig, mouseScalars, modState);
     samplesRef.current[i] = { x, y: y - mid };
   }
 }

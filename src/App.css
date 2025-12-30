@@ -236,7 +236,7 @@ h2 {
         border-radius: 3rem;
         background: linear-gradient(110deg,
                 hsla(145, 10%, 80%, 0.175) 37%,
-                hsla(235, 12%, 60%, 0.08046)) 0%;
+                hsla(235, 12%, 60%, 0.08046));
         z-index: 1;
     }
 

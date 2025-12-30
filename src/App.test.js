@@ -22,7 +22,7 @@ test('renders projects page', () => {
   const headingElement = screen.getByRole('heading', { name: /boagdev/i });
   expect(headingElement).toBeInTheDocument();
 
-  const projectTitle = screen.getByText('page_of_things');
+  const projectTitle = screen.getByText('BMMT_lite');
   expect(projectTitle).toBeInTheDocument();
 
   const projectsLink = screen.getByRole('link', { name: /projects/i });

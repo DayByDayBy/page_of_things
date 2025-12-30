@@ -84,7 +84,7 @@ function App() {
 
                         </div>
                         <p className="text">
-                            <a href="mailto:lab@boag.dev">lab<br></br>[@]<br></br>boag<br></br>dev</a>
+                            <a href="mailto:lab@boag.dev">lab<br></br>[@]<br></br>boagdev</a>
                         </p>
                     </section>
 

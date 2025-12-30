@@ -17,13 +17,19 @@ const ProjectsPage = () => {
             <div className="projects-header">
               <div className="projects-header-left">
                 <strong>
-                  <a
-                    href={project.links.find((l) => l.label === 'repo' || l.kind === 'github')?.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    {project.title}
-                  </a>
+                  {(() => {
+                    const href =
+                      project.links.find((l) => l.label === 'repo' || l.kind === 'github')?.href ||
+                      project.links[0]?.href;
+
+                    return href ? (
+                      <a href={href} target="_blank" rel="noreferrer noopener">
+                        {project.title}
+                      </a>
+                    ) : (
+                      project.title
+                    );
+                  })()}
                 </strong>
                 {project.tags?.length ? (
                   <span className="projects-tags">[{project.tags.join(' · ')}]</span>

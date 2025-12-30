@@ -133,8 +133,8 @@ a:active {
 }
 
 p.text {
-    margin: .75vh 1vw 0vh 1vw;
-    padding: 1rem 0 0rem 0;
+    margin: .5vh 1vw 0vh 1vw;
+    padding: .5rem 0 0rem 0;
     text-align: center;
 }
 
@@ -263,8 +263,8 @@ h2 {
     }
 
     p.text {
-        margin: .75vh 1rem 0vh 1rem;
-        padding: 1rem 0 0rem 0;
+        margin: .5vh 1rem 0vh 1rem;
+        padding: .5rem 0 0rem 0;
         text-align: center;
 
     }

@@ -53,11 +53,11 @@ export const projects = [
         tags: ['javascript', 'react'],
         pinned: true,
         links: [
-            // {
-            //     label: 'repo',
-            //     kind: 'github',
-            //     href: 'https://github.com/DayByDayBy/page_of_things',
-            // },
+            {
+                label: 'repo',
+                kind: 'github',
+                href: 'https://github.com/DayByDayBy/page_of_things',
+            },
             // {
             //     label: 'site',
             //     kind: 'homepage',

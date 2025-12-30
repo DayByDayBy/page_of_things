@@ -92,7 +92,7 @@ a:visited {
 }
 
 a:hover {
-  color: hsl(330, 100%, 71%, 80%);
+  color: hsla(330, 100%, 71%, 80%);
 }
 
 /* selected link */

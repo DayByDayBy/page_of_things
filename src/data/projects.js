@@ -32,7 +32,7 @@ export const projects = [
     },
     {
         id: 'cluas',
-        title: 'Cluas Huginn',
+        title: 'Cluas_Huginn',
         summary: 'a gathering of guides, a council of counsels. An agentic MCP server for the Hugging Face hackathon',
         type: 'project',
         tags: ['python'],

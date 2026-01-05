@@ -90,17 +90,12 @@ export function computeMouseScalars(canvas, mousePos) {
     0,
     canvas.width + canvas.height
   );
-  const mouseProduct = normalize(
-    mousePos.x * mousePos.y,
-    0,
-    canvas.width * canvas.height
-  );
   const rawQuotient = mousePos.y !== 0 ? mousePos.x / mousePos.y : canvas.width;
   const boundedQuotient = Math.min(Math.abs(rawQuotient), MAX_QUOTIENT);
   const normalizedQuotient = normalize(boundedQuotient, 0, MAX_QUOTIENT);
   const mouseQuotient = Math.max(-1, Math.min(1, normalizedQuotient));
   
-  return { normMouseX, mouseDiff, mouseSum, mouseProduct, mouseQuotient };
+  return { normMouseX, mouseDiff, mouseSum, mouseQuotient };
 }
 
 // computes a single y-value for the current wave configuration at a given x

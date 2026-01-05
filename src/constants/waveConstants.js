@@ -1,7 +1,6 @@
 export const NUM_POINTS = 3000;
 export const WAVE_COLOR = "rgba(0, 0, 0, 0.67)";
 export const CARRIER_FREQ_DIVISOR = 10;
-export const MOUSE_QUOTIENT_MAX = 10;
 
 export const TREMOLO_FREQ = 0.003;
 export const AM1_DEPTH = 0.5;

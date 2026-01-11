@@ -63,11 +63,13 @@ const OscilloscopeDisplay = ({ samplesRef }) => {
             ctx.stroke();
         };
 
+        // Polling redraw every 100ms to capture samplesRef.current updates
+        // samplesRef is excluded from dependency array since ref changes don't trigger re-renders
         draw();
         const id = setInterval(draw, 100);
 
         return () => clearInterval(id);
-    }, [samplesRef]);
+    }, []);
 
     return (
         <div className="oscilloscope-container">

@@ -50,7 +50,7 @@ export const projects = [
         title: 'Page_of_Things',
         summary: 'Custom Canvas-based wave background with real-time AM/FM modulation controls.',
         type: 'project',
-        tags: ['javascript', 'react'],
+        tags: ['react'],
         pinned: true,
         links: [
             {
@@ -58,12 +58,23 @@ export const projects = [
                 kind: 'github',
                 href: 'https://github.com/DayByDayBy/page_of_things',
             },
-            // {
-            //     label: 'site',
-            //     kind: 'homepage',
-            //     href: 'https://theboag.com',
-            // },
-        ],
+        ]
     },
+    {
+        id: 'alphaba',
+        title: 'alphaba',
+        summary: 'Decoding the structure and style of writing systems with machine learning, using triplet networks and a font-geometry pipeline to generate new, fictional alphabets.',
+        type: 'project',
+        tags: ['python',],
+        pinned: true,
+        links: [
+            {
+                label: 'repo',
+                kind: 'github',
+                href: 'https://github.com/DayByDayBy/alphaba',
+            },
+        ]
+    }
+
 ];
 

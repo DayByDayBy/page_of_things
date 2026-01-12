@@ -11,15 +11,15 @@ function formatAlgoLabel(prefix, one, two, three) {
 
 const Readout = ({ samplesRef, flags }) => {
   const {
-    amActive,
-    am1Active,
-    am2Active,
-    am3Active,
-    fmActive,
-    fm1Active,
-    fm2Active,
-    fm3Active,
-  } = flags;
+    amActive = false,
+    am1Active = false,
+    am2Active = false,
+    am3Active = false,
+    fmActive = false,
+    fm1Active = false,
+    fm2Active = false,
+    fm3Active = false,
+  } = flags || {};
 
   const [stats, setStats] = useState({
     amplitudePx: 0,

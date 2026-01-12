@@ -25,7 +25,7 @@ const INITIAL_DELAY_MS = 2500;
 const ROTATION_INTERVAL_MS = 8000;
 const ANIMATION_DURATION_S = 0.45;
 
-const RollingProjectsList = ({ projects }) => {
+const RollingProjectsList = ({ projects = [] }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
   const reduceMotion = useReducedMotion();

@@ -2,8 +2,17 @@ import React, { useEffect, useRef } from "react";
 import "katex/dist/katex.min.css";
 import katex from "katex";
 
-const OscilloscopeDisplay = ({ samplesRef }) => {
+const OSCILLOSCOPE_FORMULA_HTML = katex.renderToString(
+    "y = A(1 + AM) \\cdot \\allowbreak \\sin((x + \\phi)(f + FM))",
+    {
+        displayMode: true,
+        throwOnError: false,
+    }
+);
+
+const OscilloscopeDisplay = ({ samplesRef }, forwardedRef) => {
     const canvasRef = useRef(null);
+    const effectiveSamplesRef = samplesRef || forwardedRef;
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -13,7 +22,7 @@ const OscilloscopeDisplay = ({ samplesRef }) => {
         if (!ctx) return;
 
         const draw = () => {
-            const pts = (samplesRef && samplesRef.current) || [];
+            const pts = (effectiveSamplesRef && effectiveSamplesRef.current) || [];
             const width = canvas.width;
             const height = canvas.height;
 
@@ -69,7 +78,7 @@ const OscilloscopeDisplay = ({ samplesRef }) => {
         const id = setInterval(draw, 100);
 
         return () => clearInterval(id);
-    }, []);
+    }, [effectiveSamplesRef]);
 
     return (
         <div className="oscilloscope-container">
@@ -86,16 +95,10 @@ const OscilloscopeDisplay = ({ samplesRef }) => {
             <div
                 className="oscilloscope-formula"
                 dangerouslySetInnerHTML={{
-                    __html: katex.renderToString(
-                        "y = A(1 + AM) \\cdot \\allowbreak \\sin((x + \\phi)(f + FM))",
-                        {
-                            displayMode: true,
-                            throwOnError: false,
-                        }
-                    ),
+                    __html: OSCILLOSCOPE_FORMULA_HTML,
                 }}
             />
     </div>
 )
 }
-export default OscilloscopeDisplay;
+export default React.forwardRef(OscilloscopeDisplay);

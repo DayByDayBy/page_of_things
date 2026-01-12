@@ -1,14 +1,13 @@
 # Page of Things
 
-An interactive web application featuring dynamic wave visualizations with real-time modulation controls. Built with React, this project demonstrates advanced canvas animations, mathematical wave synthesis, and responsive user interface design.
+An interactive webapp, with a custom-built wave visualisation with real-time modulation controls. Built with React and canvas animations, featuring mathematical wave synthesis, and a responsive user interface design.
 
 ## Features
 
-- **Interactive Wave Visualization**: Real-time oscilloscope display with mathematical wave rendering
-- **Advanced Modulation**: Multiple AM/FM modulation layers with mouse-controlled parameters
+- **Interactive Wave Visualisation**: Real-time oscilloscope display with mathematical wave rendering
+- **Modulation**: Multiple AM/FM modulation with mouse-position control parameters
 - **Mathematical Formulas**: KaTeX-rendered wave equations with tooltips
-- **Responsive Design**: Optimized for various screen sizes with modern CSS
-- **Performance Optimized**: Efficient canvas rendering with mouse scalar computation
+- **Optimisation**:  Efficient canvas rendering with mouse scalar computation, and built for various screen sizes with modern CSS
 - **Accessibility**: ARIA labels, keyboard navigation, and screen reader support
 
 ## Installation
@@ -16,13 +15,13 @@ An interactive web application featuring dynamic wave visualizations with real-t
 ### Prerequisites
 
 - Node.js (v16 or higher)
-- npm, yarn, or pnpm package manager
+- npm, yarn, or pnpm package manager (this project uses pnpm)
 
 ### Setup
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/page_of_things.git
+git clone https://github.com/DayByDayBy/page_of_things.git
 cd page_of_things
 ```
 
@@ -63,9 +62,9 @@ pnpm start
 
 ### Wave Controls
 
-- **Move your mouse** over the wave area to modulate frequency and amplitude
+- **Move your mouse** around the screen to update X and Y for the wave-maths
 - **Toggle modulation layers** using the control panel
-- **View real-time oscilloscope** updates showing the resulting waveform
+- **Real-time oscilloscope** updates showing a snapshot of the waveform
 - **Hover over formulas** to see detailed mathematical expressions
 
 ## Project Structure
@@ -73,7 +72,7 @@ pnpm start
 ```
 src/
 ├── components/
-│   ├── Wavy/           # Wave visualization components
+│   ├── Wavy/           # Wave visualisation components
 │   └── WaveBackground.jsx
 ├── data/
 │   └── projects.js     # Projects data
@@ -90,33 +89,12 @@ src/
 ## Technologies Used
 
 - **React 18** - UI framework with hooks
-- **React Router DOM** - Client-side routing
-- **KaTeX** - Mathematical formula rendering
-- **Canvas API** - High-performance graphics rendering
-- **CSS3** - Modern styling with animations
-- **Jest & React Testing Library** - Testing framework
+- **React Router DOM** - client-side routing
+- **KaTeX** - mathematical formula rendering
+- **Canvas** - performant graphics rendering
+- **CSS3** - simple styling with animations
+- **Jest & React Testing Library** - testing framework
 
-## Contributing
-
-We welcome contributions! Please follow these guidelines:
-
-### Development Workflow
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes with appropriate tests
-4. Run tests: `pnpm test`
-5. Commit your changes: `git commit -m 'Add amazing feature'`
-6. Push to branch: `git push origin feature/amazing-feature`
-7. Open a Pull Request
-
-### Code Style
-
-- Use ES6+ features consistently
-- Follow React best practices and hooks patterns
-- Include PropTypes for component validation
-- Write meaningful commit messages
-- Add tests for new features
 
 ### Issue Reporting
 
@@ -139,7 +117,7 @@ pnpm test --watch
 pnpm test --coverage
 ```
 
-The test suite includes:
+Test suite includes:
 - Component rendering tests
 - User interaction simulations
 - Canvas mocking for graphics components
@@ -162,10 +140,3 @@ Environment variables and build settings are configured in `vercel.json`.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- React team for the excellent framework
-- KaTeX contributors for mathematical rendering
-- Canvas API documentation and examples
-- The open-source community for inspiration and tools

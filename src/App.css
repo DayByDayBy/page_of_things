@@ -27,7 +27,7 @@ main {
     min-height: 80vh;
     padding: 0rem 3rem;
     margin: 0 1rem;
-    border: 1px outset hsl(33, 100%, 88%, 0.3);
+    border: 1px outset hsla(33, 100%, 88%, 0.3);
     border-radius: 3rem;
     background: linear-gradient(110deg,
             hsla(145, 10%, 80%, 0.175) 37%,
@@ -93,14 +93,23 @@ a:visited {
 
 a:hover {
   color: hsla(330, 100%, 71%, .8);
+  text-decoration: underline;
+}
+
+a:focus,
+a:focus-visible {
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.6);
+  outline-offset: 2px;
 }
 
 /* selected link */
 a:active {
   color: hsl(330, 41%, 35%);
 }
-
-
 
 .svglink {
     padding: 0 1rem;
@@ -233,6 +242,10 @@ h2 {
         grid-template-areas: "main" "controls";
     }
 
+    .spacer-column {
+        display: none;
+    }
+
     h1 {
         margin: 0;
         padding: 0.2vw;
@@ -254,7 +267,7 @@ h2 {
         min-width: 18vw;
         padding: 1rem 0;
         margin: 0rem;
-        border: 1px outset hsl(33, 100%, 88%, 0.3046);
+        border: 1px outset hsla(33, 100%, 88%, 0.3046);
         border-radius: 3rem;
         background: linear-gradient(110deg,
                 hsla(145, 10%, 80%, 0.175) 37%,
@@ -270,7 +283,7 @@ h2 {
     .main-column {
         width: 80vw;
         max-width: none;
-        justify-self: right;
+        justify-self: end;
         grid-area: main;
     }
 

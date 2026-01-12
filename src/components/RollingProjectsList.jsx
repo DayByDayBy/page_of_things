@@ -18,10 +18,12 @@
  */
 
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const VISIBLE_COUNT = 3;
 const INITIAL_DELAY_MS = 2500;
 const ROTATION_INTERVAL_MS = 8000;
+const ANIMATION_DURATION_S = 0.45;
 
 const RollingProjectsList = ({ projects }) => {
   const [startIndex, setStartIndex] = useState(0);
@@ -63,36 +65,45 @@ const RollingProjectsList = ({ projects }) => {
 
   return (
     <div className="projects-window">
-      <ul className="projects-list">
-        {visibleProjects.map((project) => {
-          const href = getProjectHref(project);
-          return (
-            <li key={project.id}>
-              <div className="projects-header">
-                <div className="projects-header-left">
-                  <strong>
-                    {href ? (
-                      <a href={href} target="_blank" rel="noreferrer noopener">
-                        {project.title}
-                      </a>
-                    ) : (
-                      project.title
+      <motion.ul className="projects-list" layout>
+        <AnimatePresence initial={false}>
+          {visibleProjects.map((project) => {
+            const href = getProjectHref(project);
+            return (
+              <motion.li
+                key={project.id}
+                layout
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: ANIMATION_DURATION_S, ease: 'easeInOut' }}
+              >
+                <div className="projects-header">
+                  <div className="projects-header-left">
+                    <strong>
+                      {href ? (
+                        <a href={href} target="_blank" rel="noreferrer noopener">
+                          {project.title}
+                        </a>
+                      ) : (
+                        project.title
+                      )}
+                    </strong>
+                    {project.tags?.length > 0 && (
+                      <span className="projects-tags">
+                        [{project.tags.join(' · ')}]
+                      </span>
                     )}
-                  </strong>
-                  {project.tags?.length > 0 && (
-                    <span className="projects-tags">
-                      [{project.tags.join(' · ')}]
-                    </span>
-                  )}
+                  </div>
                 </div>
-              </div>
-              {project.summary && (
-                <div className="project-summary">{project.summary}</div>
-              )}
-            </li>
-          );
-        })}
-      </ul>
+                {project.summary && (
+                  <div className="project-summary">{project.summary}</div>
+                )}
+              </motion.li>
+            );
+          })}
+        </AnimatePresence>
+      </motion.ul>
     </div>
   );
 };

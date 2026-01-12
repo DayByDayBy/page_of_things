@@ -117,6 +117,9 @@ export function computeMouseScalars(canvas, mousePos) {
 
 // computes a single y-value for the current wave configuration at a given x
 export function computeWaveY(x, canvas, waveConfig, mouseScalars, modState) {
+  if (!waveConfig || !waveConfig.current) {
+    return canvas.height / 2;
+  }
   const { amplitude, frequency, phase } = waveConfig.current;
   const {
     systemActive,
@@ -245,6 +248,11 @@ export function sampleReadoutWave(
 
   if (!samplesRef.current || samplesRef.current.length !== count) {
     samplesRef.current = new Array(count);
+  }
+
+  if (!waveConfig || !waveConfig.current) {
+    samplesRef.current = [];
+    return;
   }
 
   const mouseScalars = computeMouseScalars(canvas, mousePos);

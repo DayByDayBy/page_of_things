@@ -3,7 +3,7 @@ export const projects = [
     {
         id: 'bmmt-lite',
         title: 'BMMT_lite',
-        summary: 'A simplified, public-facing version of the audio-printing modular synthesis engine for OPECC.',
+        summary: 'A simplified, public-facing version of the OPECC audio-printing modular synthesis engine.',
         type: 'project',
         tags: ['python'],
         pinned: true,
@@ -33,7 +33,7 @@ export const projects = [
     {
         id: 'cluas',
         title: 'Cluas_Huginn',
-        summary: 'A gathering of guides, a council of counsels. An agentic MCP server for the Hugging Face hackathon',
+        summary: 'A gathering of guides, a council of counsels. Agentic MCP server for the Hugging Face hackathon',
         type: 'project',
         tags: ['python'],
         pinned: true,
@@ -63,9 +63,9 @@ export const projects = [
     {
         id: 'alphaba',
         title: 'alphaba',
-        summary: 'Decoding the structure and style of writing systems with machine learning, using triplet networks and a font-geometry pipeline to generate new, fictional alphabets.',
+        summary: 'Decoding the structure and style of writing systems with machine learning, to generate new, fictional alphabets.',
         type: 'project',
-        tags: ['python',],
+        tags: ['python'],
         pinned: true,
         links: [
             {

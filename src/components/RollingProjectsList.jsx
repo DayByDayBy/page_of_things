@@ -20,9 +20,28 @@
 import { useState, useEffect } from 'react';
 
 const VISIBLE_COUNT = 3;
+const INITIAL_DELAY_MS = 2500;
+const ROTATION_INTERVAL_MS = 8000;
 
 const RollingProjectsList = ({ projects }) => {
   const [startIndex, setStartIndex] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  // Initial delay before rotation begins
+  useEffect(() => {
+    if (projects.length <= VISIBLE_COUNT) return;
+    const timer = setTimeout(() => setHasStarted(true), INITIAL_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, [projects.length]);
+
+  // Rotation interval
+  useEffect(() => {
+    if (!hasStarted || projects.length <= VISIBLE_COUNT) return;
+    const timer = setInterval(() => {
+      setStartIndex((i) => (i + 1) % projects.length);
+    }, ROTATION_INTERVAL_MS);
+    return () => clearInterval(timer);
+  }, [hasStarted, projects.length]);
 
   // Calculate visible window
   const visibleProjects =

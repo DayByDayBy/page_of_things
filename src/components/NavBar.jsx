@@ -1,25 +1,21 @@
 import gitSVG from "../assets/git.svg";
 import liSVG from "../assets/linkedIn.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const NavBar = () => {
+  const location = useLocation();
+  const isProjects = location.pathname === "/projects";
   return (
     <>
       <nav className="svglink" aria-label="primary navigation">
         <div className="svglink-links">
-          <NavLink
-            to="/"
-            end
-            className={({ isActive }) => (isActive ? "active" : undefined)}
-          >
-            home
-          </NavLink>
-          <NavLink
-            to="/projects"
-            className={({ isActive }) => (isActive ? "active" : undefined)}
-          >
-            projects
-          </NavLink>
+          {isProjects ? (
+            <NavLink to="/" end>
+              home
+            </NavLink>
+          ) : (
+            <NavLink to="/projects">projects</NavLink>
+          )}
         </div>
 
         <div className="svglink-icons">

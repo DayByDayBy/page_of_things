@@ -18,7 +18,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 const VISIBLE_COUNT = 3;
 const INITIAL_DELAY_MS = 2500;
@@ -28,6 +28,7 @@ const ANIMATION_DURATION_S = 0.45;
 const RollingProjectsList = ({ projects }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   // Initial delay before rotation begins
   useEffect(() => {
@@ -73,10 +74,14 @@ const RollingProjectsList = ({ projects }) => {
               <motion.li
                 key={project.id}
                 layout
-                initial={{ opacity: 0, y: 16 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: ANIMATION_DURATION_S, ease: 'easeInOut' }}
+                exit={reduceMotion ? false : { opacity: 0, y: -16 }}
+                transition={
+                  reduceMotion
+                    ? { duration: 0 }
+                    : { duration: ANIMATION_DURATION_S, ease: 'easeInOut' }
+                }
               >
                 <div className="projects-header">
                   <div className="projects-header-left">

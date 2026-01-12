@@ -25,31 +25,38 @@ import {
 // normalizes a value from [fromMin, fromMax] to [-1, 1]
 export function normalize(x, fromMin, fromMax) {
   if (fromMax === fromMin) return 0;
-  return ((x - fromMin) / (fromMax - fromMin)) * 2 - 1;
+  const clampedX = Math.min(Math.max(x, fromMin), fromMax);
+  return ((clampedX - fromMin) / (fromMax - fromMin)) * 2 - 1;
 }
 
 // generic parameter updater used for amplitude/frequency oscillation
 export function updateParameter(value, maxReached, minReached, change, max, min) {
   if (!maxReached.current) {
-    if (value >= max) {
+    const newValue = Math.min(value + change * Math.random(), max);
+    if (newValue === max) {
       maxReached.current = true;
       minReached.current = false;
-      return value;
+      return max;
     }
-    return value + change * Math.random();
+    return newValue;
   } else if (!minReached.current) {
-    if (value <= min) {
+    const newValue = Math.max(value - change, min);
+    if (newValue === min) {
       minReached.current = true;
       maxReached.current = false;
-      return value;
+      return min;
     }
-    return value - change;
+    return newValue;
   }
   return value;
 }
 
 // updates wave amplitude/frequency using oscillation helper
 export function updateWave(waveConfig, constants) {
+  if (!waveConfig || !waveConfig.current) return;
+  if (waveConfig.current.amplitude === undefined || waveConfig.current.frequency === undefined) return;
+  if (!waveConfig.current.ampMaxReached || !waveConfig.current.ampMinReached) return;
+  if (!waveConfig.current.freqMaxReached || !waveConfig.current.freqMinReached) return;
   waveConfig.current.amplitude = updateParameter(
     waveConfig.current.amplitude,
     waveConfig.current.ampMaxReached,
@@ -71,30 +78,40 @@ export function updateWave(waveConfig, constants) {
 
 // advances carrier phase for slow drift
 export function updatePhase(waveConfig) {
+  if (!waveConfig || !waveConfig.current) return;
+  if (waveConfig.current.phase === undefined) return;
   const random = Math.random();
   waveConfig.current.phase += random < 0.01 ? -0.000012 : 0.0000125;
+  const twoPi = 2 * Math.PI;
+  waveConfig.current.phase = ((waveConfig.current.phase % twoPi) + twoPi) % twoPi;
 }
 
 // compute mouse-derived scalars once per frame
 export function computeMouseScalars(canvas, mousePos) {
-  const MAX_QUOTIENT = Math.max(canvas.width, 1000);
-  
-  const normMouseX = normalize(mousePos.x, 0, canvas.width);
+  const safeMousePos = mousePos || { x: 0, y: 0 };
+  const maxMagnitude = Math.max(canvas.width, canvas.height, 1);
+
+  const normMouseX = normalize(safeMousePos.x, 0, canvas.width);
   const mouseDiff = normalize(
-    mousePos.x - mousePos.y,
+    safeMousePos.x - safeMousePos.y,
     -canvas.height,
     canvas.width
   );
   const mouseSum = normalize(
-    mousePos.x + mousePos.y,
+    safeMousePos.x + safeMousePos.y,
     0,
     canvas.width + canvas.height
   );
-  const rawQuotient = mousePos.y !== 0 ? mousePos.x / mousePos.y : canvas.width;
-  const boundedQuotient = Math.min(Math.abs(rawQuotient), MAX_QUOTIENT);
-  const normalizedQuotient = normalize(boundedQuotient, 0, MAX_QUOTIENT);
-  const mouseQuotient = Math.max(-1, Math.min(1, normalizedQuotient));
-  
+  const rawQuotient =
+    safeMousePos.y !== 0
+      ? safeMousePos.x / safeMousePos.y
+      : safeMousePos.x >= 0
+        ? maxMagnitude
+        : -maxMagnitude;
+  const bounded = Math.min(Math.abs(rawQuotient), maxMagnitude);
+  const boundedSigned = Math.sign(rawQuotient) * bounded;
+  const mouseQuotient = normalize(boundedSigned, -maxMagnitude, maxMagnitude);
+
   return { normMouseX, mouseDiff, mouseSum, mouseQuotient };
 }
 
@@ -211,6 +228,7 @@ export function sampleReadoutWave(
   modState,
   samplesRef
 ) {
+  if (!samplesRef) return;
   if (!canvas) {
     samplesRef.current = [];
     return;

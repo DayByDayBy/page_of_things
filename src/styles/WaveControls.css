@@ -24,6 +24,12 @@
   cursor: pointer;
   z-index: 2;
   font-size: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .toggle-modulation-menu:focus-visible {
@@ -52,6 +58,7 @@
   top: 0.5rem;
   padding: 0.5rem 1.5rem;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   transition: opacity 0.3s ease;
   z-index: 3;
@@ -59,6 +66,7 @@
 
 .modulation-controls.visible {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 
@@ -134,12 +142,12 @@
 }
 
 .modButton.active {
-  background-color: rgb(34, 129, 34);
+  background-color: rgb(24, 102, 24);
   color: white;
 }
 
 .modButton.inactive {
-  background-color: hsla(344, 13%, 74%, 0.8046);
+  background-color: hsl(344 13% 86%);
   color: black;
 }
 
@@ -253,19 +261,18 @@
   }
 
   .oscilloscope-canvas {
-  width: 25vw;
-  height: auto;
-  margin: 3rem 0 0 0;
-  border-radius: 0.5rem;
-  background: rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.8046);
-}
+    width: 25vw;
+    aspect-ratio: 3 / 2;
+    margin: 3rem 0 0 0;
+    border-radius: 0.5rem;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.8046);
+  }
 
-.oscilloscope-formula {
+  .oscilloscope-formula {
     max-width: 25vw;
     white-space: normal; 
     display: block;
     min-width: 0 !important;
-}
-
+  }
 }

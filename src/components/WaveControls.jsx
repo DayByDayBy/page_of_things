@@ -50,6 +50,8 @@ function ModulationControls({
         className={`modulation-controls ${menuExpanded ? "visible" : ""}`}
         role="group"
         aria-label="Wave modulation controls"
+        aria-hidden={!menuExpanded}
+        inert={menuExpanded ? undefined : ""}
       >
         <ModButton
           label="⏻"

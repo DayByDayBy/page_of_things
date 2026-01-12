@@ -102,8 +102,6 @@ a:active {
 
 
 
-
-
 .svglink {
     padding: 0 1rem;
     margin: 0rem;
@@ -140,7 +138,7 @@ p.text {
 
 h1 {
     margin: 0;
-    padding: 5vh 0 0 0;
+    padding: 3vh 0 0 0;
     font-family: 'Courier New', Courier, monospace;
     font-size: clamp(1.5rem, 3.33vw, 4rem);
     font-weight: 800;
@@ -157,15 +155,39 @@ h2 {
     list-style: none;
 }
 
+.projects-window {
+    overflow: hidden;
+    height: 14.5rem;
+    position: relative;
+}
+
 .projects-list {
+    list-style: none;
     padding: 0;
-    margin: 1.5rem 0;
+    margin: 0;
     text-align: left;
     width: 100%;
 }
 
 .projects-list li {
-    margin-bottom: 1.15rem;
+    padding: 0.5rem 0;
+}
+
+.projects-header strong {
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.project-summary {
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .projects-header {
@@ -213,7 +235,7 @@ h2 {
 
     h1 {
         margin: 0;
-        padding: 0.1vw;
+        padding: 0.2vw;
         font-family: 'Courier New', Courier, monospace;
         font-size: 6vw;
         transition: 0.15s ease;
@@ -246,9 +268,9 @@ h2 {
     }
 
     .main-column {
-        width: 90vw;
+        width: 80vw;
         max-width: none;
-        justify-self: center;
+        justify-self: right;
         grid-area: main;
     }
 
@@ -266,6 +288,13 @@ h2 {
         margin: .5vh 1rem 0vh 1rem;
         padding: .5rem 0 0rem 0;
         text-align: center;
+    }
 
+    .projects-list li {
+        padding: 0.4rem 0;
+    }
+
+    .projects-window {
+        height: 15rem;
     }
 }

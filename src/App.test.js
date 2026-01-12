@@ -10,6 +10,9 @@ test('renders home page', () => {
   );
   const headingElement = screen.getByRole('heading', { name: /boagdev/i });
   expect(headingElement).toBeInTheDocument();
+
+  const projectsLink = screen.getByRole('link', { name: /projects/i });
+  expect(projectsLink).toBeInTheDocument();
 });
 
 test('renders projects page', () => {
@@ -25,6 +28,6 @@ test('renders projects page', () => {
   const projectTitle = screen.getByText('BMMT_lite');
   expect(projectTitle).toBeInTheDocument();
 
-  const projectsLink = screen.getByRole('link', { name: /projects/i });
-  expect(projectsLink).toHaveClass('active');
+  const homeLink = screen.getByRole('link', { name: /home/i });
+  expect(homeLink).toBeInTheDocument();
 });

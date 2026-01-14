@@ -1,6 +1,6 @@
 # Page of Things
 
-An interactive webapp, with a custom-built wave visualisation with real-time modulation controls. Built with React and canvas animations, featuring mathematical wave synthesis, and a responsive user interface design.
+An interactive personal page webapp, with a custom-built wave visualisation with real-time modulation controls. Built with React and canvas animations, featuring mathematical wave synthesis, and a responsive user interface design.
 
 ## Features
 

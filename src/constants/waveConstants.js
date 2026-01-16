@@ -28,8 +28,8 @@ export const READOUT_SAMPLES = 128;
 export const WAVE_MOTION_CONSTANTS = {
   amplitudeChange: 0.03046,
   frequencyChange: 0.00008046,
-  ampMax: 304.6,
-  ampMin: -304.6,
+  ampMax: 80.46,
+  ampMin: -80.46,
   freqMax: 0.8046,
-  freqMin: 0.008046,
+  freqMin: 0.003046,
 };

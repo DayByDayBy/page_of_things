@@ -56,7 +56,7 @@ main {
 }
 
 .main-column {
-    width: clamp(280px, 50vw, 600px);
+    width: clamp(280px, 48vw, 600px);
     justify-self: center;
     grid-area: main;
 }
@@ -147,7 +147,7 @@ p.text {
 
 h1 {
     margin: 0;
-    padding: 3vh 0 0 0;
+    padding: 1vh 0 0 0;
     font-family: 'Courier New', Courier, monospace;
     font-size: clamp(1.5rem, 3.33vw, 4rem);
     font-weight: 800;

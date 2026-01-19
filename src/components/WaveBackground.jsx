@@ -1,38 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { 
+    useEffect, 
+    useRef 
+} from "react";
 import "../styles/Wave.css";
-import {
-  NUM_POINTS,
-  WAVE_COLOR,
-  CARRIER_FREQ_DIVISOR,
-  TREMOLO_FREQ,
-  AM1_DEPTH,
-  AM2_DEPTH,
-  AM2_MOUSE_FREQ_SCALE,
-  AM2_MOUSE_FREQ_BASE,
-  AM3_MOUSE_FREQ_SCALE,
-  AM3_MOUSE_FREQ_BASE,
-  AM3_INTENSITY_BASE,
-  AM3_INTENSITY_VARIATION,
-  FM1_BASE_FREQ,
-  FM1_INDEX,
-  FM2_INDEX,
-  FM3_BASE_FREQ,
-  FM3_INDEX,
-  FM2_MOUSE_FREQ_SCALE,
-  FM2_MOUSE_FREQ_BASE,
-  FM3_SECOND_HARMONIC_WEIGHT,
-  READOUT_SAMPLES,
-  WAVE_MOTION_CONSTANTS,
+import {  
+    WAVE_MOTION_CONSTANTS 
 } from "../constants/waveConstants";
-import {
-  normalize,
-  updateParameter,
-  updateWave,
-  updatePhase,
-  computeWaveY,
-  drawWave,
-  sampleReadoutWave,
+import { 
+    updateWave, 
+    updatePhase, 
+    drawWave, 
+    sampleReadoutWave 
 } from "../utils/waveComputation";
+
 
 const CONSTANTS = WAVE_MOTION_CONSTANTS;
 

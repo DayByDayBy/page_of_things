@@ -79,7 +79,7 @@ const Readout = ({ samplesRef, flags }) => {
     }, 100);
 
     return () => clearInterval(id);
-  }, [amActive, fmActive]);
+  }, [amActive, fmActive, samplesRef]);
 
   const amAlgo = amActive
     ? formatAlgoLabel("AM", am1Active, am2Active, am3Active)

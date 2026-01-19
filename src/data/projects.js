@@ -32,8 +32,8 @@ export const projects = [
     },
     {
         id: 'cluas',
-        title: 'Cluas_Huginn',
-        summary: 'A gathering of guides, a council of counsels. Agentic MCP server for the Hugging Face hackathon',
+        title: 'cluas_huginn',
+        summary: 'A gathering of guides, a council of counsels. Agentic MCP server for Hugging Face hackathon',
         type: 'project',
         tags: ['python'],
         pinned: true,
@@ -47,7 +47,7 @@ export const projects = [
     },
     {
         id: 'page-of-things',
-        title: 'Page_of_Things',
+        title: 'page_of_things',
         summary: 'Custom Canvas-based wave background with real-time AM/FM modulation controls.',
         type: 'project',
         tags: ['react'],
@@ -63,9 +63,9 @@ export const projects = [
     {
         id: 'alphaba',
         title: 'alphaba',
-        summary: 'Decoding the structure and style of writing systems with machine learning, to generate new, fictional alphabets.',
+        summary: 'Decoding structure & style of writing systems with ML for generating new, fictional alphabets.',
         type: 'project',
-        tags: ['python'],
+        tags: ['python', 'ml'],
         pinned: true,
         links: [
             {
@@ -74,6 +74,39 @@ export const projects = [
                 href: 'https://github.com/DayByDayBy/alphaba',
             },
         ]
+    },
+
+    {
+        id: 'repetirompter',
+        title: 'repetiprompter',
+        summary: '`prompt -> response`, where each response becomes the next prompt',
+        type: 'project',
+        tags: ['python', 'llm analysis'],
+        pinned: false,
+        links: [ 
+            {
+                label: 'repo',
+                kind: 'github',
+                href: 'https://github.com/DayByDayBy/repetiprompter',
+            }
+        ]
+
+    }, 
+    {
+        id: 'enigma',
+        title: 'enigma_one',
+        summary: 'a basic modelling of the classic encyrption device using python, with a streamlit interface',
+        type: 'project',
+        tags: ['python', 'streamlit'],
+        pinned: false,
+        links: [ 
+            {
+                label: 'repo',
+                kind: 'github',
+                href: 'https://github.com/DayByDayBy/enigma_one',
+            }
+        ]
+
     }
 
 ];

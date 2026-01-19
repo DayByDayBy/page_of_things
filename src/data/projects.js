@@ -17,7 +17,7 @@ export const projects = [
     },
     {
         id: 'the-divination-engine',
-        title: 'The_Divination_Engine',
+        title: 'the_divination_engine',
         summary: 'An app to help you read your subconscious: toss a ~4.5 sextillion-sided coin.',
         type: 'project',
         tags: ['typescript', 'java'],

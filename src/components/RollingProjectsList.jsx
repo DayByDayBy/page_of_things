@@ -21,9 +21,9 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 const VISIBLE_COUNT = 3;
-const INITIAL_DELAY_MS = 2500;
-const ROTATION_INTERVAL_MS = 8000;
-const ANIMATION_DURATION_S = 0.45;
+const INITIAL_DELAY_MS = 2000;
+const ROTATION_INTERVAL_MS = 6667;
+const ANIMATION_DURATION_S = 0.5;
 
 const RollingProjectsList = ({ projects = [] }) => {
   const [startIndex, setStartIndex] = useState(0);

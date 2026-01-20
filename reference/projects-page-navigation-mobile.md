@@ -44,22 +44,22 @@ Do you want “Projects” to have a shareable URL?
 
 ## Page/URL patterns
 
-## A) Single-page section (anchor/scroll)
+### A) Single-page section (anchor/scroll)
 **Best when:** you want the simplest thing and don’t need a separate URL.
 
 **Mobile note:** long scroll is fine if you keep each project entry compact.
 
-## B) View swap / modal overlay (no router)
+### B) View swap / modal overlay (no router)
 **Best when:** you want “feels like a page” but want to avoid router + deployment considerations.
 
 **Mobile note:** a full-height overlay with a clear close/back affordance can be very comfortable.
 
-## C) HashRouter route (shareable URL, minimal hosting risk)
+### C) HashRouter route (shareable URL, minimal hosting risk)
 **Best when:** you want a real link you can share, without needing server rewrites.
 
 **Tradeoff:** URL is `/#/projects` rather than `/projects`.
 
-## D) BrowserRouter route (clean URL)
+### D) BrowserRouter route (clean URL)
 **Best when:** you really want `/projects`.
 
 **Tradeoff:** requires deployment rewrite rules on refresh.

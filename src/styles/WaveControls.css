@@ -273,6 +273,6 @@
     max-width: 25vw;
     white-space: normal; 
     display: block;
-    min-width: 0 !important;
+    min-width: 0;
   }
 }

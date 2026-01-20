@@ -58,7 +58,7 @@ pnpm start
 - `pnpm start` - Run development server with hot reloading
 - `pnpm test` - Run test suite in watch mode
 - `pnpm build` - Create production build
-- `pnpm run predeploy` - Build and prepare for deployment
+- `pnpm run predeploy` - Build and prepare for deployment (lifecycle hook, runs automatically before deploy)
 
 ### Wave Controls
 

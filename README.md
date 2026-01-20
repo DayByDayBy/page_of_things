@@ -14,7 +14,7 @@ An interactive personal page webapp, with a custom-built wave visualisation with
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js (v18 or higher)
 - npm, yarn, or pnpm package manager (this project uses pnpm)
 
 ### Setup

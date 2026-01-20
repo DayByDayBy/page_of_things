@@ -70,6 +70,33 @@ What will likely be needed is a **small responsive/layout adjustment**, not a fu
 - ensure projects list items have comfortable tap targets
 - keep navigation minimal (icon or tiny text)
 
+## Accessibility considerations
+
+All navigation patterns MUST implement:
+
+### Universal requirements (all patterns)
+- **Keyboard navigation**: Full Tab/Enter/Escape support
+- **Logical focus order**: Sequential, predictable tabbing
+- **Screen reader announcements**: View/page changes announced to screen readers
+- **Skip navigation links**: Provide jump-to-content functionality
+
+### Pattern-specific guidance
+
+#### Icon navigation (pattern 1)
+- **aria-label**: Descriptive labels for all icons
+- **aria-current**: Indicate active page/state
+- **Visible focus indicators**: Clear focus/hover states
+
+#### Modal/drawer patterns (pattern 2)
+- **Focus trap**: Tab cycles within modal, escape closes
+- **Return focus**: Focus returns to trigger element on close
+- **aria-modal/role**: Proper semantic attributes
+
+#### Router-based patterns (patterns 3-4)
+- **Semantic navigation**: Use `<nav>` and `<a>` elements appropriately
+- **Browser back-button**: Ensure expected browser behavior works
+- **Page titles**: Update document.title on route changes
+
 ## Recommendation to start
 - Decide whether you want a shareable URL.
 - If not: implement a view swap (Home vs Projects) driven by state.

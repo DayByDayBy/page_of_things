@@ -17,11 +17,11 @@ export const AM3_INTENSITY_VARIATION = 0.4;
 export const FM1_BASE_FREQ = 0.001;
 export const FM1_INDEX = 2;
 export const FM2_INDEX = 3;
-export const FM3_BASE_FREQ = 0.0006;
+export const FM3_BASE_FREQ = 0.00006;
 export const FM3_INDEX = 1.5;
 export const FM2_MOUSE_FREQ_SCALE = 0.001;
 export const FM2_MOUSE_FREQ_BASE = 0.002;
-export const FM3_SECOND_HARMONIC_WEIGHT = 0.5;
+export const FM3_SECOND_HARMONIC_WEIGHT = 0.3046;
 
 export const READOUT_SAMPLES = 24;
 

@@ -160,42 +160,68 @@ export function computeWaveY(x, canvas, waveConfig, mouseScalars, modState) {
             totalAM += intensity * Math.sin(2 * Math.PI * mouseAMFreq * x);
         }
     }
-
-    // fm blending three:
+    //___________________________________
+    // fm, all using mouse pos as input
     if (systemActive && fmActive) {
+        //___________________________________
+        // fm1, blending three shapes:
         if (fm1Active) {
             const modFreq = FM1_BASE_FREQ;
             const modIndex = FM1_INDEX;
             const mouseInput = mouseDiff ? mouseDiff : 1;
+            // for zero and extreme value issues:
+            const safeMouseInput = Math.abs(mouseInput) < 0.001 ? 0.001 : mouseInput;
+            const clampedMouseInput = Math.max(0.1, Math.min(10, safeMouseInput));
+
             // sin
             const sineMod = Math.sin(2 * Math.PI * modFreq * x);
             // tri
             const triangleMod = 2 / Math.PI * Math.asin(Math.sin(2 * Math.PI * modFreq * x));
-            // squ
+            // sq
             const squareMod = Math.sign(Math.sin(2 * Math.PI * modFreq * x));
-            // blending
-            const blendedMod = (sineMod + (triangleMod*mouseInput) + (squareMod/mouseInput)) / 3;
+            // mouse blending
+            const blendedMod = (
+                sineMod +
+                (triangleMod * clampedMouseInput) +
+                (squareMod / clampedMouseInput)
+            ) / 3;
+
             totalFM += modIndex * blendedMod;
         }
 
+        // fm2, simple sin mod:
         if (fm2Active) {
             const modFreq = normMouseX * FM2_MOUSE_FREQ_SCALE + FM2_MOUSE_FREQ_BASE;
             const modIndex = FM2_INDEX;
             totalFM += -modIndex * Math.sin(2 * Math.PI * modFreq * x);
         }
 
+        // fm3, conditionally applied boosting
         if (fm3Active) {
-            const safeQuotient = Math.abs(mouseQuotient) < 1e-3
-                ? (Math.sign(mouseQuotient) || 1) * 1e-3
-                : mouseQuotient;
+            const xRounded = Math.round(x);
+            const safeMouse = Math.abs(mouseScalars.x) < 1e-3
+                ? (Math.sign(mouseScalars.x) || 1) * 1e-3
+                : mouseScalars.x;
 
-            const modFreq = FM3_BASE_FREQ / safeQuotient;
+            const mouseModScale =  normMouseX/7; 
             const modIndex = FM3_INDEX;
-            const complexMod =
-                Math.sin(2 * Math.PI * modFreq * x) +
-                FM3_SECOND_HARMONIC_WEIGHT *
-                Math.sin(2 * Math.PI * modFreq * 2 * x);
-            totalFM += modIndex * complexMod;
+
+            let complexMod;
+
+            if (xRounded % 13 === 0) {
+                complexMod = 8
+            }
+            else if (xRounded % 7 === 0) {
+                complexMod = 0;
+            }
+            else if (xRounded % 5 === 0) {
+                complexMod = 4;
+            }
+            else {
+                complexMod = 6;
+            }
+
+            totalFM += modIndex * complexMod + mouseModScale;
         }
     }
 

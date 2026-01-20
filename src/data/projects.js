@@ -65,7 +65,7 @@ export const projects = [
         title: 'alphaba',
         summary: 'Decoding structure & style of writing systems with ML for generating new, fictional alphabets.',
         type: 'project',
-        tags: ['python', 'ml'],
+        tags: ['python', 'ML'],
         pinned: true,
         links: [
             {
@@ -79,9 +79,9 @@ export const projects = [
     {
         id: 'repetiprompter',
         title: 'repetiprompter',
-        summary: '`prompt -> response`, where each response becomes the next prompt',
+        summary: 'recursive `prompt -> response ->` loops, with language analysis ',
         type: 'project',
-        tags: ['python', 'llm analysis'],
+        tags: ['python', 'NLP', 'ML'],
         pinned: false,
         links: [ 
             {

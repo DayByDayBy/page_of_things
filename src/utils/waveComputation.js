@@ -199,11 +199,7 @@ export function computeWaveY(x, canvas, waveConfig, mouseScalars, modState) {
         // fm3, conditionally applied boosting
         if (fm3Active) {
             const xRounded = Math.round(x);
-            const safeMouse = Math.abs(mouseScalars.x) < 1e-3
-                ? (Math.sign(mouseScalars.x) || 1) * 1e-3
-                : mouseScalars.x;
-
-            const mouseModScale =  normMouseX/7; 
+            const mouseModScale = normMouseX/7; 
             const modIndex = FM3_INDEX;
 
             let complexMod;

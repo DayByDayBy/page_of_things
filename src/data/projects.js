@@ -77,7 +77,7 @@ export const projects = [
     },
 
     {
-        id: 'repetirompter',
+        id: 'repetiprompter',
         title: 'repetiprompter',
         summary: '`prompt -> response`, where each response becomes the next prompt',
         type: 'project',

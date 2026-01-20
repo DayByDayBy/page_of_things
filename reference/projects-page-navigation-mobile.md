@@ -13,7 +13,7 @@ Do you want “Projects” to have a shareable URL?
 
 ## Navigation patterns (minimal-change first)
 
-## 1) Add a Projects icon alongside existing icons (recommended starting point)
+### 1) Add a Projects icon alongside existing icons (recommended starting point)
 **How it feels:** consistent with current site (icon-only nav).
 
 **Pros**
@@ -27,7 +27,7 @@ Do you want “Projects” to have a shareable URL?
 **Works best with**
 - View swap (no router) or modal overlay.
 
-## 2) Tiny text links under the name (Home | Projects)
+### 2) Tiny text links under the name (Home | Projects)
 **Pros**
 - Very clear.
 - Still minimal.
@@ -35,7 +35,7 @@ Do you want “Projects” to have a shareable URL?
 **Cons**
 - Slightly changes the visual hierarchy.
 
-## 3) Drawer / “more” menu on mobile
+### 3) Drawer / “more” menu on mobile
 **Pros**
 - Scales if you add more sections later (Writing, About, etc.).
 

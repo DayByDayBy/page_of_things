@@ -22,6 +22,17 @@ const OscilloscopeDisplay = ({ samplesRef }, forwardedRef) => {
                 forwardedRef.current = canvasRef.current;
             }
         }
+        
+        // Cleanup function to clear stale references
+        return () => {
+            if (forwardedRef) {
+                if (typeof forwardedRef === 'function') {
+                    forwardedRef(null);
+                } else {
+                    forwardedRef.current = null;
+                }
+            }
+        };
     }, [forwardedRef]);
 
     useEffect(() => {

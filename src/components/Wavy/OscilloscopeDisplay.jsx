@@ -12,7 +12,17 @@ const OSCILLOSCOPE_FORMULA_HTML = katex.renderToString(
 
 const OscilloscopeDisplay = ({ samplesRef }, forwardedRef) => {
     const canvasRef = useRef(null);
-    const effectiveSamplesRef = samplesRef || forwardedRef;
+
+    useEffect(() => {
+        // Forward canvas ref to parent
+        if (forwardedRef) {
+            if (typeof forwardedRef === 'function') {
+                forwardedRef(canvasRef.current);
+            } else {
+                forwardedRef.current = canvasRef.current;
+            }
+        }
+    }, [forwardedRef]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -22,7 +32,7 @@ const OscilloscopeDisplay = ({ samplesRef }, forwardedRef) => {
         if (!ctx) return;
 
         const draw = () => {
-            const pts = (effectiveSamplesRef && effectiveSamplesRef.current) || [];
+            const pts = (samplesRef && samplesRef.current) || [];
             const width = canvas.width;
             const height = canvas.height;
 
@@ -78,7 +88,7 @@ const OscilloscopeDisplay = ({ samplesRef }, forwardedRef) => {
         const id = setInterval(draw, 100);
 
         return () => clearInterval(id);
-    }, [effectiveSamplesRef]);
+    }, [samplesRef]);
 
     return (
         <div className="oscilloscope-container">

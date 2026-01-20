@@ -72,7 +72,7 @@ const WaveBackground = ({ mousePosition, modulationState, systemActive, samplesR
 
     const render = () => {
       const modState = {
-        ...modStateRef.current,
+        ...(modStateRef.current || {}),
         systemActive: systemActiveRef.current,
       };
 

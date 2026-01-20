@@ -95,7 +95,7 @@ export const projects = [
     {
         id: 'enigma',
         title: 'enigma_one',
-        summary: 'a basic modelling of the classic encyrption device using python, with a streamlit interface',
+        summary: 'a basic modelling of the classic encryption device using python, with a streamlit interface',
         type: 'project',
         tags: ['python', 'streamlit'],
         pinned: false,

@@ -6,6 +6,7 @@ import WaveControls from './components/WaveControls';
 import { useMousePosition } from './hooks/useMousePosition';
 import PageContainer from './container/PageContainer';
 import ProjectsPage from './pages/ProjectsPage';
+import NotFound from './components/NotFound';
 import { initialModulationState, modulationReducer } from './state/modulationReducer';
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
                             <Routes>
                                 <Route path="/" element={<PageContainer />} />
                                 <Route path="/projects" element={<ProjectsPage />} />
+                                <Route path="*" element={<NotFound />} />
                             </Routes>
 
                         </div>

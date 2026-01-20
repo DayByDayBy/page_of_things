@@ -168,10 +168,9 @@ export function computeWaveY(x, canvas, waveConfig, mouseScalars, modState) {
         if (fm1Active) {
             const modFreq = FM1_BASE_FREQ;
             const modIndex = FM1_INDEX;
-            const mouseInput = mouseDiff ? mouseDiff : 1;
-            // for zero and extreme value issues:
-            const safeMouseInput = Math.abs(mouseInput) < 0.001 ? 0.001 : mouseInput;
-            const clampedMouseInput = Math.max(0.1, Math.min(10, safeMouseInput));
+            const mouseMagnitude = Math.abs(mouseDiff ?? 1);
+            const safeMouse = Math.max(0.001, mouseMagnitude);
+            const clampedMouseInput = Math.max(0.1, Math.min(10, safeMouse));
 
             // sin
             const sineMod = Math.sin(2 * Math.PI * modFreq * x);

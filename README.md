@@ -5,7 +5,7 @@ An interactive personal page webapp, with a custom-built wave visualisation with
 ## Features
 
 - **Interactive Wave Visualisation**: Real-time oscilloscope display with mathematical wave rendering
-- **Modulation**: Multiple AM/FM modulation with mouse-position control parameters
+- **Modulation**: Multiple AM/FM modulations with mouse-position control parameters
 - **Mathematical Formulas**: KaTeX-rendered wave equations with tooltips
 - **Optimisation**: Efficient canvas rendering with optimized mouse event handling, built for various screen sizes with modern CSS
 - **Accessibility**: ARIA labels, keyboard navigation, and screen reader support

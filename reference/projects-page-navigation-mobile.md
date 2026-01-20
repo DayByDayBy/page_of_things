@@ -82,17 +82,17 @@ All navigation patterns MUST implement:
 
 ### Pattern-specific guidance
 
-#### Icon navigation (pattern 1)
+#### Icon navigation (Navigation pattern 1)
 - **aria-label**: Descriptive labels for all icons
 - **aria-current**: Indicate active page/state
 - **Visible focus indicators**: Clear focus/hover states
 
-#### Modal/drawer patterns (pattern 2)
+#### Modal/drawer patterns (Navigation pattern 3)
 - **Focus trap**: Tab cycles within modal, escape closes
 - **Return focus**: Focus returns to trigger element on close
 - **aria-modal/role**: Proper semantic attributes
 
-#### Router-based patterns (patterns 3-4)
+#### Router-based patterns (Page/URL patterns C-D)
 - **Semantic navigation**: Use `<nav>` and `<a>` elements appropriately
 - **Browser back-button**: Ensure expected browser behavior works
 - **Page titles**: Update document.title on route changes

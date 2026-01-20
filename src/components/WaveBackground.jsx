@@ -41,7 +41,7 @@ const WaveBackground = ({ mousePosition, modulationState, systemActive, samplesR
   }, [samplesRef]);
   
   const waveConfig = useRef({
-    amplitude: 10,
+    amplitude: 32,
     frequency: 0.0101,
     phase: 0.000000001,
     ampMaxReached: { current: false },

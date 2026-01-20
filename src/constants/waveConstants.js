@@ -23,13 +23,13 @@ export const FM2_MOUSE_FREQ_SCALE = 0.001;
 export const FM2_MOUSE_FREQ_BASE = 0.002;
 export const FM3_SECOND_HARMONIC_WEIGHT = 0.5;
 
-export const READOUT_SAMPLES = 128;
+export const READOUT_SAMPLES = 24;
 
 export const WAVE_MOTION_CONSTANTS = {
   amplitudeChange: 0.03046,
   frequencyChange: 0.00008046,
-  ampMax: 80.46,
-  ampMin: -80.46,
+  ampMax: 160.92,
+  ampMin: -160.92,
   freqMax: 0.8046,
   freqMin: 0.003046,
 };

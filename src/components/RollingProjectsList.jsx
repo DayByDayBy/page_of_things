@@ -11,9 +11,9 @@
  *
  * MOTION RULES:
  * - Direction: vertical, upward only
- * - Interval: 8 seconds between rotations
- * - Initial delay: 2.5 seconds (first state is static)
- * - Animation: 450ms ease-in-out
+ * - Interval: 6.667 seconds between rotations
+ * - Initial delay: 2 seconds (first state is static)
+ * - Animation: 500ms ease-in-out
  * - If ≤3 projects: static, no rotation
  */
 

@@ -33,7 +33,7 @@
 }
 
 .toggle-modulation-menu:focus-visible {
-  outline: 3px solid rgba(0, 0, 0, 0.6);
+  outline: 3px solid rgba(0, 0, 0, 0.8);
   outline-offset: 2px;
   border-radius: 0.5rem;
 }

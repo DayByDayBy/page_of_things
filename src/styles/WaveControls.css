@@ -254,7 +254,7 @@
   .mainModButton,
   .amMainButton,
   .fmMainButton {
-    min-width: 12vw;
+    min-width: clamp(2.75rem, 12vw, 4rem);
     width: auto;
     grid-column: auto;
     grid-row: auto;

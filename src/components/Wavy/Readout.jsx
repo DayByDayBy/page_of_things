@@ -91,7 +91,7 @@ const Readout = ({ samplesRef, flags }) => {
   const formatPx = (value) => `${value.toFixed(1)} px`;
 
   return (
-    <div className="modulation-readout-container" aria-live="polite">
+    <div className="modulation-readout-container">
       <div className={`modulation-card am-card ${amActive ? "visible" : ""}`}>
         <div className="modulation-card-title">AM Modulation</div>
         <div className="modulation-card-body">

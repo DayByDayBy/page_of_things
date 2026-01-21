@@ -30,6 +30,6 @@ export const WAVE_MOTION_CONSTANTS = {
   frequencyChange: 0.00008046,
   ampMax: 160.92,
   ampMin: -160.92,
-  freqMax: 0.8046,
+  freqMax: 0.03046,
   freqMin: 0.003046,
 };

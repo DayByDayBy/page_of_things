@@ -14,11 +14,9 @@ import {
     FM1_BASE_FREQ,
     FM1_INDEX,
     FM2_INDEX,
-    FM3_BASE_FREQ,
     FM3_INDEX,
     FM2_MOUSE_FREQ_SCALE,
     FM2_MOUSE_FREQ_BASE,
-    FM3_SECOND_HARMONIC_WEIGHT,
     READOUT_SAMPLES,
 } from "../constants/waveConstants";
 
@@ -133,7 +131,7 @@ export function computeWaveY(x, canvas, waveConfig, mouseScalars, modState) {
         fm3Active,
     } = modState;
 
-    const { normMouseX, mouseDiff, mouseSum, mouseQuotient } = mouseScalars;
+    const { normMouseX, mouseDiff, mouseSum } = mouseScalars;
     const carrierFreq = frequency / CARRIER_FREQ_DIVISOR;
 
     let totalAM = 0;
